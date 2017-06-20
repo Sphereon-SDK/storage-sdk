@@ -43,7 +43,7 @@ namespace Sphereon.SDK.Storage.Model
         /// Initializes a new instance of the <see cref="ContainerRequest" /> class.
         /// </summary>
         /// <param name="Name">Name.</param>
-        /// <param name="BackendId">BackendId.</param>
+        /// <param name="BackendId">The backend in which the container will be stored or is stored..</param>
         public ContainerRequest(string Name = null, string BackendId = null)
         {
             this.Name = Name;
@@ -56,8 +56,9 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="name", EmitDefaultValue=false)]
         public string Name { get; set; }
         /// <summary>
-        /// Gets or Sets BackendId
+        /// The backend in which the container will be stored or is stored.
         /// </summary>
+        /// <value>The backend in which the container will be stored or is stored.</value>
         [DataMember(Name="backendId", EmitDefaultValue=false)]
         public string BackendId { get; set; }
         /// <summary>

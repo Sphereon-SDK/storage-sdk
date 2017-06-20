@@ -80,7 +80,7 @@ namespace Sphereon.SDK.Storage.Model
         /// Initializes a new instance of the <see cref="ContainerResponse" /> class.
         /// </summary>
         /// <param name="Name">Name.</param>
-        /// <param name="BackendId">BackendId.</param>
+        /// <param name="BackendId">The backend in which the container will be stored or is stored..</param>
         /// <param name="Id">Id.</param>
         /// <param name="State">State.</param>
         public ContainerResponse(string Name = null, string BackendId = null, string Id = null, StateEnum? State = null)
@@ -97,8 +97,9 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="name", EmitDefaultValue=false)]
         public string Name { get; set; }
         /// <summary>
-        /// Gets or Sets BackendId
+        /// The backend in which the container will be stored or is stored.
         /// </summary>
+        /// <value>The backend in which the container will be stored or is stored.</value>
         [DataMember(Name="backendId", EmitDefaultValue=false)]
         public string BackendId { get; set; }
         /// <summary>

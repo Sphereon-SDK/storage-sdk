@@ -342,14 +342,15 @@
       "type": "object",
       "properties": {
         "authenticationProvider": {
+          "description": "The provider of the credentials",
           "type": "string",
           "enum": [
             "API_SUPPLIER",
             "END_USER"
           ]
         },
-        "secretKey": {"type": "string"},
         "backendType": {
+          "description": "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.",
           "type": "string",
           "enum": [
             "FILESYSTEM",
@@ -358,17 +359,30 @@
             "GOOGLE_CLOUD_STORAGE"
           ]
         },
+        "backendSecret": {
+          "description": "The API secret for 3rd party backends.",
+          "type": "string"
+        },
         "name": {"type": "string"},
         "description": {"type": "string"},
-        "parentId": {"type": "string"},
-        "accesskeyId": {"type": "string"}
+        "backendKey": {
+          "description": "The API key for 3rd party backends.",
+          "type": "string"
+        },
+        "parentId": {
+          "description": "The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.",
+          "type": "string"
+        }
       }
     },
     "ContainerResponse": {
       "type": "object",
       "properties": {
         "name": {"type": "string"},
-        "backendId": {"type": "string"},
+        "backendId": {
+          "description": "The backend in which the container will be stored or is stored.",
+          "type": "string"
+        },
         "id": {"type": "string"},
         "state": {
           "type": "string",
@@ -424,7 +438,10 @@
       "type": "object",
       "properties": {
         "name": {"type": "string"},
-        "backendId": {"type": "string"}
+        "backendId": {
+          "description": "The backend in which the container will be stored or is stored.",
+          "type": "string"
+        }
       }
     },
     "ErrorResponse": {

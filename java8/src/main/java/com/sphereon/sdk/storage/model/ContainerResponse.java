@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ContainerResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-20T15:53:06.291+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-20T18:04:16.267+02:00")
 public class ContainerResponse   {
   @SerializedName("name")
   private String name = null;
@@ -100,10 +100,10 @@ public class ContainerResponse   {
   }
 
    /**
-   * Get backendId
+   * The backend in which the container will be stored or is stored.
    * @return backendId
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(example = "null", value = "The backend in which the container will be stored or is stored.")
   public String getBackendId() {
     return backendId;
   }

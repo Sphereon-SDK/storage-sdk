@@ -40,8 +40,9 @@ namespace Sphereon.SDK.Storage.Model
     public partial class BackendRequest :  IEquatable<BackendRequest>
     {
         /// <summary>
-        /// Gets or Sets AuthenticationProvider
+        /// The provider of the credentials
         /// </summary>
+        /// <value>The provider of the credentials</value>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum AuthenticationProviderEnum
         {
@@ -60,8 +61,9 @@ namespace Sphereon.SDK.Storage.Model
         }
 
         /// <summary>
-        /// Gets or Sets BackendType
+        /// The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
         /// </summary>
+        /// <value>The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.</value>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum BackendTypeEnum
         {
@@ -92,41 +94,44 @@ namespace Sphereon.SDK.Storage.Model
         }
 
         /// <summary>
-        /// Gets or Sets AuthenticationProvider
+        /// The provider of the credentials
         /// </summary>
+        /// <value>The provider of the credentials</value>
         [DataMember(Name="authenticationProvider", EmitDefaultValue=false)]
         public AuthenticationProviderEnum? AuthenticationProvider { get; set; }
         /// <summary>
-        /// Gets or Sets BackendType
+        /// The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
         /// </summary>
+        /// <value>The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.</value>
         [DataMember(Name="backendType", EmitDefaultValue=false)]
         public BackendTypeEnum? BackendType { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="BackendRequest" /> class.
         /// </summary>
-        /// <param name="AuthenticationProvider">AuthenticationProvider.</param>
-        /// <param name="SecretKey">SecretKey.</param>
-        /// <param name="BackendType">BackendType.</param>
+        /// <param name="AuthenticationProvider">The provider of the credentials.</param>
+        /// <param name="BackendType">The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties..</param>
+        /// <param name="BackendSecret">The API secret for 3rd party backends..</param>
         /// <param name="Name">Name.</param>
         /// <param name="Description">Description.</param>
-        /// <param name="ParentId">ParentId.</param>
-        /// <param name="AccesskeyId">AccesskeyId.</param>
-        public BackendRequest(AuthenticationProviderEnum? AuthenticationProvider = null, string SecretKey = null, BackendTypeEnum? BackendType = null, string Name = null, string Description = null, string ParentId = null, string AccesskeyId = null)
+        /// <param name="BackendKey">The API key for 3rd party backends..</param>
+        /// <param name="ParentId">The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends..</param>
+        public BackendRequest(AuthenticationProviderEnum? AuthenticationProvider = null, BackendTypeEnum? BackendType = null, string BackendSecret = null, string Name = null, string Description = null, string BackendKey = null, string ParentId = null)
         {
             this.AuthenticationProvider = AuthenticationProvider;
-            this.SecretKey = SecretKey;
             this.BackendType = BackendType;
+            this.BackendSecret = BackendSecret;
             this.Name = Name;
             this.Description = Description;
+            this.BackendKey = BackendKey;
             this.ParentId = ParentId;
-            this.AccesskeyId = AccesskeyId;
         }
         
         /// <summary>
-        /// Gets or Sets SecretKey
+        /// The API secret for 3rd party backends.
         /// </summary>
-        [DataMember(Name="secretKey", EmitDefaultValue=false)]
-        public string SecretKey { get; set; }
+        /// <value>The API secret for 3rd party backends.</value>
+        [DataMember(Name="backendSecret", EmitDefaultValue=false)]
+        public string BackendSecret { get; set; }
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
@@ -138,15 +143,17 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="description", EmitDefaultValue=false)]
         public string Description { get; set; }
         /// <summary>
-        /// Gets or Sets ParentId
+        /// The API key for 3rd party backends.
         /// </summary>
+        /// <value>The API key for 3rd party backends.</value>
+        [DataMember(Name="backendKey", EmitDefaultValue=false)]
+        public string BackendKey { get; set; }
+        /// <summary>
+        /// The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.
+        /// </summary>
+        /// <value>The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.</value>
         [DataMember(Name="parentId", EmitDefaultValue=false)]
         public string ParentId { get; set; }
-        /// <summary>
-        /// Gets or Sets AccesskeyId
-        /// </summary>
-        [DataMember(Name="accesskeyId", EmitDefaultValue=false)]
-        public string AccesskeyId { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -156,12 +163,12 @@ namespace Sphereon.SDK.Storage.Model
             var sb = new StringBuilder();
             sb.Append("class BackendRequest {\n");
             sb.Append("  AuthenticationProvider: ").Append(AuthenticationProvider).Append("\n");
-            sb.Append("  SecretKey: ").Append(SecretKey).Append("\n");
             sb.Append("  BackendType: ").Append(BackendType).Append("\n");
+            sb.Append("  BackendSecret: ").Append(BackendSecret).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  BackendKey: ").Append(BackendKey).Append("\n");
             sb.Append("  ParentId: ").Append(ParentId).Append("\n");
-            sb.Append("  AccesskeyId: ").Append(AccesskeyId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -204,14 +211,14 @@ namespace Sphereon.SDK.Storage.Model
                     this.AuthenticationProvider.Equals(other.AuthenticationProvider)
                 ) && 
                 (
-                    this.SecretKey == other.SecretKey ||
-                    this.SecretKey != null &&
-                    this.SecretKey.Equals(other.SecretKey)
-                ) && 
-                (
                     this.BackendType == other.BackendType ||
                     this.BackendType != null &&
                     this.BackendType.Equals(other.BackendType)
+                ) && 
+                (
+                    this.BackendSecret == other.BackendSecret ||
+                    this.BackendSecret != null &&
+                    this.BackendSecret.Equals(other.BackendSecret)
                 ) && 
                 (
                     this.Name == other.Name ||
@@ -224,14 +231,14 @@ namespace Sphereon.SDK.Storage.Model
                     this.Description.Equals(other.Description)
                 ) && 
                 (
+                    this.BackendKey == other.BackendKey ||
+                    this.BackendKey != null &&
+                    this.BackendKey.Equals(other.BackendKey)
+                ) && 
+                (
                     this.ParentId == other.ParentId ||
                     this.ParentId != null &&
                     this.ParentId.Equals(other.ParentId)
-                ) && 
-                (
-                    this.AccesskeyId == other.AccesskeyId ||
-                    this.AccesskeyId != null &&
-                    this.AccesskeyId.Equals(other.AccesskeyId)
                 );
         }
 
@@ -248,18 +255,18 @@ namespace Sphereon.SDK.Storage.Model
                 // Suitable nullity checks etc, of course :)
                 if (this.AuthenticationProvider != null)
                     hash = hash * 59 + this.AuthenticationProvider.GetHashCode();
-                if (this.SecretKey != null)
-                    hash = hash * 59 + this.SecretKey.GetHashCode();
                 if (this.BackendType != null)
                     hash = hash * 59 + this.BackendType.GetHashCode();
+                if (this.BackendSecret != null)
+                    hash = hash * 59 + this.BackendSecret.GetHashCode();
                 if (this.Name != null)
                     hash = hash * 59 + this.Name.GetHashCode();
                 if (this.Description != null)
                     hash = hash * 59 + this.Description.GetHashCode();
+                if (this.BackendKey != null)
+                    hash = hash * 59 + this.BackendKey.GetHashCode();
                 if (this.ParentId != null)
                     hash = hash * 59 + this.ParentId.GetHashCode();
-                if (this.AccesskeyId != null)
-                    hash = hash * 59 + this.AccesskeyId.GetHashCode();
                 return hash;
             }
         }

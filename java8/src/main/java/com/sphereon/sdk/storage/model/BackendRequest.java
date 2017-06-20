@@ -34,10 +34,10 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * BackendRequest
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-20T15:53:06.291+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-20T18:04:16.267+02:00")
 public class BackendRequest   {
   /**
-   * Gets or Sets authenticationProvider
+   * The provider of the credentials
    */
   public enum AuthenticationProviderEnum {
     @SerializedName("API_SUPPLIER")
@@ -61,11 +61,8 @@ public class BackendRequest   {
   @SerializedName("authenticationProvider")
   private AuthenticationProviderEnum authenticationProvider = null;
 
-  @SerializedName("secretKey")
-  private String secretKey = null;
-
   /**
-   * Gets or Sets backendType
+   * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
    */
   public enum BackendTypeEnum {
     @SerializedName("FILESYSTEM")
@@ -95,17 +92,20 @@ public class BackendRequest   {
   @SerializedName("backendType")
   private BackendTypeEnum backendType = null;
 
+  @SerializedName("backendSecret")
+  private String backendSecret = null;
+
   @SerializedName("name")
   private String name = null;
 
   @SerializedName("description")
   private String description = null;
 
+  @SerializedName("backendKey")
+  private String backendKey = null;
+
   @SerializedName("parentId")
   private String parentId = null;
-
-  @SerializedName("accesskeyId")
-  private String accesskeyId = null;
 
   public BackendRequest authenticationProvider(AuthenticationProviderEnum authenticationProvider) {
     this.authenticationProvider = authenticationProvider;
@@ -113,10 +113,10 @@ public class BackendRequest   {
   }
 
    /**
-   * Get authenticationProvider
+   * The provider of the credentials
    * @return authenticationProvider
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(example = "null", value = "The provider of the credentials")
   public AuthenticationProviderEnum getAuthenticationProvider() {
     return authenticationProvider;
   }
@@ -125,40 +125,40 @@ public class BackendRequest   {
     this.authenticationProvider = authenticationProvider;
   }
 
-  public BackendRequest secretKey(String secretKey) {
-    this.secretKey = secretKey;
-    return this;
-  }
-
-   /**
-   * Get secretKey
-   * @return secretKey
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getSecretKey() {
-    return secretKey;
-  }
-
-  public void setSecretKey(String secretKey) {
-    this.secretKey = secretKey;
-  }
-
   public BackendRequest backendType(BackendTypeEnum backendType) {
     this.backendType = backendType;
     return this;
   }
 
    /**
-   * Get backendType
+   * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
    * @return backendType
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(example = "null", value = "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.")
   public BackendTypeEnum getBackendType() {
     return backendType;
   }
 
   public void setBackendType(BackendTypeEnum backendType) {
     this.backendType = backendType;
+  }
+
+  public BackendRequest backendSecret(String backendSecret) {
+    this.backendSecret = backendSecret;
+    return this;
+  }
+
+   /**
+   * The API secret for 3rd party backends.
+   * @return backendSecret
+  **/
+  @ApiModelProperty(example = "null", value = "The API secret for 3rd party backends.")
+  public String getBackendSecret() {
+    return backendSecret;
+  }
+
+  public void setBackendSecret(String backendSecret) {
+    this.backendSecret = backendSecret;
   }
 
   public BackendRequest name(String name) {
@@ -197,40 +197,40 @@ public class BackendRequest   {
     this.description = description;
   }
 
+  public BackendRequest backendKey(String backendKey) {
+    this.backendKey = backendKey;
+    return this;
+  }
+
+   /**
+   * The API key for 3rd party backends.
+   * @return backendKey
+  **/
+  @ApiModelProperty(example = "null", value = "The API key for 3rd party backends.")
+  public String getBackendKey() {
+    return backendKey;
+  }
+
+  public void setBackendKey(String backendKey) {
+    this.backendKey = backendKey;
+  }
+
   public BackendRequest parentId(String parentId) {
     this.parentId = parentId;
     return this;
   }
 
    /**
-   * Get parentId
+   * The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.
    * @return parentId
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(example = "null", value = "The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.")
   public String getParentId() {
     return parentId;
   }
 
   public void setParentId(String parentId) {
     this.parentId = parentId;
-  }
-
-  public BackendRequest accesskeyId(String accesskeyId) {
-    this.accesskeyId = accesskeyId;
-    return this;
-  }
-
-   /**
-   * Get accesskeyId
-   * @return accesskeyId
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getAccesskeyId() {
-    return accesskeyId;
-  }
-
-  public void setAccesskeyId(String accesskeyId) {
-    this.accesskeyId = accesskeyId;
   }
 
 
@@ -244,17 +244,17 @@ public class BackendRequest   {
     }
     BackendRequest backendRequest = (BackendRequest) o;
     return Objects.equals(this.authenticationProvider, backendRequest.authenticationProvider) &&
-        Objects.equals(this.secretKey, backendRequest.secretKey) &&
         Objects.equals(this.backendType, backendRequest.backendType) &&
+        Objects.equals(this.backendSecret, backendRequest.backendSecret) &&
         Objects.equals(this.name, backendRequest.name) &&
         Objects.equals(this.description, backendRequest.description) &&
-        Objects.equals(this.parentId, backendRequest.parentId) &&
-        Objects.equals(this.accesskeyId, backendRequest.accesskeyId);
+        Objects.equals(this.backendKey, backendRequest.backendKey) &&
+        Objects.equals(this.parentId, backendRequest.parentId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticationProvider, secretKey, backendType, name, description, parentId, accesskeyId);
+    return Objects.hash(authenticationProvider, backendType, backendSecret, name, description, backendKey, parentId);
   }
 
   @Override
@@ -263,12 +263,12 @@ public class BackendRequest   {
     sb.append("class BackendRequest {\n");
     
     sb.append("    authenticationProvider: ").append(toIndentedString(authenticationProvider)).append("\n");
-    sb.append("    secretKey: ").append(toIndentedString(secretKey)).append("\n");
     sb.append("    backendType: ").append(toIndentedString(backendType)).append("\n");
+    sb.append("    backendSecret: ").append(toIndentedString(backendSecret)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    backendKey: ").append(toIndentedString(backendKey)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
-    sb.append("    accesskeyId: ").append(toIndentedString(accesskeyId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
