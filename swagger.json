@@ -1,0 +1,459 @@
+{
+  "basePath": "/",
+  "paths": {
+    "/bucket-storage/0.6.0/containers/{containerId}": {
+      "post": {
+        "summary": "Update a container",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Update an existing container with new container settings",
+        "operationId": "updateContainer",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/ContainerResponse"},
+            "description": "Container updated"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid Container request"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Backend was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "schema": {"$ref": "#/definitions/ContainerRequest"},
+            "in": "body",
+            "name": "containerRequest",
+            "description": "containerRequest",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json;charset=UTF-8"]
+      },
+      "delete": {
+        "summary": "Delete an existing container",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Delete an existing container including the stored objects if indicated.",
+        "operationId": "deleteContainer",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/ContainerResponse"},
+            "description": "Container deleted"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container name or container was not empty and recursion was not set"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "delete",
+            "description": "delete",
+            "type": "string",
+            "required": false,
+            "enum": [
+              "RECURSIVE",
+              "EMPTY_ONLY"
+            ]
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json"]
+      }
+    },
+    "/bucket-storage/0.6.0/containers": {"post": {
+      "summary": "Create a new container",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Create a new container",
+      "operationId": "createContainer",
+      "responses": {
+        "201": {
+          "schema": {"$ref": "#/definitions/ContainerResponse"},
+          "description": "Container created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid Container request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Backend was not found"
+        }
+      },
+      "parameters": [{
+        "schema": {"$ref": "#/definitions/ContainerRequest"},
+        "in": "body",
+        "name": "containerRequest",
+        "description": "containerRequest",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json;charset=UTF-8"]
+    }},
+    "/bucket-storage/0.6.0/backends": {"post": {
+      "summary": "Create a new backend",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Create a new backend",
+      "operationId": "createBackend",
+      "responses": {
+        "201": {
+          "schema": {"$ref": "#/definitions/BackendResponse"},
+          "description": "Backend created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid backend request"
+        }
+      },
+      "parameters": [{
+        "schema": {"$ref": "#/definitions/BackendRequest"},
+        "in": "body",
+        "name": "backendRequest",
+        "description": "backendRequest",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json;charset=UTF-8"]
+    }},
+    "/bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath}": {
+      "post": {
+        "summary": "Create a new object within a container",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["*/*"],
+        "description": "Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned",
+        "operationId": "createObject",
+        "responses": {
+          "201": {"description": "Object created"},
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object request"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "objectPath",
+            "description": "objectPath",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "stream",
+            "description": "stream",
+            "type": "file",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["multipart/form-data"]
+      },
+      "get": {
+        "summary": "Get an existing object from a container",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": [
+          "application/octet-stream",
+          "application/json;charset=UTF-8"
+        ],
+        "description": "Get an existing object from a container",
+        "operationId": "getObject",
+        "responses": {
+          "200": {"description": "Object retrieved"},
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object name"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Object or container did not exist"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "objectPath",
+            "description": "objectPath",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json"]
+      },
+      "delete": {
+        "summary": "Delete an existing object from a container.",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["*/*"],
+        "description": "Delete an existing object from a container. There is no request nor response body for a delete request.",
+        "operationId": "deleteObject",
+        "responses": {
+          "200": {"description": "Object deleted"},
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object name"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container or object was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "objectPath",
+            "description": "objectPath",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json"]
+      }
+    },
+    "/bucket-storage/0.6.0/backends/{backendId}": {
+      "post": {
+        "summary": "Update a backend",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Update a backend",
+        "operationId": "updateBackend",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/BackendResponse"},
+            "description": "Backend updated"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid backend request"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Backend was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "backendId",
+            "description": "backendId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "schema": {"$ref": "#/definitions/BackendRequest"},
+            "in": "body",
+            "name": "backendRequest",
+            "description": "backendRequest",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json;charset=UTF-8"]
+      },
+      "delete": {
+        "summary": "Delete a backend",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Delete a backend",
+        "operationId": "deleteBackend",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/BackendResponse"},
+            "description": "Backend deleted"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Backend was already deleted or unknown backend"
+          }
+        },
+        "parameters": [{
+          "in": "path",
+          "name": "backendId",
+          "description": "backendId",
+          "type": "string",
+          "required": true
+        }],
+        "tags": ["Storage"],
+        "consumes": ["application/json"]
+      }
+    }
+  },
+  "host": "gw.api.cloud.sphereon.com",
+  "schemes": ["https"],
+  "securityDefinitions": {"oauth2schema": {
+    "tokenUrl": "https://gw.api.cloud.sphereon.com/token",
+    "scopes": {"global": "accessEverything"},
+    "type": "oauth2",
+    "flow": "application"
+  }},
+  "definitions": {
+    "BackendRequest": {
+      "type": "object",
+      "properties": {
+        "authenticationProvider": {
+          "type": "string",
+          "enum": [
+            "API_SUPPLIER",
+            "END_USER"
+          ]
+        },
+        "secretKey": {"type": "string"},
+        "backendType": {
+          "type": "string",
+          "enum": [
+            "FILESYSTEM",
+            "AMAZON_S3",
+            "MS_AZURE_BLOB_STORAGE",
+            "GOOGLE_CLOUD_STORAGE"
+          ]
+        },
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "parentId": {"type": "string"},
+        "accesskeyId": {"type": "string"}
+      }
+    },
+    "ContainerResponse": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "backendId": {"type": "string"},
+        "id": {"type": "string"},
+        "state": {
+          "type": "string",
+          "enum": [
+            "REQUEST",
+            "CREATED",
+            "UPDATED",
+            "DELETED"
+          ]
+        }
+      }
+    },
+    "BackendResponse": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "id": {"type": "string"},
+        "state": {
+          "type": "string",
+          "enum": [
+            "REQUEST",
+            "CREATED",
+            "UPDATED",
+            "DELETED"
+          ]
+        },
+        "parentId": {"type": "string"}
+      }
+    },
+    "Error": {
+      "description": "An error",
+      "type": "object",
+      "required": [
+        "code",
+        "level",
+        "message"
+      ],
+      "properties": {
+        "code": {"type": "string"},
+        "level": {
+          "type": "string",
+          "enum": [
+            "INFO",
+            "WARNING",
+            "FATAL"
+          ]
+        },
+        "cause": {"$ref": "#/definitions/Error"},
+        "message": {"type": "string"}
+      }
+    },
+    "ContainerRequest": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "backendId": {"type": "string"}
+      }
+    },
+    "ErrorResponse": {
+      "description": "The error response",
+      "type": "object",
+      "properties": {"errors": {
+        "type": "array",
+        "items": {"$ref": "#/definitions/Error"}
+      }}
+    }
+  },
+  "swagger": "2.0",
+  "info": {
+    "license": {
+      "name": "Apache License Version 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "contact": {
+      "name": "Sphereon DevOps Team",
+      "url": "https://sphereon.com",
+      "email": "dev@sphereon.com"
+    },
+    "description": "Sphereon Storage APIs provide an abstraction layer for storage of containers (folders) and objects (files), using a filesystem backend or AWS-s3, Azure blobstorage or Google cloud storage backend.",
+    "termsOfService": "https://sphereon.com",
+    "title": "Storage",
+    "version": "0.6.0"
+  },
+  "tags": [{
+    "name": "Storage",
+    "description": "Storage related API"
+  }]
+}
