@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * BackendResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-20T18:04:16.267+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-27T15:52:13.268+02:00")
 public class BackendResponse   {
   @SerializedName("name")
   private String name = null;
@@ -136,10 +136,10 @@ public class BackendResponse   {
   }
 
    /**
-   * Get parentId
+   * The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.
    * @return parentId
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(example = "null", value = "The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.")
   public String getParentId() {
     return parentId;
   }

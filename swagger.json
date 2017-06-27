@@ -195,7 +195,13 @@
         "description": "Get an existing object from a container",
         "operationId": "getObject",
         "responses": {
-          "200": {"description": "Object retrieved"},
+          "200": {
+            "schema": {
+              "format": "byte",
+              "type": "string"
+            },
+            "description": "Object retrieved"
+          },
           "400": {
             "schema": {"$ref": "#/definitions/ErrorResponse"},
             "description": "Invalid container or object name"
@@ -409,7 +415,10 @@
             "DELETED"
           ]
         },
-        "parentId": {"type": "string"}
+        "parentId": {
+          "description": "The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.",
+          "type": "string"
+        }
       }
     },
     "Error": {

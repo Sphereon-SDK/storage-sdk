@@ -413,7 +413,7 @@ void (empty response body)
 
 <a name="getobject"></a>
 # **GetObject**
-> void GetObject (string containerId, string objectPath)
+> byte[] GetObject (string containerId, string objectPath)
 
 Get an existing object from a container
 
@@ -444,7 +444,8 @@ namespace Example
             try
             {
                 // Get an existing object from a container
-                apiInstance.GetObject(containerId, objectPath);
+                byte[] result = apiInstance.GetObject(containerId, objectPath);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -464,7 +465,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**byte[]**
 
 ### Authorization
 

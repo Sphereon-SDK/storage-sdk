@@ -341,7 +341,7 @@ null (empty response body)
 
 <a name="getObject"></a>
 # **getObject**
-> getObject(containerId, objectPath)
+> byte[] getObject(containerId, objectPath)
 
 Get an existing object from a container
 
@@ -366,7 +366,8 @@ StorageApi apiInstance = new StorageApi();
 String containerId = "containerId_example"; // String | containerId
 String objectPath = "objectPath_example"; // String | objectPath
 try {
-    apiInstance.getObject(containerId, objectPath);
+    byte[] result = apiInstance.getObject(containerId, objectPath);
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling StorageApi#getObject");
     e.printStackTrace();
@@ -382,7 +383,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**byte[]**
 
 ### Authorization
 

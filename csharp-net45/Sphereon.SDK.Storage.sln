@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 VisualStudioVersion = 12.0.0.0
 MinimumVisualStudioVersion = 10.0.0.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sphereon.SDK.Storage", "src\Sphereon.SDK.Storage\Sphereon.SDK.Storage.csproj", "{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sphereon.SDK.Storage", "src\Sphereon.SDK.Storage\Sphereon.SDK.Storage.csproj", "{4EF14B98-6D8F-400D-8978-63E163776953}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sphereon.SDK.Storage.Test", "src\Sphereon.SDK.Storage.Test\Sphereon.SDK.Storage.Test.csproj", "{19F1DEBC-DE5E-4517-8062-F000CD499087}"
 EndProject
@@ -12,10 +12,10 @@ Debug|Any CPU = Debug|Any CPU
 Release|Any CPU = Release|Any CPU
 EndGlobalSection
 GlobalSection(ProjectConfigurationPlatforms) = postSolution
-{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}.Release|Any CPU.Build.0 = Release|Any CPU
+{4EF14B98-6D8F-400D-8978-63E163776953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{4EF14B98-6D8F-400D-8978-63E163776953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{4EF14B98-6D8F-400D-8978-63E163776953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{4EF14B98-6D8F-400D-8978-63E163776953}.Release|Any CPU.Build.0 = Release|Any CPU
 {19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 {19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 {19F1DEBC-DE5E-4517-8062-F000CD499087}.Release|Any CPU.ActiveCfg = Release|Any CPU

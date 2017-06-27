@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * BackendRequest
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-20T18:04:16.267+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-06-27T15:52:13.268+02:00")
 public class BackendRequest   {
   /**
    * The provider of the credentials

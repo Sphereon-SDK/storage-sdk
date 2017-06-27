@@ -24,7 +24,7 @@ limitations under the License.
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}</ProjectGuid>
+    <ProjectGuid>{4EF14B98-6D8F-400D-8978-63E163776953}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sphereon.SDK.Storage</RootNamespace>

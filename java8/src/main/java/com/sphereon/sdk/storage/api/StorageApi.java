@@ -794,10 +794,12 @@ public class StorageApi {
      * Get an existing object from a container
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
+     * @return byte[]
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void getObject(String containerId, String objectPath) throws ApiException {
-        getObjectWithHttpInfo(containerId, objectPath);
+    public byte[] getObject(String containerId, String objectPath) throws ApiException {
+        ApiResponse<byte[]> resp = getObjectWithHttpInfo(containerId, objectPath);
+        return resp.getData();
     }
 
     /**
@@ -805,12 +807,13 @@ public class StorageApi {
      * Get an existing object from a container
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;byte[]&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> getObjectWithHttpInfo(String containerId, String objectPath) throws ApiException {
+    public ApiResponse<byte[]> getObjectWithHttpInfo(String containerId, String objectPath) throws ApiException {
         com.squareup.okhttp.Call call = getObjectCall(containerId, objectPath, null, null);
-        return apiClient.execute(call);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -822,7 +825,7 @@ public class StorageApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getObjectAsync(String containerId, String objectPath, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call getObjectAsync(String containerId, String objectPath, final ApiCallback<byte[]> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -844,7 +847,8 @@ public class StorageApi {
         }
 
         com.squareup.okhttp.Call call = getObjectCall(containerId, objectPath, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /* Build call for updateBackend */

@@ -179,8 +179,8 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns></returns>
-        void GetObject (string containerId, string objectPath);
+        /// <returns>byte[]</returns>
+        byte[] GetObject (string containerId, string objectPath);
 
         /// <summary>
         /// Get an existing object from a container
@@ -191,8 +191,8 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetObjectWithHttpInfo (string containerId, string objectPath);
+        /// <returns>ApiResponse of byte[]</returns>
+        ApiResponse<byte[]> GetObjectWithHttpInfo (string containerId, string objectPath);
         /// <summary>
         /// Update a backend
         /// </summary>
@@ -384,8 +384,8 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetObjectAsync (string containerId, string objectPath);
+        /// <returns>Task of byte[]</returns>
+        System.Threading.Tasks.Task<byte[]> GetObjectAsync (string containerId, string objectPath);
 
         /// <summary>
         /// Get an existing object from a container
@@ -396,8 +396,8 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath);
+        /// <returns>Task of ApiResponse (byte[])</returns>
+        System.Threading.Tasks.Task<ApiResponse<byte[]>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath);
         /// <summary>
         /// Update a backend
         /// </summary>
@@ -1558,10 +1558,11 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns></returns>
-        public void GetObject (string containerId, string objectPath)
+        /// <returns>byte[]</returns>
+        public byte[] GetObject (string containerId, string objectPath)
         {
-             GetObjectWithHttpInfo(containerId, objectPath);
+             ApiResponse<byte[]> localVarResponse = GetObjectWithHttpInfo(containerId, objectPath);
+             return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1570,8 +1571,8 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> GetObjectWithHttpInfo (string containerId, string objectPath)
+        /// <returns>ApiResponse of byte[]</returns>
+        public ApiResponse< byte[] > GetObjectWithHttpInfo (string containerId, string objectPath)
         {
             // verify the required parameter 'containerId' is set
             if (containerId == null)
@@ -1629,10 +1630,10 @@ namespace Sphereon.SDK.Storage.Api
                 if (exception != null) throw exception;
             }
 
-            
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<byte[]>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (byte[]) Configuration.ApiClient.Deserialize(localVarResponse, typeof(byte[])));
+            
         }
 
         /// <summary>
@@ -1641,10 +1642,11 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetObjectAsync (string containerId, string objectPath)
+        /// <returns>Task of byte[]</returns>
+        public async System.Threading.Tasks.Task<byte[]> GetObjectAsync (string containerId, string objectPath)
         {
-             await GetObjectAsyncWithHttpInfo(containerId, objectPath);
+             ApiResponse<byte[]> localVarResponse = await GetObjectAsyncWithHttpInfo(containerId, objectPath);
+             return localVarResponse.Data;
 
         }
 
@@ -1654,8 +1656,8 @@ namespace Sphereon.SDK.Storage.Api
         /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath)
+        /// <returns>Task of ApiResponse (byte[])</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<byte[]>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath)
         {
             // verify the required parameter 'containerId' is set
             if (containerId == null)
@@ -1713,10 +1715,10 @@ namespace Sphereon.SDK.Storage.Api
                 if (exception != null) throw exception;
             }
 
-            
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<byte[]>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (byte[]) Configuration.ApiClient.Deserialize(localVarResponse, typeof(byte[])));
+            
         }
 
         /// <summary>

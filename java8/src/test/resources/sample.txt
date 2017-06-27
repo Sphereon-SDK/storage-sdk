@@ -1,0 +1,2 @@
+Sphereon - The smartest document processing platform.
+Test file for testing Storage SDK functionality

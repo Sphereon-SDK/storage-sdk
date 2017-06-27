@@ -26,6 +26,7 @@
 package com.sphereon.sdk.storage.api;
 
 import com.sphereon.sdk.storage.handler.ApiException;
+import com.sphereon.sdk.storage.handler.ApiResponse;
 import com.sphereon.sdk.storage.model.BackendRequest;
 import com.sphereon.sdk.storage.model.BackendResponse;
 import com.sphereon.sdk.storage.model.ErrorResponse;
@@ -39,6 +40,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,11 +54,18 @@ import java.util.Map;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StorageApiTest {
 
-    public static final String TEST_BACKEND = "test-backend";
     private final StorageApi api = new StorageApi();
     private static final String ACCESS_TOKEN = "0dbd17f1-c108-350e-807e-42d13e543b32";
 
+    private static final String TEST_BACKEND = "test-backend";
+    private static final String TEST_CONTAINER = "testcontainer";
+    private static final String TEST_OBJECT = "folder/test-file.txt";
+
+    private static final String TEST_FILENAME = "sample.txt";
+    private final URL FILE_URL = getClass().getClassLoader().getResource(TEST_FILENAME);
+
     private static BackendResponse backendResponse;
+    private static ContainerResponse containerResponse;
 
     /**
      * Create a new backend
@@ -77,7 +87,6 @@ public class StorageApiTest {
         backendResponse = api.createBackend(backendRequest);
         Assert.assertNotNull(backendResponse);
         Assert.assertEquals(TEST_BACKEND, backendResponse.getName());
-
     }
 
     /**
@@ -89,11 +98,15 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createContainerTest() throws ApiException {
-        ContainerRequest containerRequest = null;
-        // ContainerResponse response = api.createContainer(containerRequest);
+    public void _02_createContainerTest() throws ApiException {
+        ContainerRequest containerRequest = new ContainerRequest();
+        containerRequest.backendId(TEST_BACKEND);
+        containerRequest.setName(TEST_CONTAINER);
+        containerResponse = api.createContainer(containerRequest);
 
-        // TODO: test validations
+        Assert.assertNotNull(containerResponse);
+        Assert.assertEquals(TEST_CONTAINER, containerResponse.getName());
+        Assert.assertEquals(backendResponse.getId(), containerResponse.getBackendId());
     }
 
     /**
@@ -105,13 +118,11 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createObjectTest() throws ApiException {
-        String containerId = null;
-        String objectPath = null;
-        File stream = null;
-        // api.createObject(containerId, objectPath, stream);
+    public void _03_createObjectTest() throws ApiException, URISyntaxException {
+        File stream = new File(FILE_URL.toURI());
 
-        // TODO: test validations
+        ApiResponse<Void> response = api.createObjectWithHttpInfo(TEST_CONTAINER, TEST_OBJECT, stream);
+        Assert.assertEquals(201, response.getStatusCode());
     }
 
     /**
@@ -123,7 +134,7 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void _15_deleteBackendTest() throws ApiException {
+    public void _13_deleteBackendTest() throws ApiException {
         BackendResponse response = api.deleteBackend(TEST_BACKEND);
         Assert.assertNotNull(response);
         Assert.assertEquals(TEST_BACKEND, response.getName());
@@ -139,12 +150,12 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteContainerTest() throws ApiException {
-        String containerId = null;
-        String delete = null;
-        // ContainerResponse response = api.deleteContainer(containerId, delete);
+    public void _12_deleteContainerTest() throws ApiException {
+        String delete = "recursive";
+        ContainerResponse response = api.deleteContainer(containerResponse.getId(), delete);
 
-        // TODO: test validations
+        Assert.assertNotNull(response);
+        Assert.assertEquals(containerResponse.getId(), response.getId());
     }
 
     /**
@@ -156,12 +167,9 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteObjectTest() throws ApiException {
-        String containerId = null;
-        String objectPath = null;
-        // api.deleteObject(containerId, objectPath);
-
-        // TODO: test validations
+    public void _11_deleteObjectTest() throws ApiException {
+        ApiResponse<Void> response = api.deleteObjectWithHttpInfo(TEST_CONTAINER, TEST_OBJECT);
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
     /**
@@ -173,12 +181,12 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getObjectTest() throws ApiException {
-        String containerId = null;
-        String objectPath = null;
-        // api.getObject(containerId, objectPath);
+    public void _04_getObjectTest() throws ApiException, URISyntaxException {
+        byte[] stream = api.getObject(TEST_CONTAINER, TEST_OBJECT);
 
-        // TODO: test validations
+        File file = new File(FILE_URL.toURI());
+
+        Assert.assertEquals(file.length(), stream.length);
     }
 
     /**
@@ -190,12 +198,16 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateBackendTest() throws ApiException {
-        String backendId = null;
-        BackendRequest backendRequest = null;
-        // BackendResponse response = api.updateBackend(backendId, backendRequest);
+    public void _05_updateBackendTest() throws ApiException {
+        BackendRequest backendRequest = new BackendRequest();
+        backendRequest.setBackendType(BackendRequest.BackendTypeEnum.FILESYSTEM);
+        backendRequest.setAuthenticationProvider(BackendRequest.AuthenticationProviderEnum.API_SUPPLIER);
+        backendRequest.setName(TEST_BACKEND);
+        backendRequest.setDescription("New test backend description");
+        BackendResponse response = api.updateBackend(TEST_BACKEND, backendRequest);
 
-        // TODO: test validations
+        Assert.assertNotNull(response);
+        Assert.assertEquals(TEST_BACKEND, response.getName());
     }
 
     /**
@@ -207,12 +219,15 @@ public class StorageApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateContainerTest() throws ApiException {
-        String containerId = null;
-        ContainerRequest containerRequest = null;
-        // ContainerResponse response = api.updateContainer(containerId, containerRequest);
+    public void _06_updateContainerTest() throws ApiException {
+        String updateName = "updatedcontainer";
+        ContainerRequest containerRequest = new ContainerRequest();
+        containerRequest.setName(updateName);
+        containerRequest.setBackendId(TEST_BACKEND);
+        ContainerResponse response = api.updateContainer(TEST_CONTAINER, containerRequest);
 
-        // TODO: test validations
+        Assert.assertNotNull(response);
+        Assert.assertEquals(containerResponse.getId(), response.getId());
+        Assert.assertEquals(updateName, response.getName());
     }
-
 }
