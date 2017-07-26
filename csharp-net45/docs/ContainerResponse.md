@@ -1,4 +1,4 @@
-# Sphereon.SDK.Storage.Model.ContainerResponse
+# Sphereon.SDK.STORAGE.Model.ContainerResponse
 ## Properties
 
 Name | Type | Description | Notes

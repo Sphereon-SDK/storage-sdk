@@ -27,12 +27,12 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Model;
-using Sphereon.SDK.Storage.Client;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Model;
+using Sphereon.SDK.STORAGE.Client;
 using System.Reflection;
 
-namespace Sphereon.SDK.Storage.Test
+namespace Sphereon.SDK.STORAGE.Test
 {
     /// <summary>
     ///  Class for testing ErrorResponse

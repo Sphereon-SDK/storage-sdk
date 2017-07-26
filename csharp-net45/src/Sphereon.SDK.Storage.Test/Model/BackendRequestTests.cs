@@ -27,12 +27,12 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Model;
-using Sphereon.SDK.Storage.Client;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Model;
+using Sphereon.SDK.STORAGE.Client;
 using System.Reflection;
 
-namespace Sphereon.SDK.Storage.Test
+namespace Sphereon.SDK.STORAGE.Test
 {
     /// <summary>
     ///  Class for testing BackendRequest
@@ -85,20 +85,20 @@ namespace Sphereon.SDK.Storage.Test
             // TODO unit test for the property 'AuthenticationProvider'
         }
         /// <summary>
-        /// Test the property 'SecretKey'
-        /// </summary>
-        [Test]
-        public void SecretKeyTest()
-        {
-            // TODO unit test for the property 'SecretKey'
-        }
-        /// <summary>
         /// Test the property 'BackendType'
         /// </summary>
         [Test]
         public void BackendTypeTest()
         {
             // TODO unit test for the property 'BackendType'
+        }
+        /// <summary>
+        /// Test the property 'BackendSecret'
+        /// </summary>
+        [Test]
+        public void BackendSecretTest()
+        {
+            // TODO unit test for the property 'BackendSecret'
         }
         /// <summary>
         /// Test the property 'Name'
@@ -117,20 +117,20 @@ namespace Sphereon.SDK.Storage.Test
             // TODO unit test for the property 'Description'
         }
         /// <summary>
+        /// Test the property 'BackendKey'
+        /// </summary>
+        [Test]
+        public void BackendKeyTest()
+        {
+            // TODO unit test for the property 'BackendKey'
+        }
+        /// <summary>
         /// Test the property 'ParentId'
         /// </summary>
         [Test]
         public void ParentIdTest()
         {
             // TODO unit test for the property 'ParentId'
-        }
-        /// <summary>
-        /// Test the property 'AccesskeyId'
-        /// </summary>
-        [Test]
-        public void AccesskeyIdTest()
-        {
-            // TODO unit test for the property 'AccesskeyId'
         }
 
     }

@@ -31,7 +31,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Sphereon.SDK.Storage.Model
+namespace Sphereon.SDK.STORAGE.Model
 {
     /// <summary>
     /// BackendResponse
@@ -82,7 +82,7 @@ namespace Sphereon.SDK.Storage.Model
         /// <param name="Name">Name.</param>
         /// <param name="Id">Id.</param>
         /// <param name="State">State.</param>
-        /// <param name="ParentId">ParentId.</param>
+        /// <param name="ParentId">The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends..</param>
         public BackendResponse(string Name = null, string Id = null, StateEnum? State = null, string ParentId = null)
         {
             this.Name = Name;
@@ -102,8 +102,9 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="id", EmitDefaultValue=false)]
         public string Id { get; set; }
         /// <summary>
-        /// Gets or Sets ParentId
+        /// The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.
         /// </summary>
+        /// <value>The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.</value>
         [DataMember(Name="parentId", EmitDefaultValue=false)]
         public string ParentId { get; set; }
         /// <summary>

@@ -27,8 +27,8 @@ limitations under the License.
     <ProjectGuid>{19F1DEBC-DE5E-4517-8062-F000CD499087}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sphereon.SDK.Storage.Test</RootNamespace>
-    <AssemblyName>Sphereon.SDK.Storage.Test</AssemblyName>
+    <RootNamespace>Sphereon.SDK.STORAGE.Test</RootNamespace>
+    <AssemblyName>Sphereon.SDK.STORAGE.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -85,9 +85,9 @@ limitations under the License.
   </ItemGroup>
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-      <ProjectReference Include="..\Sphereon.SDK.Storage\Sphereon.SDK.Storage.csproj">
-          <Project>{782DA8BA-79D3-4B20-B260-DA32CB4C5A15}</Project>
-          <Name>Sphereon.SDK.Storage</Name>
+      <ProjectReference Include="..\Sphereon.SDK.STORAGE\Sphereon.SDK.STORAGE.csproj">
+          <Project>{790699EC-7264-48B1-AE59-B23C36D2C306}</Project>
+          <Name>Sphereon.SDK.STORAGE</Name>
       </ProjectReference>
   </ItemGroup>
 </Project>

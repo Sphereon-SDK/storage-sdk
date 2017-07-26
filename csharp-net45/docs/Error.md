@@ -1,4 +1,4 @@
-# Sphereon.SDK.Storage.Model.Error
+# Sphereon.SDK.STORAGE.Model.Error
 ## Properties
 
 Name | Type | Description | Notes

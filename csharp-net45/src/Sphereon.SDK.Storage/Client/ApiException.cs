@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Sphereon.SDK.Storage.Client
+namespace Sphereon.SDK.STORAGE.Client
 {
     /// <summary>
     /// API Exception

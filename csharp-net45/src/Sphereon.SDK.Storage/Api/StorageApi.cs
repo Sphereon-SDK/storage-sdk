@@ -25,10 +25,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
-namespace Sphereon.SDK.Storage.Api
+namespace Sphereon.SDK.STORAGE.Api
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
@@ -42,7 +42,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>BackendResponse</returns>
         BackendResponse CreateBackend (BackendRequest backendRequest);
@@ -53,7 +53,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>ApiResponse of BackendResponse</returns>
         ApiResponse<BackendResponse> CreateBackendWithHttpInfo (BackendRequest backendRequest);
@@ -63,7 +63,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ContainerResponse</returns>
         ContainerResponse CreateContainer (ContainerRequest containerRequest);
@@ -74,7 +74,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ApiResponse of ContainerResponse</returns>
         ApiResponse<ContainerResponse> CreateContainerWithHttpInfo (ContainerRequest containerRequest);
@@ -84,7 +84,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -97,7 +97,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -109,7 +109,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>BackendResponse</returns>
         BackendResponse DeleteBackend (string backendId);
@@ -120,7 +120,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>ApiResponse of BackendResponse</returns>
         ApiResponse<BackendResponse> DeleteBackendWithHttpInfo (string backendId);
@@ -130,7 +130,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing container including the stored objects if indicated.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>ContainerResponse</returns>
@@ -142,7 +142,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing container including the stored objects if indicated.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>ApiResponse of ContainerResponse</returns>
@@ -153,7 +153,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns></returns>
@@ -165,7 +165,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -176,11 +176,11 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Get an existing object from a container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns></returns>
-        void GetObject (string containerId, string objectPath);
+        /// <returns>byte[]</returns>
+        byte[] GetObject (string containerId, string objectPath);
 
         /// <summary>
         /// Get an existing object from a container
@@ -188,18 +188,18 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Get an existing object from a container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetObjectWithHttpInfo (string containerId, string objectPath);
+        /// <returns>ApiResponse of byte[]</returns>
+        ApiResponse<byte[]> GetObjectWithHttpInfo (string containerId, string objectPath);
         /// <summary>
         /// Update a backend
         /// </summary>
         /// <remarks>
         /// Update a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>BackendResponse</returns>
@@ -211,7 +211,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Update a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>ApiResponse of BackendResponse</returns>
@@ -222,7 +222,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Update an existing container with new container settings
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ContainerResponse</returns>
@@ -234,7 +234,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Update an existing container with new container settings
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ApiResponse of ContainerResponse</returns>
@@ -247,7 +247,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of BackendResponse</returns>
         System.Threading.Tasks.Task<BackendResponse> CreateBackendAsync (BackendRequest backendRequest);
@@ -258,7 +258,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of ApiResponse (BackendResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<BackendResponse>> CreateBackendAsyncWithHttpInfo (BackendRequest backendRequest);
@@ -268,7 +268,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ContainerResponse</returns>
         System.Threading.Tasks.Task<ContainerResponse> CreateContainerAsync (ContainerRequest containerRequest);
@@ -279,7 +279,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ApiResponse (ContainerResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ContainerResponse>> CreateContainerAsyncWithHttpInfo (ContainerRequest containerRequest);
@@ -289,7 +289,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -302,7 +302,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -314,7 +314,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>Task of BackendResponse</returns>
         System.Threading.Tasks.Task<BackendResponse> DeleteBackendAsync (string backendId);
@@ -325,7 +325,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>Task of ApiResponse (BackendResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<BackendResponse>> DeleteBackendAsyncWithHttpInfo (string backendId);
@@ -335,7 +335,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing container including the stored objects if indicated.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>Task of ContainerResponse</returns>
@@ -347,7 +347,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing container including the stored objects if indicated.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>Task of ApiResponse (ContainerResponse)</returns>
@@ -358,7 +358,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns>Task of void</returns>
@@ -370,7 +370,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns>Task of ApiResponse</returns>
@@ -381,11 +381,11 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Get an existing object from a container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetObjectAsync (string containerId, string objectPath);
+        /// <returns>Task of byte[]</returns>
+        System.Threading.Tasks.Task<byte[]> GetObjectAsync (string containerId, string objectPath);
 
         /// <summary>
         /// Get an existing object from a container
@@ -393,18 +393,18 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Get an existing object from a container
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath);
+        /// <returns>Task of ApiResponse (byte[])</returns>
+        System.Threading.Tasks.Task<ApiResponse<byte[]>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath);
         /// <summary>
         /// Update a backend
         /// </summary>
         /// <remarks>
         /// Update a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of BackendResponse</returns>
@@ -416,7 +416,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Update a backend
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of ApiResponse (BackendResponse)</returns>
@@ -427,7 +427,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Update an existing container with new container settings
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ContainerResponse</returns>
@@ -439,7 +439,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <remarks>
         /// Update an existing container with new container settings
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ApiResponse (ContainerResponse)</returns>
@@ -452,7 +452,7 @@ namespace Sphereon.SDK.Storage.Api
     /// </summary>
     public partial class StorageApi : IStorageApi
     {
-        private Sphereon.SDK.Storage.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Sphereon.SDK.STORAGE.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageApi"/> class.
@@ -462,7 +462,7 @@ namespace Sphereon.SDK.Storage.Api
         {
             this.Configuration = new Configuration(new ApiClient(basePath));
 
-            ExceptionFactory = Sphereon.SDK.Storage.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Sphereon.SDK.STORAGE.Client.Configuration.DefaultExceptionFactory;
 
             // ensure API client has configuration ready
             if (Configuration.ApiClient.Configuration == null)
@@ -484,7 +484,7 @@ namespace Sphereon.SDK.Storage.Api
             else
                 this.Configuration = configuration;
 
-            ExceptionFactory = Sphereon.SDK.Storage.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Sphereon.SDK.STORAGE.Client.Configuration.DefaultExceptionFactory;
 
             // ensure API client has configuration ready
             if (Configuration.ApiClient.Configuration == null)
@@ -521,7 +521,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public Sphereon.SDK.Storage.Client.ExceptionFactory ExceptionFactory
+        public Sphereon.SDK.STORAGE.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -559,7 +559,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new backend Create a new backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>BackendResponse</returns>
         public BackendResponse CreateBackend (BackendRequest backendRequest)
@@ -571,7 +571,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new backend Create a new backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>ApiResponse of BackendResponse</returns>
         public ApiResponse< BackendResponse > CreateBackendWithHttpInfo (BackendRequest backendRequest)
@@ -643,7 +643,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new backend Create a new backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of BackendResponse</returns>
         public async System.Threading.Tasks.Task<BackendResponse> CreateBackendAsync (BackendRequest backendRequest)
@@ -656,7 +656,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new backend Create a new backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of ApiResponse (BackendResponse)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<BackendResponse>> CreateBackendAsyncWithHttpInfo (BackendRequest backendRequest)
@@ -728,7 +728,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new container Create a new container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ContainerResponse</returns>
         public ContainerResponse CreateContainer (ContainerRequest containerRequest)
@@ -740,7 +740,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new container Create a new container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ApiResponse of ContainerResponse</returns>
         public ApiResponse< ContainerResponse > CreateContainerWithHttpInfo (ContainerRequest containerRequest)
@@ -812,7 +812,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new container Create a new container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ContainerResponse</returns>
         public async System.Threading.Tasks.Task<ContainerResponse> CreateContainerAsync (ContainerRequest containerRequest)
@@ -825,7 +825,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new container Create a new container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ApiResponse (ContainerResponse)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ContainerResponse>> CreateContainerAsyncWithHttpInfo (ContainerRequest containerRequest)
@@ -897,7 +897,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new object within a container Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -910,7 +910,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new object within a container Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -985,7 +985,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new object within a container Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -999,7 +999,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Create a new object within a container Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
@@ -1074,7 +1074,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete a backend Delete a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>BackendResponse</returns>
         public BackendResponse DeleteBackend (string backendId)
@@ -1086,7 +1086,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete a backend Delete a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>ApiResponse of BackendResponse</returns>
         public ApiResponse< BackendResponse > DeleteBackendWithHttpInfo (string backendId)
@@ -1151,7 +1151,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete a backend Delete a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>Task of BackendResponse</returns>
         public async System.Threading.Tasks.Task<BackendResponse> DeleteBackendAsync (string backendId)
@@ -1164,7 +1164,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete a backend Delete a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <returns>Task of ApiResponse (BackendResponse)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<BackendResponse>> DeleteBackendAsyncWithHttpInfo (string backendId)
@@ -1229,7 +1229,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing container Delete an existing container including the stored objects if indicated.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>ContainerResponse</returns>
@@ -1242,7 +1242,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing container Delete an existing container including the stored objects if indicated.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>ApiResponse of ContainerResponse</returns>
@@ -1309,7 +1309,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing container Delete an existing container including the stored objects if indicated.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>Task of ContainerResponse</returns>
@@ -1323,7 +1323,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing container Delete an existing container including the stored objects if indicated.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="delete">delete (optional)</param>
         /// <returns>Task of ApiResponse (ContainerResponse)</returns>
@@ -1390,7 +1390,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing object from a container. Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns></returns>
@@ -1402,7 +1402,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing object from a container. Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -1472,7 +1472,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing object from a container. Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns>Task of void</returns>
@@ -1485,7 +1485,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Delete an existing object from a container. Delete an existing object from a container. There is no request nor response body for a delete request.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <returns>Task of ApiResponse</returns>
@@ -1555,23 +1555,24 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Get an existing object from a container Get an existing object from a container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns></returns>
-        public void GetObject (string containerId, string objectPath)
+        /// <returns>byte[]</returns>
+        public byte[] GetObject (string containerId, string objectPath)
         {
-             GetObjectWithHttpInfo(containerId, objectPath);
+             ApiResponse<byte[]> localVarResponse = GetObjectWithHttpInfo(containerId, objectPath);
+             return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get an existing object from a container Get an existing object from a container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> GetObjectWithHttpInfo (string containerId, string objectPath)
+        /// <returns>ApiResponse of byte[]</returns>
+        public ApiResponse< byte[] > GetObjectWithHttpInfo (string containerId, string objectPath)
         {
             // verify the required parameter 'containerId' is set
             if (containerId == null)
@@ -1629,33 +1630,34 @@ namespace Sphereon.SDK.Storage.Api
                 if (exception != null) throw exception;
             }
 
-            
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<byte[]>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (byte[]) Configuration.ApiClient.Deserialize(localVarResponse, typeof(byte[])));
+            
         }
 
         /// <summary>
         /// Get an existing object from a container Get an existing object from a container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetObjectAsync (string containerId, string objectPath)
+        /// <returns>Task of byte[]</returns>
+        public async System.Threading.Tasks.Task<byte[]> GetObjectAsync (string containerId, string objectPath)
         {
-             await GetObjectAsyncWithHttpInfo(containerId, objectPath);
+             ApiResponse<byte[]> localVarResponse = await GetObjectAsyncWithHttpInfo(containerId, objectPath);
+             return localVarResponse.Data;
 
         }
 
         /// <summary>
         /// Get an existing object from a container Get an existing object from a container
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath)
+        /// <returns>Task of ApiResponse (byte[])</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<byte[]>> GetObjectAsyncWithHttpInfo (string containerId, string objectPath)
         {
             // verify the required parameter 'containerId' is set
             if (containerId == null)
@@ -1713,16 +1715,16 @@ namespace Sphereon.SDK.Storage.Api
                 if (exception != null) throw exception;
             }
 
-            
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<byte[]>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (byte[]) Configuration.ApiClient.Deserialize(localVarResponse, typeof(byte[])));
+            
         }
 
         /// <summary>
         /// Update a backend Update a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>BackendResponse</returns>
@@ -1735,7 +1737,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a backend Update a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>ApiResponse of BackendResponse</returns>
@@ -1812,7 +1814,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a backend Update a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of BackendResponse</returns>
@@ -1826,7 +1828,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a backend Update a backend
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
         /// <param name="backendRequest">backendRequest</param>
         /// <returns>Task of ApiResponse (BackendResponse)</returns>
@@ -1903,7 +1905,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a container Update an existing container with new container settings
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ContainerResponse</returns>
@@ -1916,7 +1918,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a container Update an existing container with new container settings
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>ApiResponse of ContainerResponse</returns>
@@ -1993,7 +1995,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a container Update an existing container with new container settings
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ContainerResponse</returns>
@@ -2007,7 +2009,7 @@ namespace Sphereon.SDK.Storage.Api
         /// <summary>
         /// Update a container Update an existing container with new container settings
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Storage.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="containerRequest">containerRequest</param>
         /// <returns>Task of ApiResponse (ContainerResponse)</returns>

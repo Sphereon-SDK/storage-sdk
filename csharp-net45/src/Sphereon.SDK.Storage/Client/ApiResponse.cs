@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sphereon.SDK.Storage.Client
+namespace Sphereon.SDK.STORAGE.Client
 {
     /// <summary>
     /// API Response

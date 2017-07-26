@@ -1,4 +1,4 @@
-# Sphereon.SDK.Storage.Model.ContainerRequest
+# Sphereon.SDK.STORAGE.Model.ContainerRequest
 ## Properties
 
 Name | Type | Description | Notes

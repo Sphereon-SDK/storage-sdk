@@ -24,7 +24,7 @@
 using System;
 using RestSharp;
 
-namespace Sphereon.SDK.Storage.Client
+namespace Sphereon.SDK.STORAGE.Client
 {
     /// <summary>
     /// A delegate to ExceptionFactory method

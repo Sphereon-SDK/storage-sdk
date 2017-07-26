@@ -16,6 +16,6 @@
 language: csharp
 mono:
   - latest
-solution: Sphereon.SDK.Storage.sln
+solution: Sphereon.SDK.STORAGE.sln
 script:
   - /bin/sh ./mono_nunit_test.sh

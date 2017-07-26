@@ -1,4 +1,4 @@
-# Sphereon.SDK.Storage.Api.StorageApi
+# Sphereon.SDK.STORAGE.Api.StorageApi
 
 All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
@@ -27,9 +27,9 @@ Create a new backend
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -92,9 +92,9 @@ Create a new container
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -157,9 +157,9 @@ Create a new object within a container. If the container did not exist yet, it w
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -225,9 +225,9 @@ Delete a backend
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -290,9 +290,9 @@ Delete an existing container including the stored objects if indicated.
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -357,9 +357,9 @@ Delete an existing object from a container. There is no request nor response bod
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -413,7 +413,7 @@ void (empty response body)
 
 <a name="getobject"></a>
 # **GetObject**
-> void GetObject (string containerId, string objectPath)
+> byte[] GetObject (string containerId, string objectPath)
 
 Get an existing object from a container
 
@@ -423,9 +423,9 @@ Get an existing object from a container
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -444,7 +444,8 @@ namespace Example
             try
             {
                 // Get an existing object from a container
-                apiInstance.GetObject(containerId, objectPath);
+                byte[] result = apiInstance.GetObject(containerId, objectPath);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -464,7 +465,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**byte[]**
 
 ### Authorization
 
@@ -489,9 +490,9 @@ Update a backend
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {
@@ -556,9 +557,9 @@ Update an existing container with new container settings
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
 
 namespace Example
 {

@@ -29,11 +29,11 @@ using System.Reflection;
 using RestSharp;
 using NUnit.Framework;
 
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Model;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Model;
 
-namespace Sphereon.SDK.Storage.Test
+namespace Sphereon.SDK.STORAGE.Test
 {
     /// <summary>
     ///  Class for testing StorageApi
@@ -161,8 +161,8 @@ namespace Sphereon.SDK.Storage.Test
             // TODO uncomment below to test the method and replace null with proper value
             //string containerId = null;
             //string objectPath = null;
-            //instance.GetObject(containerId, objectPath);
-            
+            //var response = instance.GetObject(containerId, objectPath);
+            //Assert.IsInstanceOf<byte[]> (response, "response is byte[]");
         }
         
         /// <summary>
