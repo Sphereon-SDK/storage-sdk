@@ -41,6 +41,36 @@
         "tags": ["Storage"],
         "consumes": ["application/json;charset=UTF-8"]
       },
+      "get": {
+        "summary": "Get container information",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Get information on a container",
+        "operationId": "getContainerInfo",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/ContainerResponse"},
+            "description": "Container info returned"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container name"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container does not exist"
+          }
+        },
+        "parameters": [{
+          "in": "path",
+          "name": "containerId",
+          "description": "containerId",
+          "type": "string",
+          "required": true
+        }],
+        "tags": ["Storage"],
+        "consumes": ["application/json"]
+      },
       "delete": {
         "summary": "Delete an existing container",
         "security": [{"oauth2schema": ["global"]}],

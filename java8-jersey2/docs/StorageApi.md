@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**deleteBackend**](StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.6.0/backends/{backendId} | Delete a backend
 [**deleteContainer**](StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.6.0/containers/{containerId} | Delete an existing container
 [**deleteObject**](StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**getContainerInfo**](StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.6.0/containers/{containerId} | Get container information
 [**getObject**](StorageApi.md#getObject) | **GET** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 [**updateBackend**](StorageApi.md#updateBackend) | **POST** /bucket-storage/0.6.0/backends/{backendId} | Update a backend
 [**updateContainer**](StorageApi.md#updateContainer) | **POST** /bucket-storage/0.6.0/containers/{containerId} | Update a container
@@ -338,6 +339,59 @@ null (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: *_/_*
+
+<a name="getContainerInfo"></a>
+# **getContainerInfo**
+> ContainerResponse getContainerInfo(containerId)
+
+Get container information
+
+Get information on a container
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+try {
+    ContainerResponse result = apiInstance.getContainerInfo(containerId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#getContainerInfo");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
 
 <a name="getObject"></a>
 # **getObject**

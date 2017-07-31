@@ -86,7 +86,7 @@ limitations under the License.
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\Sphereon.SDK.STORAGE\Sphereon.SDK.STORAGE.csproj">
-          <Project>{790699EC-7264-48B1-AE59-B23C36D2C306}</Project>
+          <Project>{6990120C-EB49-4086-8818-FDF65DDE9B10}</Project>
           <Name>Sphereon.SDK.STORAGE</Name>
       </ProjectReference>
   </ItemGroup>

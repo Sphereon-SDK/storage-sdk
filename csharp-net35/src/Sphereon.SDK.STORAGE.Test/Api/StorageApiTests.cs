@@ -153,6 +153,18 @@ namespace Sphereon.SDK.STORAGE.Test
         }
         
         /// <summary>
+        /// Test GetContainerInfo
+        /// </summary>
+        [Test]
+        public void GetContainerInfoTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //var response = instance.GetContainerInfo(containerId);
+            //Assert.IsInstanceOf<ContainerResponse> (response, "response is ContainerResponse");
+        }
+        
+        /// <summary>
         /// Test GetObject
         /// </summary>
         [Test]

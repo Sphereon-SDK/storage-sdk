@@ -119,6 +119,16 @@
         done();
       });
     });
+    describe('getContainerInfo', function() {
+      it('should call getContainerInfo successfully', function(done) {
+        //uncomment below and update the code to test getContainerInfo
+        //instance.getContainerInfo(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('getObject', function() {
       it('should call getObject successfully', function(done) {
         //uncomment below and update the code to test getObject

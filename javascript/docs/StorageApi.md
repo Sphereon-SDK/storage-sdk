@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**deleteBackend**](StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.6.0/backends/{backendId} | Delete a backend
 [**deleteContainer**](StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.6.0/containers/{containerId} | Delete an existing container
 [**deleteObject**](StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**getContainerInfo**](StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.6.0/containers/{containerId} | Get container information
 [**getObject**](StorageApi.md#getObject) | **GET** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 [**updateBackend**](StorageApi.md#updateBackend) | **POST** /bucket-storage/0.6.0/backends/{backendId} | Update a backend
 [**updateContainer**](StorageApi.md#updateContainer) | **POST** /bucket-storage/0.6.0/containers/{containerId} | Update a container
@@ -333,6 +334,57 @@ null (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: *_/_*
+
+<a name="getContainerInfo"></a>
+# **getContainerInfo**
+> ContainerResponse getContainerInfo(containerId)
+
+Get container information
+
+Get information on a container
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getContainerInfo(containerId, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
 
 <a name="getObject"></a>
 # **getObject**

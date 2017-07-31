@@ -38,7 +38,7 @@ import java.util.List;
  * The error response
  */
 @ApiModel(description = "The error response")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-26T16:23:49.807+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-31T16:44:55.894+02:00")
 public class ErrorResponse {
   @JsonProperty("errors")
   private List<Error> errors = new ArrayList<Error>();

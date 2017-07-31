@@ -111,6 +111,19 @@ public class StorageApiTest {
     }
     
     /**
+     * Get container information
+     *
+     * Get information on a container
+     */
+    @Test
+    public void getContainerInfoTest() {
+        String containerId = null;
+        // ContainerResponse response = api.getContainerInfo(containerId);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Get an existing object from a container
      *
      * Get an existing object from a container

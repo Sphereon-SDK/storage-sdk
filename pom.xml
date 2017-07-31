@@ -4,7 +4,7 @@
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>storage-sdk-generator</artifactId>
     <packaging>jar</packaging>
-    <version>0.6.2</version>
+    <version>0.7.0</version>
     <name>Storage API SDK Generator</name>
 
 

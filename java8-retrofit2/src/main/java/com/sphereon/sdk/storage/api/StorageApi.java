@@ -114,6 +114,21 @@ public interface StorageApi {
   );
 
   /**
+   * Get container information
+   * Get information on a container
+   * @param containerId containerId (required)
+   * @return Call&lt;ContainerResponse&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.6.0/containers/{containerId}")
+  Call<ContainerResponse> getContainerInfo(
+    @retrofit2.http.Path("containerId") String containerId
+  );
+
+  /**
    * Get an existing object from a container
    * Get an existing object from a container
    * @param containerId containerId (required)

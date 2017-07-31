@@ -26,7 +26,7 @@ After the client library is installed/deployed, you can use it in your Maven pro
 <dependency>
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>storage-sdk-java8-retrofit2</artifactId>
-    <version>0.6.2</version>
+    <version>0.7.0</version>
     <scope>compile</scope>
 </dependency>
 

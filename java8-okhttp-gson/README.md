@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>storage-sdk-java8</artifactId>
-    <version>0.6.2</version>
+    <version>0.7.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.sphereon.sdk:storage-sdk-java8:0.6.2"
+compile "com.sphereon.sdk:storage-sdk-java8:0.7.0"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/storage-sdk-java8-0.6.2.jar
+* target/storage-sdk-java8-0.7.0.jar
 * target/lib/*.jar
 
 ## Getting Started
@@ -101,6 +101,7 @@ Class | Method | HTTP request | Description
 *StorageApi* | [**deleteBackend**](docs/StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.6.0/backends/{backendId} | Delete a backend
 *StorageApi* | [**deleteContainer**](docs/StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.6.0/containers/{containerId} | Delete an existing container
 *StorageApi* | [**deleteObject**](docs/StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+*StorageApi* | [**getContainerInfo**](docs/StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.6.0/containers/{containerId} | Get container information
 *StorageApi* | [**getObject**](docs/StorageApi.md#getObject) | **GET** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 *StorageApi* | [**updateBackend**](docs/StorageApi.md#updateBackend) | **POST** /bucket-storage/0.6.0/backends/{backendId} | Update a backend
 *StorageApi* | [**updateContainer**](docs/StorageApi.md#updateContainer) | **POST** /bucket-storage/0.6.0/containers/{containerId} | Update a container

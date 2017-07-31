@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**DeleteBackend**](StorageApi.md#deletebackend) | **DELETE** /bucket-storage/0.6.0/backends/{backendId} | Delete a backend
 [**DeleteContainer**](StorageApi.md#deletecontainer) | **DELETE** /bucket-storage/0.6.0/containers/{containerId} | Delete an existing container
 [**DeleteObject**](StorageApi.md#deleteobject) | **DELETE** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**GetContainerInfo**](StorageApi.md#getcontainerinfo) | **GET** /bucket-storage/0.6.0/containers/{containerId} | Get container information
 [**GetObject**](StorageApi.md#getobject) | **GET** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 [**UpdateBackend**](StorageApi.md#updatebackend) | **POST** /bucket-storage/0.6.0/backends/{backendId} | Update a backend
 [**UpdateContainer**](StorageApi.md#updatecontainer) | **POST** /bucket-storage/0.6.0/containers/{containerId} | Update a container
@@ -408,6 +409,71 @@ void (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: *_/_*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="getcontainerinfo"></a>
+# **GetContainerInfo**
+> ContainerResponse GetContainerInfo (string containerId)
+
+Get container information
+
+Get information on a container
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
+
+namespace Example
+{
+    public class GetContainerInfoExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // string | containerId
+
+            try
+            {
+                // Get container information
+                ContainerResponse result = apiInstance.GetContainerInfo(containerId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.GetContainerInfo: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **string**| containerId | 
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
