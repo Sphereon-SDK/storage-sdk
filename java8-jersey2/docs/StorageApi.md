@@ -133,11 +133,11 @@ Create a new object within a container. If the container did not exist yet, it w
 ### Example
 ```java
 // Import classes:
-//import com.sphereon.sdk.storage.handler.ApiClient;
-//import com.sphereon.sdk.storage.handler.ApiException;
-//import com.sphereon.sdk.storage.handler.Configuration;
+ApiClient
+ApiException
+Configuration
 //import com.sphereon.sdk.storage.handler.auth.*;
-//import com.sphereon.sdk.storage.api.StorageApi;
+StorageApi
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -297,11 +297,11 @@ Delete an existing object from a container. There is no request nor response bod
 ### Example
 ```java
 // Import classes:
-//import com.sphereon.sdk.storage.handler.ApiClient;
-//import com.sphereon.sdk.storage.handler.ApiException;
-//import com.sphereon.sdk.storage.handler.Configuration;
+ApiClient
+ApiException
+Configuration
 //import com.sphereon.sdk.storage.handler.auth.*;
-//import com.sphereon.sdk.storage.api.StorageApi;
+StorageApi
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
