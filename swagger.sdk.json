@@ -1,7 +1,7 @@
 {
   "basePath": "/",
   "paths": {
-    "/bucket-storage/0.6.0/containers/{containerId}": {
+    "/bucket-storage/0.7/containers/{containerId}": {
       "post": {
         "summary": "Update a container",
         "security": [{"oauth2schema": ["global"]}],
@@ -115,63 +115,7 @@
         "consumes": ["application/json"]
       }
     },
-    "/bucket-storage/0.6.0/containers": {"post": {
-      "summary": "Create a new container",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json;charset=UTF-8"],
-      "description": "Create a new container",
-      "operationId": "createContainer",
-      "responses": {
-        "201": {
-          "schema": {"$ref": "#/definitions/ContainerResponse"},
-          "description": "Container created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid Container request"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Backend was not found"
-        }
-      },
-      "parameters": [{
-        "schema": {"$ref": "#/definitions/ContainerRequest"},
-        "in": "body",
-        "name": "containerRequest",
-        "description": "containerRequest",
-        "required": true
-      }],
-      "tags": ["Storage"],
-      "consumes": ["application/json;charset=UTF-8"]
-    }},
-    "/bucket-storage/0.6.0/backends": {"post": {
-      "summary": "Create a new backend",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json;charset=UTF-8"],
-      "description": "Create a new backend",
-      "operationId": "createBackend",
-      "responses": {
-        "201": {
-          "schema": {"$ref": "#/definitions/BackendResponse"},
-          "description": "Backend created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid backend request"
-        }
-      },
-      "parameters": [{
-        "schema": {"$ref": "#/definitions/BackendRequest"},
-        "in": "body",
-        "name": "backendRequest",
-        "description": "backendRequest",
-        "required": true
-      }],
-      "tags": ["Storage"],
-      "consumes": ["application/json;charset=UTF-8"]
-    }},
-    "/bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath}": {
+    "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}": {
       "post": {
         "summary": "Create a new object within a container",
         "security": [{"oauth2schema": ["global"]}],
@@ -297,7 +241,7 @@
         "consumes": ["application/json"]
       }
     },
-    "/bucket-storage/0.6.0/backends/{backendId}": {
+    "/bucket-storage/0.7/backends/{backendId}": {
       "post": {
         "summary": "Update a backend",
         "security": [{"oauth2schema": ["global"]}],
@@ -363,7 +307,63 @@
         "tags": ["Storage"],
         "consumes": ["application/json"]
       }
-    }
+    },
+    "/bucket-storage/0.7/backends": {"post": {
+      "summary": "Create a new backend",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Create a new backend",
+      "operationId": "createBackend",
+      "responses": {
+        "201": {
+          "schema": {"$ref": "#/definitions/BackendResponse"},
+          "description": "Backend created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid backend request"
+        }
+      },
+      "parameters": [{
+        "schema": {"$ref": "#/definitions/BackendRequest"},
+        "in": "body",
+        "name": "backendRequest",
+        "description": "backendRequest",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json;charset=UTF-8"]
+    }},
+    "/bucket-storage/0.7/containers": {"post": {
+      "summary": "Create a new container",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Create a new container",
+      "operationId": "createContainer",
+      "responses": {
+        "201": {
+          "schema": {"$ref": "#/definitions/ContainerResponse"},
+          "description": "Container created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid Container request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Backend was not found"
+        }
+      },
+      "parameters": [{
+        "schema": {"$ref": "#/definitions/ContainerRequest"},
+        "in": "body",
+        "name": "containerRequest",
+        "description": "containerRequest",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json;charset=UTF-8"]
+    }}
   },
   "host": "gw.api.cloud.sphereon.com",
   "schemes": ["https"],
@@ -506,7 +506,7 @@
     "description": "Sphereon Storage APIs provide an abstraction layer for storage of containers (folders) and objects (files), using a filesystem backend or AWS-s3, Azure blobstorage or Google cloud storage backend.",
     "termsOfService": "https://sphereon.com",
     "title": "Storage",
-    "version": "0.6.0"
+    "version": "0.7"
   },
   "tags": [{
     "name": "Storage",

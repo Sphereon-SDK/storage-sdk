@@ -4,16 +4,16 @@ All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateBackend**](StorageApi.md#createbackend) | **POST** /bucket-storage/0.6.0/backends | Create a new backend
-[**CreateContainer**](StorageApi.md#createcontainer) | **POST** /bucket-storage/0.6.0/containers | Create a new container
-[**CreateObject**](StorageApi.md#createobject) | **POST** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Create a new object within a container
-[**DeleteBackend**](StorageApi.md#deletebackend) | **DELETE** /bucket-storage/0.6.0/backends/{backendId} | Delete a backend
-[**DeleteContainer**](StorageApi.md#deletecontainer) | **DELETE** /bucket-storage/0.6.0/containers/{containerId} | Delete an existing container
-[**DeleteObject**](StorageApi.md#deleteobject) | **DELETE** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
-[**GetContainerInfo**](StorageApi.md#getcontainerinfo) | **GET** /bucket-storage/0.6.0/containers/{containerId} | Get container information
-[**GetObject**](StorageApi.md#getobject) | **GET** /bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
-[**UpdateBackend**](StorageApi.md#updatebackend) | **POST** /bucket-storage/0.6.0/backends/{backendId} | Update a backend
-[**UpdateContainer**](StorageApi.md#updatecontainer) | **POST** /bucket-storage/0.6.0/containers/{containerId} | Update a container
+[**CreateBackend**](StorageApi.md#createbackend) | **POST** /bucket-storage/0.7/backends | Create a new backend
+[**CreateContainer**](StorageApi.md#createcontainer) | **POST** /bucket-storage/0.7/containers | Create a new container
+[**CreateObject**](StorageApi.md#createobject) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Create a new object within a container
+[**DeleteBackend**](StorageApi.md#deletebackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
+[**DeleteContainer**](StorageApi.md#deletecontainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
+[**DeleteObject**](StorageApi.md#deleteobject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**GetContainerInfo**](StorageApi.md#getcontainerinfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
+[**GetObject**](StorageApi.md#getobject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
+[**UpdateBackend**](StorageApi.md#updatebackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
+[**UpdateContainer**](StorageApi.md#updatecontainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
 
 <a name="createbackend"></a>

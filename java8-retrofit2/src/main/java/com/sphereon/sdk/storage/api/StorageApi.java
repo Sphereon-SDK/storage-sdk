@@ -31,7 +31,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json;charset&#x3D;UTF-8" 
   })
-  @POST("bucket-storage/0.6.0/backends")
+  @POST("bucket-storage/0.7/backends")
   Call<BackendResponse> createBackend(
     @retrofit2.http.Body BackendRequest backendRequest
   );
@@ -46,7 +46,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json;charset&#x3D;UTF-8" 
   })
-  @POST("bucket-storage/0.6.0/containers")
+  @POST("bucket-storage/0.7/containers")
   Call<ContainerResponse> createContainer(
     @retrofit2.http.Body ContainerRequest containerRequest
   );
@@ -61,7 +61,7 @@ public interface StorageApi {
    */
   
   @retrofit2.http.Multipart
-  @POST("bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath}")
+  @POST("bucket-storage/0.7/containers/{containerId}/objects/{objectPath}")
   Call<Void> createObject(
     @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath, @retrofit2.http.Part("stream\"; filename=\"stream") RequestBody stream
   );
@@ -76,7 +76,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json" 
   })
-  @DELETE("bucket-storage/0.6.0/backends/{backendId}")
+  @DELETE("bucket-storage/0.7/backends/{backendId}")
   Call<BackendResponse> deleteBackend(
     @retrofit2.http.Path("backendId") String backendId
   );
@@ -92,7 +92,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json" 
   })
-  @DELETE("bucket-storage/0.6.0/containers/{containerId}")
+  @DELETE("bucket-storage/0.7/containers/{containerId}")
   Call<ContainerResponse> deleteContainer(
     @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Query("delete") String delete
   );
@@ -108,7 +108,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json" 
   })
-  @DELETE("bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath}")
+  @DELETE("bucket-storage/0.7/containers/{containerId}/objects/{objectPath}")
   Call<Void> deleteObject(
     @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath
   );
@@ -123,7 +123,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json" 
   })
-  @GET("bucket-storage/0.6.0/containers/{containerId}")
+  @GET("bucket-storage/0.7/containers/{containerId}")
   Call<ContainerResponse> getContainerInfo(
     @retrofit2.http.Path("containerId") String containerId
   );
@@ -139,7 +139,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json" 
   })
-  @GET("bucket-storage/0.6.0/containers/{containerId}/objects/{objectPath}")
+  @GET("bucket-storage/0.7/containers/{containerId}/objects/{objectPath}")
   Call<byte[]> getObject(
     @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath
   );
@@ -155,7 +155,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json;charset&#x3D;UTF-8" 
   })
-  @POST("bucket-storage/0.6.0/backends/{backendId}")
+  @POST("bucket-storage/0.7/backends/{backendId}")
   Call<BackendResponse> updateBackend(
     @retrofit2.http.Path("backendId") String backendId, @retrofit2.http.Body BackendRequest backendRequest
   );
@@ -171,7 +171,7 @@ public interface StorageApi {
   @Headers({
   	"Content-Type:application/json;charset&#x3D;UTF-8" 
   })
-  @POST("bucket-storage/0.6.0/containers/{containerId}")
+  @POST("bucket-storage/0.7/containers/{containerId}")
   Call<ContainerResponse> updateContainer(
     @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Body ContainerRequest containerRequest
   );

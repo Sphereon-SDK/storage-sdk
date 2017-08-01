@@ -1,6 +1,6 @@
 {
   "name": "storage",
-  "version": "0.6.0",
+  "version": "0.7",
   "description": "Sphereon_Storage_APIs_provide_an_abstraction_layer_for_storage_of_containers__folders_and_objects__files_using_a_filesystem_backend_or_AWS_s3_Azure_blobstorage_or_Google_cloud_storage_backend_",
   "license": "Apache-2.0",
   "main": "src/SphereonSdkStorage/index.js",
