@@ -25,12 +25,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/BackendRequest', 'SphereonSdkStorage/model/BackendResponse', 'SphereonSdkStorage/model/ContainerRequest', 'SphereonSdkStorage/model/ContainerResponse', 'SphereonSdkStorage/model/Error', 'SphereonSdkStorage/model/ErrorResponse', 'SphereonSdkStorage/api/StorageApi'], factory);
+    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/BackendRequest', 'SphereonSdkStorage/model/BackendResponse', 'SphereonSdkStorage/model/ContainerRequest', 'SphereonSdkStorage/model/ContainerResponse', 'SphereonSdkStorage/model/Error', 'SphereonSdkStorage/model/ErrorResponse', 'SphereonSdkStorage/model/OAuth2Credentials', 'SphereonSdkStorage/model/OAuthCredentials', 'SphereonSdkStorage/model/RequestCredentials', 'SphereonSdkStorage/model/UsernamePasswordCredentials', 'SphereonSdkStorage/api/StorageApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/BackendRequest'), require('./model/BackendResponse'), require('./model/ContainerRequest'), require('./model/ContainerResponse'), require('./model/Error'), require('./model/ErrorResponse'), require('./api/StorageApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/BackendRequest'), require('./model/BackendResponse'), require('./model/ContainerRequest'), require('./model/ContainerResponse'), require('./model/Error'), require('./model/ErrorResponse'), require('./model/OAuth2Credentials'), require('./model/OAuthCredentials'), require('./model/RequestCredentials'), require('./model/UsernamePasswordCredentials'), require('./api/StorageApi'));
   }
-}(function(ApiClient, BackendRequest, BackendResponse, ContainerRequest, ContainerResponse, Error, ErrorResponse, StorageApi) {
+}(function(ApiClient, BackendRequest, BackendResponse, ContainerRequest, ContainerResponse, Error, ErrorResponse, OAuth2Credentials, OAuthCredentials, RequestCredentials, UsernamePasswordCredentials, StorageApi) {
   'use strict';
 
   /**
@@ -100,6 +100,26 @@
      * @property {module:SphereonSdkStorage/model/ErrorResponse}
      */
     ErrorResponse: ErrorResponse,
+    /**
+     * The OAuth2Credentials model constructor.
+     * @property {module:SphereonSdkStorage/model/OAuth2Credentials}
+     */
+    OAuth2Credentials: OAuth2Credentials,
+    /**
+     * The OAuthCredentials model constructor.
+     * @property {module:SphereonSdkStorage/model/OAuthCredentials}
+     */
+    OAuthCredentials: OAuthCredentials,
+    /**
+     * The RequestCredentials model constructor.
+     * @property {module:SphereonSdkStorage/model/RequestCredentials}
+     */
+    RequestCredentials: RequestCredentials,
+    /**
+     * The UsernamePasswordCredentials model constructor.
+     * @property {module:SphereonSdkStorage/model/UsernamePasswordCredentials}
+     */
+    UsernamePasswordCredentials: UsernamePasswordCredentials,
     /**
      * The StorageApi service constructor.
      * @property {module:SphereonSdkStorage/api/StorageApi}

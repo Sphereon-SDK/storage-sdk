@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ContainerRequest
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-01T17:58:46.925+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:45.206+02:00")
 public class ContainerRequest {
   @SerializedName("name")
   private String name = null;

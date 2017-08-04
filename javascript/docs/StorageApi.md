@@ -10,8 +10,10 @@ Method | HTTP request | Description
 [**deleteBackend**](StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
 [**deleteContainer**](StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
 [**deleteObject**](StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**getBackendInfo**](StorageApi.md#getBackendInfo) | **GET** /bucket-storage/0.7/backends/{backendId} | Get backend information
 [**getContainerInfo**](StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
 [**getObject**](StorageApi.md#getObject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
+[**listContainers**](StorageApi.md#listContainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
 [**updateBackend**](StorageApi.md#updateBackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
 [**updateContainer**](StorageApi.md#updateContainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -335,6 +337,57 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: *_/_*
 
+<a name="getBackendInfo"></a>
+# **getBackendInfo**
+> ContainerResponse getBackendInfo(backendId)
+
+Get backend information
+
+Get information on a backend
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var backendId = "backendId_example"; // String | backendId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getBackendInfo(backendId, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **backendId** | **String**| backendId | 
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
+
 <a name="getContainerInfo"></a>
 # **getContainerInfo**
 > ContainerResponse getContainerInfo(containerId)
@@ -439,6 +492,57 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/octet-stream, application/json;charset=UTF-8
+
+<a name="listContainers"></a>
+# **listContainers**
+> ContainerResponse listContainers(backendId)
+
+List containers
+
+List containers for the given backend name or id.
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var backendId = "backendId_example"; // String | backendId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.listContainers(backendId, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **backendId** | **String**| backendId | 
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
 
 <a name="updateBackend"></a>
 # **updateBackend**

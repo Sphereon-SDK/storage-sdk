@@ -153,6 +153,18 @@ namespace Sphereon.SDK.STORAGE.Test
         }
         
         /// <summary>
+        /// Test GetBackendInfo
+        /// </summary>
+        [Test]
+        public void GetBackendInfoTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string backendId = null;
+            //var response = instance.GetBackendInfo(backendId);
+            //Assert.IsInstanceOf<ContainerResponse> (response, "response is ContainerResponse");
+        }
+        
+        /// <summary>
         /// Test GetContainerInfo
         /// </summary>
         [Test]
@@ -175,6 +187,18 @@ namespace Sphereon.SDK.STORAGE.Test
             //string objectPath = null;
             //var response = instance.GetObject(containerId, objectPath);
             //Assert.IsInstanceOf<byte[]> (response, "response is byte[]");
+        }
+        
+        /// <summary>
+        /// Test ListContainers
+        /// </summary>
+        [Test]
+        public void ListContainersTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string backendId = null;
+            //var response = instance.ListContainers(backendId);
+            //Assert.IsInstanceOf<ContainerResponse> (response, "response is ContainerResponse");
         }
         
         /// <summary>

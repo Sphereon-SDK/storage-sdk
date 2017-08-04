@@ -354,6 +354,52 @@
     }
 
     /**
+     * Callback function to receive the result of the getBackendInfo operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~getBackendInfoCallback
+     * @param {String} error Error message, if any.
+     * @param {module:SphereonSdkStorage/model/ContainerResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get backend information
+     * Get information on a backend
+     * @param {String} backendId backendId
+     * @param {module:SphereonSdkStorage/api/StorageApi~getBackendInfoCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:SphereonSdkStorage/model/ContainerResponse}
+     */
+    this.getBackendInfo = function(backendId, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'backendId' is set
+      if (backendId == undefined || backendId == null) {
+        throw "Missing the required parameter 'backendId' when calling getBackendInfo";
+      }
+
+
+      var pathParams = {
+        'backendId': backendId
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json;charset=UTF-8'];
+      var returnType = ContainerResponse;
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/backends/{backendId}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the getContainerInfo operation.
      * @callback module:SphereonSdkStorage/api/StorageApi~getContainerInfoCallback
      * @param {String} error Error message, if any.
@@ -447,6 +493,52 @@
 
       return this.apiClient.callApi(
         '/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listContainers operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~listContainersCallback
+     * @param {String} error Error message, if any.
+     * @param {module:SphereonSdkStorage/model/ContainerResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List containers
+     * List containers for the given backend name or id.
+     * @param {String} backendId backendId
+     * @param {module:SphereonSdkStorage/api/StorageApi~listContainersCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:SphereonSdkStorage/model/ContainerResponse}
+     */
+    this.listContainers = function(backendId, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'backendId' is set
+      if (backendId == undefined || backendId == null) {
+        throw "Missing the required parameter 'backendId' when calling listContainers";
+      }
+
+
+      var pathParams = {
+        'backendId': backendId
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json;charset=UTF-8'];
+      var returnType = ContainerResponse;
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/backends/{backendId}/containers', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

@@ -114,6 +114,21 @@ public interface StorageApi {
   );
 
   /**
+   * Get backend information
+   * Get information on a backend
+   * @param backendId backendId (required)
+   * @return Call&lt;ContainerResponse&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.7/backends/{backendId}")
+  Call<ContainerResponse> getBackendInfo(
+    @retrofit2.http.Path("backendId") String backendId
+  );
+
+  /**
    * Get container information
    * Get information on a container
    * @param containerId containerId (required)
@@ -142,6 +157,21 @@ public interface StorageApi {
   @GET("bucket-storage/0.7/containers/{containerId}/objects/{objectPath}")
   Call<byte[]> getObject(
     @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath
+  );
+
+  /**
+   * List containers
+   * List containers for the given backend name or id.
+   * @param backendId backendId (required)
+   * @return Call&lt;ContainerResponse&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.7/backends/{backendId}/containers")
+  Call<ContainerResponse> listContainers(
+    @retrofit2.http.Path("backendId") String backendId
   );
 
   /**

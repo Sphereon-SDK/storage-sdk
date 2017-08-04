@@ -25,18 +25,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['SphereonSdkStorage/ApiClient'], factory);
+    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/RequestCredentials'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'));
+    module.exports = factory(require('../ApiClient'), require('./RequestCredentials'));
   } else {
     // Browser globals (root is window)
     if (!root.Storage) {
       root.Storage = {};
     }
-    root.Storage.BackendRequest = factory(root.Storage.ApiClient);
+    root.Storage.BackendRequest = factory(root.Storage.ApiClient, root.Storage.RequestCredentials);
   }
-}(this, function(ApiClient) {
+}(this, function(ApiClient, RequestCredentials) {
   'use strict';
 
 
@@ -61,8 +61,6 @@
 
 
 
-
-
   };
 
   /**
@@ -76,14 +74,8 @@
     if (data) {
       obj = obj || new exports();
 
-      if (data.hasOwnProperty('authenticationProvider')) {
-        obj['authenticationProvider'] = ApiClient.convertToType(data['authenticationProvider'], 'String');
-      }
       if (data.hasOwnProperty('backendType')) {
         obj['backendType'] = ApiClient.convertToType(data['backendType'], 'String');
-      }
-      if (data.hasOwnProperty('backendSecret')) {
-        obj['backendSecret'] = ApiClient.convertToType(data['backendSecret'], 'String');
       }
       if (data.hasOwnProperty('name')) {
         obj['name'] = ApiClient.convertToType(data['name'], 'String');
@@ -91,31 +83,21 @@
       if (data.hasOwnProperty('description')) {
         obj['description'] = ApiClient.convertToType(data['description'], 'String');
       }
-      if (data.hasOwnProperty('backendKey')) {
-        obj['backendKey'] = ApiClient.convertToType(data['backendKey'], 'String');
-      }
       if (data.hasOwnProperty('parentId')) {
         obj['parentId'] = ApiClient.convertToType(data['parentId'], 'String');
+      }
+      if (data.hasOwnProperty('requestCredentials')) {
+        obj['requestCredentials'] = RequestCredentials.constructFromObject(data['requestCredentials']);
       }
     }
     return obj;
   }
 
   /**
-   * The provider of the credentials
-   * @member {module:SphereonSdkStorage/model/BackendRequest.AuthenticationProviderEnum} authenticationProvider
-   */
-  exports.prototype['authenticationProvider'] = undefined;
-  /**
    * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
    * @member {module:SphereonSdkStorage/model/BackendRequest.BackendTypeEnum} backendType
    */
   exports.prototype['backendType'] = undefined;
-  /**
-   * The API secret for 3rd party backends.
-   * @member {String} backendSecret
-   */
-  exports.prototype['backendSecret'] = undefined;
   /**
    * @member {String} name
    */
@@ -125,33 +107,16 @@
    */
   exports.prototype['description'] = undefined;
   /**
-   * The API key for 3rd party backends.
-   * @member {String} backendKey
-   */
-  exports.prototype['backendKey'] = undefined;
-  /**
-   * The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends.
+   * The backend that is used for when properties are not set. This allows usernamePasswordCredentials to be set at one backend and used by multiple backends.
    * @member {String} parentId
    */
   exports.prototype['parentId'] = undefined;
-
-
   /**
-   * Allowed values for the <code>authenticationProvider</code> property.
-   * @enum {String}
-   * @readonly
+   * The credentials details
+   * @member {module:SphereonSdkStorage/model/RequestCredentials} requestCredentials
    */
-  exports.AuthenticationProviderEnum = {
-    /**
-     * value: "API_SUPPLIER"
-     * @const
-     */
-    "API_SUPPLIER": "API_SUPPLIER",
-    /**
-     * value: "END_USER"
-     * @const
-     */
-    "END_USER": "END_USER"  };
+  exports.prototype['requestCredentials'] = undefined;
+
 
   /**
    * Allowed values for the <code>backendType</code> property.

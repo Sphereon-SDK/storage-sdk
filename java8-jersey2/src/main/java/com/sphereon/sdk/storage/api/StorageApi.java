@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:04:00.973+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:28.434+02:00")
 public class StorageApi {
   private ApiClient apiClient;
 
@@ -311,6 +311,48 @@ public class StorageApi {
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  /**
+   * Get backend information
+   * Get information on a backend
+   * @param backendId backendId (required)
+   * @return ContainerResponse
+   * @throws ApiException if fails to make API call
+   */
+  public ContainerResponse getBackendInfo(String backendId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'backendId' is set
+    if (backendId == null) {
+      throw new ApiException(400, "Missing the required parameter 'backendId' when calling getBackendInfo");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/backends/{backendId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "backendId" + "\\}", apiClient.escapeString(backendId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json;charset=UTF-8"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<ContainerResponse> localVarReturnType = new GenericType<ContainerResponse>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
   /**
    * Get container information
    * Get information on a container

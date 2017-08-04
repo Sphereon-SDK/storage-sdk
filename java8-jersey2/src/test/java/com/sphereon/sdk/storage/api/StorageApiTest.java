@@ -148,6 +148,22 @@ public class StorageApiTest {
     }
     
     /**
+     * Get backend information
+     *
+     * Get information on a backend
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getBackendInfoTest() throws ApiException {
+        String backendId = null;
+        // ContainerResponse response = api.getBackendInfo(backendId);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Get container information
      *
      * Get information on a container

@@ -77,28 +77,12 @@ namespace Sphereon.SDK.STORAGE.Test
         }
 
         /// <summary>
-        /// Test the property 'AuthenticationProvider'
-        /// </summary>
-        [Test]
-        public void AuthenticationProviderTest()
-        {
-            // TODO unit test for the property 'AuthenticationProvider'
-        }
-        /// <summary>
         /// Test the property 'BackendType'
         /// </summary>
         [Test]
         public void BackendTypeTest()
         {
             // TODO unit test for the property 'BackendType'
-        }
-        /// <summary>
-        /// Test the property 'BackendSecret'
-        /// </summary>
-        [Test]
-        public void BackendSecretTest()
-        {
-            // TODO unit test for the property 'BackendSecret'
         }
         /// <summary>
         /// Test the property 'Name'
@@ -117,20 +101,20 @@ namespace Sphereon.SDK.STORAGE.Test
             // TODO unit test for the property 'Description'
         }
         /// <summary>
-        /// Test the property 'BackendKey'
-        /// </summary>
-        [Test]
-        public void BackendKeyTest()
-        {
-            // TODO unit test for the property 'BackendKey'
-        }
-        /// <summary>
         /// Test the property 'ParentId'
         /// </summary>
         [Test]
         public void ParentIdTest()
         {
             // TODO unit test for the property 'ParentId'
+        }
+        /// <summary>
+        /// Test the property 'RequestCredentials'
+        /// </summary>
+        [Test]
+        public void RequestCredentialsTest()
+        {
+            // TODO unit test for the property 'RequestCredentials'
         }
 
     }

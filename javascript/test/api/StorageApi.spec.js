@@ -119,6 +119,16 @@
         done();
       });
     });
+    describe('getBackendInfo', function() {
+      it('should call getBackendInfo successfully', function(done) {
+        //uncomment below and update the code to test getBackendInfo
+        //instance.getBackendInfo(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('getContainerInfo', function() {
       it('should call getContainerInfo successfully', function(done) {
         //uncomment below and update the code to test getContainerInfo
@@ -133,6 +143,16 @@
       it('should call getObject successfully', function(done) {
         //uncomment below and update the code to test getObject
         //instance.getObject(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('listContainers', function() {
+      it('should call listContainers successfully', function(done) {
+        //uncomment below and update the code to test listContainers
+        //instance.listContainers(pet, function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

@@ -10,8 +10,10 @@ Method | HTTP request | Description
 [**DeleteBackend**](StorageApi.md#deletebackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
 [**DeleteContainer**](StorageApi.md#deletecontainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
 [**DeleteObject**](StorageApi.md#deleteobject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**GetBackendInfo**](StorageApi.md#getbackendinfo) | **GET** /bucket-storage/0.7/backends/{backendId} | Get backend information
 [**GetContainerInfo**](StorageApi.md#getcontainerinfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
 [**GetObject**](StorageApi.md#getobject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
+[**ListContainers**](StorageApi.md#listcontainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
 [**UpdateBackend**](StorageApi.md#updatebackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
 [**UpdateContainer**](StorageApi.md#updatecontainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -412,6 +414,71 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="getbackendinfo"></a>
+# **GetBackendInfo**
+> ContainerResponse GetBackendInfo (string backendId)
+
+Get backend information
+
+Get information on a backend
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
+
+namespace Example
+{
+    public class GetBackendInfoExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var backendId = backendId_example;  // string | backendId
+
+            try
+            {
+                // Get backend information
+                ContainerResponse result = apiInstance.GetBackendInfo(backendId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.GetBackendInfo: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **backendId** | **string**| backendId | 
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="getcontainerinfo"></a>
 # **GetContainerInfo**
 > ContainerResponse GetContainerInfo (string containerId)
@@ -541,6 +608,71 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/octet-stream, application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="listcontainers"></a>
+# **ListContainers**
+> ContainerResponse ListContainers (string backendId)
+
+List containers
+
+List containers for the given backend name or id.
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.STORAGE.Api;
+using Sphereon.SDK.STORAGE.Client;
+using Sphereon.SDK.STORAGE.Model;
+
+namespace Example
+{
+    public class ListContainersExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var backendId = backendId_example;  // string | backendId
+
+            try
+            {
+                // List containers
+                ContainerResponse result = apiInstance.ListContainers(backendId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.ListContainers: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **backendId** | **string**| backendId | 
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

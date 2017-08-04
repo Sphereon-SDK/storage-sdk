@@ -101,8 +101,10 @@ Class | Method | HTTP request | Description
 *StorageApi* | [**deleteBackend**](docs/StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
 *StorageApi* | [**deleteContainer**](docs/StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
 *StorageApi* | [**deleteObject**](docs/StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+*StorageApi* | [**getBackendInfo**](docs/StorageApi.md#getBackendInfo) | **GET** /bucket-storage/0.7/backends/{backendId} | Get backend information
 *StorageApi* | [**getContainerInfo**](docs/StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
 *StorageApi* | [**getObject**](docs/StorageApi.md#getObject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
+*StorageApi* | [**listContainers**](docs/StorageApi.md#listContainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
 *StorageApi* | [**updateBackend**](docs/StorageApi.md#updateBackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
 *StorageApi* | [**updateContainer**](docs/StorageApi.md#updateContainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -115,6 +117,10 @@ Class | Method | HTTP request | Description
  - [ContainerResponse](docs/ContainerResponse.md)
  - [Error](docs/Error.md)
  - [ErrorResponse](docs/ErrorResponse.md)
+ - [OAuth2Credentials](docs/OAuth2Credentials.md)
+ - [OAuthCredentials](docs/OAuthCredentials.md)
+ - [RequestCredentials](docs/RequestCredentials.md)
+ - [UsernamePasswordCredentials](docs/UsernamePasswordCredentials.md)
 
 
 ## Documentation for Authorization

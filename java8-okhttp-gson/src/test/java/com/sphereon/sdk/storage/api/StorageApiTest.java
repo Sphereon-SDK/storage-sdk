@@ -148,6 +148,22 @@ public class StorageApiTest {
     }
     
     /**
+     * Get backend information
+     *
+     * Get information on a backend
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getBackendInfoTest() throws ApiException {
+        String backendId = null;
+        // ContainerResponse response = api.getBackendInfo(backendId);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Get container information
      *
      * Get information on a container
@@ -176,6 +192,22 @@ public class StorageApiTest {
         String containerId = null;
         String objectPath = null;
         // byte[] response = api.getObject(containerId, objectPath);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List containers
+     *
+     * List containers for the given backend name or id.
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listContainersTest() throws ApiException {
+        String backendId = null;
+        // ContainerResponse response = api.listContainers(backendId);
 
         // TODO: test validations
     }

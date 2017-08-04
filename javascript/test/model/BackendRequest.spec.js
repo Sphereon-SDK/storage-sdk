@@ -65,20 +65,8 @@
       //expect(instance).to.be.a(Storage.BackendRequest);
     });
 
-    it('should have the property authenticationProvider (base name: "authenticationProvider")', function() {
-      // uncomment below and update the code to test the property authenticationProvider
-      //var instane = new Storage.BackendRequest();
-      //expect(instance).to.be();
-    });
-
     it('should have the property backendType (base name: "backendType")', function() {
       // uncomment below and update the code to test the property backendType
-      //var instane = new Storage.BackendRequest();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property backendSecret (base name: "backendSecret")', function() {
-      // uncomment below and update the code to test the property backendSecret
       //var instane = new Storage.BackendRequest();
       //expect(instance).to.be();
     });
@@ -95,14 +83,14 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property backendKey (base name: "backendKey")', function() {
-      // uncomment below and update the code to test the property backendKey
+    it('should have the property parentId (base name: "parentId")', function() {
+      // uncomment below and update the code to test the property parentId
       //var instane = new Storage.BackendRequest();
       //expect(instance).to.be();
     });
 
-    it('should have the property parentId (base name: "parentId")', function() {
-      // uncomment below and update the code to test the property parentId
+    it('should have the property requestCredentials (base name: "requestCredentials")', function() {
+      // uncomment below and update the code to test the property requestCredentials
       //var instane = new Storage.BackendRequest();
       //expect(instance).to.be();
     });
