@@ -28,32 +28,25 @@ package com.sphereon.sdk.storage.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.sphereon.sdk.storage.model.Error;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * An error
+ * OAuthCredentials
  */
-@ApiModel(description = "An error")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:04:00.973+02:00")
-public class Error {
-  @JsonProperty("code")
-  private String code = null;
-
+public class OAuthCredentials {
   /**
-   * Gets or Sets level
+   * Gets or Sets authenticationProvider
    */
-  public enum LevelEnum {
-    INFO("INFO"),
+  public enum AuthenticationProviderEnum {
+    API_SUPPLIER("API_SUPPLIER"),
     
-    WARNING("WARNING"),
-    
-    FATAL("FATAL");
+    END_USER("END_USER");
 
     private String value;
 
-    LevelEnum(String value) {
+    AuthenticationProviderEnum(String value) {
       this.value = value;
     }
 
@@ -63,8 +56,8 @@ public class Error {
     }
 
     @JsonCreator
-    public static LevelEnum fromValue(String text) {
-      for (LevelEnum b : LevelEnum.values()) {
+    public static AuthenticationProviderEnum fromValue(String text) {
+      for (AuthenticationProviderEnum b : AuthenticationProviderEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -73,85 +66,67 @@ public class Error {
     }
   }
 
-  @JsonProperty("level")
-  private LevelEnum level = null;
+  @JsonProperty("authenticationProvider")
+  private AuthenticationProviderEnum authenticationProvider = null;
 
-  @JsonProperty("cause")
-  private Error cause = null;
+  @JsonProperty("secretkey")
+  private String secretkey = null;
 
-  @JsonProperty("message")
-  private String message = null;
+  @JsonProperty("accesskeyid")
+  private String accesskeyid = null;
 
-  public Error code(String code) {
-    this.code = code;
+  public OAuthCredentials authenticationProvider(AuthenticationProviderEnum authenticationProvider) {
+    this.authenticationProvider = authenticationProvider;
     return this;
   }
 
    /**
-   * Get code
-   * @return code
-  **/
-  @ApiModelProperty(example = "null", required = true, value = "")
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public Error level(LevelEnum level) {
-    this.level = level;
-    return this;
-  }
-
-   /**
-   * Get level
-   * @return level
-  **/
-  @ApiModelProperty(example = "null", required = true, value = "")
-  public LevelEnum getLevel() {
-    return level;
-  }
-
-  public void setLevel(LevelEnum level) {
-    this.level = level;
-  }
-
-  public Error cause(Error cause) {
-    this.cause = cause;
-    return this;
-  }
-
-   /**
-   * Get cause
-   * @return cause
+   * Get authenticationProvider
+   * @return authenticationProvider
   **/
   @ApiModelProperty(example = "null", value = "")
-  public Error getCause() {
-    return cause;
+  public AuthenticationProviderEnum getAuthenticationProvider() {
+    return authenticationProvider;
   }
 
-  public void setCause(Error cause) {
-    this.cause = cause;
+  public void setAuthenticationProvider(AuthenticationProviderEnum authenticationProvider) {
+    this.authenticationProvider = authenticationProvider;
   }
 
-  public Error message(String message) {
-    this.message = message;
+  public OAuthCredentials secretkey(String secretkey) {
+    this.secretkey = secretkey;
     return this;
   }
 
    /**
-   * Get message
-   * @return message
+   * Get secretkey
+   * @return secretkey
   **/
-  @ApiModelProperty(example = "null", required = true, value = "")
-  public String getMessage() {
-    return message;
+  @ApiModelProperty(example = "null", value = "")
+  public String getSecretkey() {
+    return secretkey;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setSecretkey(String secretkey) {
+    this.secretkey = secretkey;
+  }
+
+  public OAuthCredentials accesskeyid(String accesskeyid) {
+    this.accesskeyid = accesskeyid;
+    return this;
+  }
+
+   /**
+   * Get accesskeyid
+   * @return accesskeyid
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public String getAccesskeyid() {
+    return accesskeyid;
+  }
+
+  public void setAccesskeyid(String accesskeyid) {
+    this.accesskeyid = accesskeyid;
   }
 
 
@@ -163,28 +138,26 @@ public class Error {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.code, error.code) &&
-        Objects.equals(this.level, error.level) &&
-        Objects.equals(this.cause, error.cause) &&
-        Objects.equals(this.message, error.message);
+    OAuthCredentials oauthCredentials = (OAuthCredentials) o;
+    return Objects.equals(this.authenticationProvider, oauthCredentials.authenticationProvider) &&
+        Objects.equals(this.secretkey, oauthCredentials.secretkey) &&
+        Objects.equals(this.accesskeyid, oauthCredentials.accesskeyid);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, level, cause, message);
+    return Objects.hash(authenticationProvider, secretkey, accesskeyid);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
+    sb.append("class OAuthCredentials {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    level: ").append(toIndentedString(level)).append("\n");
-    sb.append("    cause: ").append(toIndentedString(cause)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    authenticationProvider: ").append(toIndentedString(authenticationProvider)).append("\n");
+    sb.append("    secretkey: ").append(toIndentedString(secretkey)).append("\n");
+    sb.append("    accesskeyid: ").append(toIndentedString(accesskeyid)).append("\n");
     sb.append("}");
     return sb.toString();
   }

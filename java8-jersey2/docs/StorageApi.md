@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**deleteObject**](StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
 [**getContainerInfo**](StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
 [**getObject**](StorageApi.md#getObject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
+[**listContainers**](StorageApi.md#listContainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
 [**updateBackend**](StorageApi.md#updateBackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
 [**updateContainer**](StorageApi.md#updateContainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -447,6 +448,59 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/octet-stream, application/json;charset=UTF-8
+
+<a name="listContainers"></a>
+# **listContainers**
+> ContainerResponse listContainers(backendId)
+
+List containers
+
+List containers for the given backend name or id.
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String backendId = "backendId_example"; // String | backendId
+try {
+    ContainerResponse result = apiInstance.listContainers(backendId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#listContainers");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **backendId** | **String**| backendId |
+
+### Return type
+
+[**ContainerResponse**](ContainerResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
 
 <a name="updateBackend"></a>
 # **updateBackend**

@@ -181,6 +181,22 @@ public class StorageApiTest {
     }
     
     /**
+     * List containers
+     *
+     * List containers for the given backend name or id.
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listContainersTest() throws ApiException {
+        String backendId = null;
+        // ContainerResponse response = api.listContainers(backendId);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Update a backend
      *
      * Update a backend
