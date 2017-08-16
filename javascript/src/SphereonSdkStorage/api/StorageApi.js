@@ -25,18 +25,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/BackendRequest', 'SphereonSdkStorage/model/BackendResponse', 'SphereonSdkStorage/model/ErrorResponse', 'SphereonSdkStorage/model/ContainerResponse', 'SphereonSdkStorage/model/ContainerRequest'], factory);
+    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/BackendRequest', 'SphereonSdkStorage/model/BackendResponse', 'SphereonSdkStorage/model/ErrorResponse', 'SphereonSdkStorage/model/ContainerResponse', 'SphereonSdkStorage/model/ContainerRequest', 'SphereonSdkStorage/model/ObjectResponse'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/BackendRequest'), require('../model/BackendResponse'), require('../model/ErrorResponse'), require('../model/ContainerResponse'), require('../model/ContainerRequest'));
+    module.exports = factory(require('../ApiClient'), require('../model/BackendRequest'), require('../model/BackendResponse'), require('../model/ErrorResponse'), require('../model/ContainerResponse'), require('../model/ContainerRequest'), require('../model/ObjectResponse'));
   } else {
     // Browser globals (root is window)
     if (!root.Storage) {
       root.Storage = {};
     }
-    root.Storage.StorageApi = factory(root.Storage.ApiClient, root.Storage.BackendRequest, root.Storage.BackendResponse, root.Storage.ErrorResponse, root.Storage.ContainerResponse, root.Storage.ContainerRequest);
+    root.Storage.StorageApi = factory(root.Storage.ApiClient, root.Storage.BackendRequest, root.Storage.BackendResponse, root.Storage.ErrorResponse, root.Storage.ContainerResponse, root.Storage.ContainerRequest, root.Storage.ObjectResponse);
   }
-}(this, function(ApiClient, BackendRequest, BackendResponse, ErrorResponse, ContainerResponse, ContainerRequest) {
+}(this, function(ApiClient, BackendRequest, BackendResponse, ErrorResponse, ContainerResponse, ContainerRequest, ObjectResponse) {
   'use strict';
 
   /**
@@ -150,19 +150,22 @@
      * Callback function to receive the result of the createObject operation.
      * @callback module:SphereonSdkStorage/api/StorageApi~createObjectCallback
      * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
+     * @param {module:SphereonSdkStorage/model/ObjectResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * Create a new object within a container
-     * Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
      * @param {String} containerId containerId
      * @param {String} objectPath objectPath
      * @param {File} stream stream
+     * @param {Object} opts Optional parameters
+     * @param {Boolean} opts.overwrite overwrite
      * @param {module:SphereonSdkStorage/api/StorageApi~createObjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:SphereonSdkStorage/model/ObjectResponse}
      */
-    this.createObject = function(containerId, objectPath, stream, callback) {
+    this.createObject = function(containerId, objectPath, stream, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'containerId' is set
@@ -186,6 +189,7 @@
         'objectPath': objectPath
       };
       var queryParams = {
+        'overwrite': opts['overwrite']
       };
       var headerParams = {
       };
@@ -195,11 +199,123 @@
 
       var authNames = ['oauth2schema'];
       var contentTypes = ['multipart/form-data'];
-      var accepts = ['*_/_*'];
-      var returnType = null;
+      var accepts = ['application/json'];
+      var returnType = ObjectResponse;
 
       return this.apiClient.callApi(
         '/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the createObjectInFolder operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~createObjectInFolderCallback
+     * @param {String} error Error message, if any.
+     * @param {module:SphereonSdkStorage/model/ObjectResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Create a new object within a container
+     * @param {String} containerId containerId
+     * @param {File} stream stream
+     * @param {Object} opts Optional parameters
+     * @param {Boolean} opts.overwrite overwrite
+     * @param {module:SphereonSdkStorage/api/StorageApi~createObjectInFolderCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:SphereonSdkStorage/model/ObjectResponse}
+     */
+    this.createObjectInFolder = function(containerId, stream, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'containerId' is set
+      if (containerId == undefined || containerId == null) {
+        throw "Missing the required parameter 'containerId' when calling createObjectInFolder";
+      }
+
+      // verify the required parameter 'stream' is set
+      if (stream == undefined || stream == null) {
+        throw "Missing the required parameter 'stream' when calling createObjectInFolder";
+      }
+
+
+      var pathParams = {
+        'containerId': containerId
+      };
+      var queryParams = {
+        'overwrite': opts['overwrite']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+        'stream': stream
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['multipart/form-data'];
+      var accepts = ['application/json'];
+      var returnType = ObjectResponse;
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/containers/{containerId}/objects/**', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the createObjectInFolder1 operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~createObjectInFolder1Callback
+     * @param {String} error Error message, if any.
+     * @param {module:SphereonSdkStorage/model/ObjectResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Create a new object within a container
+     * @param {String} containerId containerId
+     * @param {File} stream stream
+     * @param {Object} opts Optional parameters
+     * @param {Boolean} opts.overwrite overwrite
+     * @param {module:SphereonSdkStorage/api/StorageApi~createObjectInFolder1Callback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:SphereonSdkStorage/model/ObjectResponse}
+     */
+    this.createObjectInFolder1 = function(containerId, stream, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'containerId' is set
+      if (containerId == undefined || containerId == null) {
+        throw "Missing the required parameter 'containerId' when calling createObjectInFolder1";
+      }
+
+      // verify the required parameter 'stream' is set
+      if (stream == undefined || stream == null) {
+        throw "Missing the required parameter 'stream' when calling createObjectInFolder1";
+      }
+
+
+      var pathParams = {
+        'containerId': containerId
+      };
+      var queryParams = {
+        'overwrite': opts['overwrite']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+        'stream': stream
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['multipart/form-data'];
+      var accepts = ['application/json'];
+      var returnType = ObjectResponse;
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -357,7 +473,7 @@
      * Callback function to receive the result of the getBackendInfo operation.
      * @callback module:SphereonSdkStorage/api/StorageApi~getBackendInfoCallback
      * @param {String} error Error message, if any.
-     * @param {module:SphereonSdkStorage/model/ContainerResponse} data The data returned by the service call.
+     * @param {module:SphereonSdkStorage/model/BackendResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -366,7 +482,7 @@
      * Get information on a backend
      * @param {String} backendId backendId
      * @param {module:SphereonSdkStorage/api/StorageApi~getBackendInfoCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:SphereonSdkStorage/model/ContainerResponse}
+     * data is of type: {@link module:SphereonSdkStorage/model/BackendResponse}
      */
     this.getBackendInfo = function(backendId, callback) {
       var postBody = null;
@@ -390,7 +506,7 @@
       var authNames = ['oauth2schema'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json;charset=UTF-8'];
-      var returnType = ContainerResponse;
+      var returnType = BackendResponse;
 
       return this.apiClient.callApi(
         '/bucket-storage/0.7/backends/{backendId}', 'GET',
@@ -502,7 +618,7 @@
      * Callback function to receive the result of the listContainers operation.
      * @callback module:SphereonSdkStorage/api/StorageApi~listContainersCallback
      * @param {String} error Error message, if any.
-     * @param {module:SphereonSdkStorage/model/ContainerResponse} data The data returned by the service call.
+     * @param {Array.<module:SphereonSdkStorage/model/ContainerResponse>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -511,7 +627,7 @@
      * List containers for the given backend name or id.
      * @param {String} backendId backendId
      * @param {module:SphereonSdkStorage/api/StorageApi~listContainersCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:SphereonSdkStorage/model/ContainerResponse}
+     * data is of type: {@link Array.<module:SphereonSdkStorage/model/ContainerResponse>}
      */
     this.listContainers = function(backendId, callback) {
       var postBody = null;
@@ -535,10 +651,197 @@
       var authNames = ['oauth2schema'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json;charset=UTF-8'];
-      var returnType = ContainerResponse;
+      var returnType = [ContainerResponse];
 
       return this.apiClient.callApi(
         '/bucket-storage/0.7/backends/{backendId}/containers', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listObjects operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~listObjectsCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:SphereonSdkStorage/model/ObjectResponse>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List objects in path
+     * @param {String} containerId containerId
+     * @param {String} objectPath objectPath
+     * @param {module:SphereonSdkStorage/api/StorageApi~listObjectsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<module:SphereonSdkStorage/model/ObjectResponse>}
+     */
+    this.listObjects = function(containerId, objectPath, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'containerId' is set
+      if (containerId == undefined || containerId == null) {
+        throw "Missing the required parameter 'containerId' when calling listObjects";
+      }
+
+      // verify the required parameter 'objectPath' is set
+      if (objectPath == undefined || objectPath == null) {
+        throw "Missing the required parameter 'objectPath' when calling listObjects";
+      }
+
+
+      var pathParams = {
+        'containerId': containerId,
+        'objectPath': objectPath
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = [ObjectResponse];
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/containers/{containerId}/list/{objectPath}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listObjectsInFolder operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~listObjectsInFolderCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:SphereonSdkStorage/model/ObjectResponse>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List objects in path
+     * @param {String} containerId containerId
+     * @param {module:SphereonSdkStorage/api/StorageApi~listObjectsInFolderCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<module:SphereonSdkStorage/model/ObjectResponse>}
+     */
+    this.listObjectsInFolder = function(containerId, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'containerId' is set
+      if (containerId == undefined || containerId == null) {
+        throw "Missing the required parameter 'containerId' when calling listObjectsInFolder";
+      }
+
+
+      var pathParams = {
+        'containerId': containerId
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = [ObjectResponse];
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/containers/{containerId}/list', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listObjectsInFolder1 operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~listObjectsInFolder1Callback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:SphereonSdkStorage/model/ObjectResponse>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List objects in path
+     * @param {String} containerId containerId
+     * @param {module:SphereonSdkStorage/api/StorageApi~listObjectsInFolder1Callback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<module:SphereonSdkStorage/model/ObjectResponse>}
+     */
+    this.listObjectsInFolder1 = function(containerId, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'containerId' is set
+      if (containerId == undefined || containerId == null) {
+        throw "Missing the required parameter 'containerId' when calling listObjectsInFolder1";
+      }
+
+
+      var pathParams = {
+        'containerId': containerId
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = [ObjectResponse];
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/containers/{containerId}/list/**', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listObjectsInFolder2 operation.
+     * @callback module:SphereonSdkStorage/api/StorageApi~listObjectsInFolder2Callback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:SphereonSdkStorage/model/ObjectResponse>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List objects in path
+     * @param {String} containerId containerId
+     * @param {module:SphereonSdkStorage/api/StorageApi~listObjectsInFolder2Callback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<module:SphereonSdkStorage/model/ObjectResponse>}
+     */
+    this.listObjectsInFolder2 = function(containerId, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'containerId' is set
+      if (containerId == undefined || containerId == null) {
+        throw "Missing the required parameter 'containerId' when calling listObjectsInFolder2";
+      }
+
+
+      var pathParams = {
+        'containerId': containerId
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['oauth2schema'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = [ObjectResponse];
+
+      return this.apiClient.callApi(
+        '/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

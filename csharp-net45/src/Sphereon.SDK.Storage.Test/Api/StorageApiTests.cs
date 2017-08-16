@@ -110,8 +110,37 @@ namespace Sphereon.SDK.STORAGE.Test
             //string containerId = null;
             //string objectPath = null;
             //System.IO.Stream stream = null;
-            //instance.CreateObject(containerId, objectPath, stream);
-            
+            //bool? overwrite = null;
+            //var response = instance.CreateObject(containerId, objectPath, stream, overwrite);
+            //Assert.IsInstanceOf<ObjectResponse> (response, "response is ObjectResponse");
+        }
+        
+        /// <summary>
+        /// Test CreateObjectInFolder
+        /// </summary>
+        [Test]
+        public void CreateObjectInFolderTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //System.IO.Stream stream = null;
+            //bool? overwrite = null;
+            //var response = instance.CreateObjectInFolder(containerId, stream, overwrite);
+            //Assert.IsInstanceOf<ObjectResponse> (response, "response is ObjectResponse");
+        }
+        
+        /// <summary>
+        /// Test CreateObjectInFolder1
+        /// </summary>
+        [Test]
+        public void CreateObjectInFolder1Test()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //System.IO.Stream stream = null;
+            //bool? overwrite = null;
+            //var response = instance.CreateObjectInFolder1(containerId, stream, overwrite);
+            //Assert.IsInstanceOf<ObjectResponse> (response, "response is ObjectResponse");
         }
         
         /// <summary>
@@ -161,7 +190,7 @@ namespace Sphereon.SDK.STORAGE.Test
             // TODO uncomment below to test the method and replace null with proper value
             //string backendId = null;
             //var response = instance.GetBackendInfo(backendId);
-            //Assert.IsInstanceOf<ContainerResponse> (response, "response is ContainerResponse");
+            //Assert.IsInstanceOf<BackendResponse> (response, "response is BackendResponse");
         }
         
         /// <summary>
@@ -198,7 +227,56 @@ namespace Sphereon.SDK.STORAGE.Test
             // TODO uncomment below to test the method and replace null with proper value
             //string backendId = null;
             //var response = instance.ListContainers(backendId);
-            //Assert.IsInstanceOf<ContainerResponse> (response, "response is ContainerResponse");
+            //Assert.IsInstanceOf<List<ContainerResponse>> (response, "response is List<ContainerResponse>");
+        }
+        
+        /// <summary>
+        /// Test ListObjects
+        /// </summary>
+        [Test]
+        public void ListObjectsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //string objectPath = null;
+            //var response = instance.ListObjects(containerId, objectPath);
+            //Assert.IsInstanceOf<List<ObjectResponse>> (response, "response is List<ObjectResponse>");
+        }
+        
+        /// <summary>
+        /// Test ListObjectsInFolder
+        /// </summary>
+        [Test]
+        public void ListObjectsInFolderTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //var response = instance.ListObjectsInFolder(containerId);
+            //Assert.IsInstanceOf<List<ObjectResponse>> (response, "response is List<ObjectResponse>");
+        }
+        
+        /// <summary>
+        /// Test ListObjectsInFolder1
+        /// </summary>
+        [Test]
+        public void ListObjectsInFolder1Test()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //var response = instance.ListObjectsInFolder1(containerId);
+            //Assert.IsInstanceOf<List<ObjectResponse>> (response, "response is List<ObjectResponse>");
+        }
+        
+        /// <summary>
+        /// Test ListObjectsInFolder2
+        /// </summary>
+        [Test]
+        public void ListObjectsInFolder2Test()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //var response = instance.ListObjectsInFolder2(containerId);
+            //Assert.IsInstanceOf<List<ObjectResponse>> (response, "response is List<ObjectResponse>");
         }
         
         /// <summary>

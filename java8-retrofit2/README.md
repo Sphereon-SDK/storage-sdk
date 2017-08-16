@@ -1,4 +1,4 @@
-# storage-sdk-java8-retrofit2
+# template-processor-sdk-java8-retrofit2
 
 ## Requirements
 
@@ -25,7 +25,7 @@ After the client library is installed/deployed, you can use it in your Maven pro
 ```xml
 <dependency>
     <groupId>com.sphereon.sdk</groupId>
-    <artifactId>storage-sdk-java8-retrofit2</artifactId>
+    <artifactId>template-processor-sdk-java8-retrofit2</artifactId>
     <version>0.7.0</version>
     <scope>compile</scope>
 </dependency>

@@ -3,6 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**BackendType** | **string** | The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties. | [optional] 
 **Name** | **string** |  | [optional] 
 **Id** | **string** |  | [optional] 
 **State** | **string** |  | [optional] 

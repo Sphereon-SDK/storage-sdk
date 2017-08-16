@@ -31,6 +31,7 @@ import com.sphereon.sdk.storage.model.BackendResponse;
 import com.sphereon.sdk.storage.model.ErrorResponse;
 import com.sphereon.sdk.storage.model.ContainerResponse;
 import com.sphereon.sdk.storage.model.ContainerRequest;
+import com.sphereon.sdk.storage.model.ObjectResponse;
 import java.io.File;
 import org.junit.Test;
 
@@ -82,7 +83,7 @@ public class StorageApiTest {
     /**
      * Create a new object within a container
      *
-     * Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+     * 
      *
      * @throws ApiException
      *          if the Api call fails
@@ -92,7 +93,44 @@ public class StorageApiTest {
         String containerId = null;
         String objectPath = null;
         File stream = null;
-        // api.createObject(containerId, objectPath, stream);
+        Boolean overwrite = null;
+        // ObjectResponse response = api.createObject(containerId, objectPath, stream, overwrite);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Create a new object within a container
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void createObjectInFolderTest() throws ApiException {
+        String containerId = null;
+        File stream = null;
+        Boolean overwrite = null;
+        // ObjectResponse response = api.createObjectInFolder(containerId, stream, overwrite);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Create a new object within a container
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void createObjectInFolder1Test() throws ApiException {
+        String containerId = null;
+        File stream = null;
+        Boolean overwrite = null;
+        // ObjectResponse response = api.createObjectInFolder1(containerId, stream, overwrite);
 
         // TODO: test validations
     }
@@ -158,7 +196,7 @@ public class StorageApiTest {
     @Test
     public void getBackendInfoTest() throws ApiException {
         String backendId = null;
-        // ContainerResponse response = api.getBackendInfo(backendId);
+        // BackendResponse response = api.getBackendInfo(backendId);
 
         // TODO: test validations
     }
@@ -207,7 +245,72 @@ public class StorageApiTest {
     @Test
     public void listContainersTest() throws ApiException {
         String backendId = null;
-        // ContainerResponse response = api.listContainers(backendId);
+        // List<ContainerResponse> response = api.listContainers(backendId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List objects in path
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listObjectsTest() throws ApiException {
+        String containerId = null;
+        String objectPath = null;
+        // List<ObjectResponse> response = api.listObjects(containerId, objectPath);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List objects in path
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listObjectsInFolderTest() throws ApiException {
+        String containerId = null;
+        // List<ObjectResponse> response = api.listObjectsInFolder(containerId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List objects in path
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listObjectsInFolder1Test() throws ApiException {
+        String containerId = null;
+        // List<ObjectResponse> response = api.listObjectsInFolder1(containerId);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List objects in path
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listObjectsInFolder2Test() throws ApiException {
+        String containerId = null;
+        // List<ObjectResponse> response = api.listObjectsInFolder2(containerId);
 
         // TODO: test validations
     }

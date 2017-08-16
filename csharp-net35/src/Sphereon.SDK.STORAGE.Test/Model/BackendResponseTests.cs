@@ -77,6 +77,14 @@ namespace Sphereon.SDK.STORAGE.Test
         }
 
         /// <summary>
+        /// Test the property 'BackendType'
+        /// </summary>
+        [Test]
+        public void BackendTypeTest()
+        {
+            // TODO unit test for the property 'BackendType'
+        }
+        /// <summary>
         /// Test the property 'Name'
         /// </summary>
         [Test]

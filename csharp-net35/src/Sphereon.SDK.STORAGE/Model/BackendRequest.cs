@@ -48,10 +48,10 @@ namespace Sphereon.SDK.STORAGE.Model
         {
             
             /// <summary>
-            /// Enum FILESYSTEM for "FILESYSTEM"
+            /// Enum SHAREDSTORAGE for "SHARED_STORAGE"
             /// </summary>
-            [EnumMember(Value = "FILESYSTEM")]
-            FILESYSTEM,
+            [EnumMember(Value = "SHARED_STORAGE")]
+            SHAREDSTORAGE,
             
             /// <summary>
             /// Enum AMAZONS3 for "AMAZON_S3"

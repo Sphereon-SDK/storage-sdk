@@ -136,7 +136,12 @@
      * value: "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials"
      * @const
      */
-    "UsernamePasswordCredentials": "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials"  };
+    "UsernamePasswordCredentials": "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials",
+    /**
+     * value: "com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters"
+     * @const
+     */
+    "ClaimParameters": "com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters"  };
 
 
   return exports;

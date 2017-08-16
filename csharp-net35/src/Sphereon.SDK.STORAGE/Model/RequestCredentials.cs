@@ -69,7 +69,13 @@ namespace Sphereon.SDK.STORAGE.Model
             /// Enum UsernamePasswordCredentials for "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials"
             /// </summary>
             [EnumMember(Value = "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials")]
-            UsernamePasswordCredentials
+            UsernamePasswordCredentials,
+            
+            /// <summary>
+            /// Enum ClaimParameters for "com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters"
+            /// </summary>
+            [EnumMember(Value = "com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters")]
+            ClaimParameters
         }
 
         /// <summary>

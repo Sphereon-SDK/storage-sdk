@@ -35,13 +35,13 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * BackendRequest
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:28.434+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-16T15:34:02.364+02:00")
 public class BackendRequest {
   /**
    * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
    */
   public enum BackendTypeEnum {
-    FILESYSTEM("FILESYSTEM"),
+    SHARED_STORAGE("SHARED_STORAGE"),
     
     AMAZON_S3("AMAZON_S3"),
     

@@ -82,27 +82,79 @@ namespace Sphereon.SDK.STORAGE.Api
         /// Create a new object within a container
         /// </summary>
         /// <remarks>
-        /// Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+        /// 
         /// </remarks>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
-        /// <returns></returns>
-        void CreateObject (string containerId, string objectPath, System.IO.Stream stream);
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ObjectResponse</returns>
+        ObjectResponse CreateObject (string containerId, string objectPath, System.IO.Stream stream, bool? overwrite = null);
 
         /// <summary>
         /// Create a new object within a container
         /// </summary>
         /// <remarks>
-        /// Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+        /// 
         /// </remarks>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> CreateObjectWithHttpInfo (string containerId, string objectPath, System.IO.Stream stream);
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ApiResponse of ObjectResponse</returns>
+        ApiResponse<ObjectResponse> CreateObjectWithHttpInfo (string containerId, string objectPath, System.IO.Stream stream, bool? overwrite = null);
+        /// <summary>
+        /// Create a new object within a container
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ObjectResponse</returns>
+        ObjectResponse CreateObjectInFolder (string containerId, System.IO.Stream stream, bool? overwrite = null);
+
+        /// <summary>
+        /// Create a new object within a container
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ApiResponse of ObjectResponse</returns>
+        ApiResponse<ObjectResponse> CreateObjectInFolderWithHttpInfo (string containerId, System.IO.Stream stream, bool? overwrite = null);
+        /// <summary>
+        /// Create a new object within a container
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ObjectResponse</returns>
+        ObjectResponse CreateObjectInFolder1 (string containerId, System.IO.Stream stream, bool? overwrite = null);
+
+        /// <summary>
+        /// Create a new object within a container
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ApiResponse of ObjectResponse</returns>
+        ApiResponse<ObjectResponse> CreateObjectInFolder1WithHttpInfo (string containerId, System.IO.Stream stream, bool? overwrite = null);
         /// <summary>
         /// Delete a backend
         /// </summary>
@@ -178,8 +230,8 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </remarks>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ContainerResponse</returns>
-        ContainerResponse GetBackendInfo (string backendId);
+        /// <returns>BackendResponse</returns>
+        BackendResponse GetBackendInfo (string backendId);
 
         /// <summary>
         /// Get backend information
@@ -189,8 +241,8 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </remarks>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ApiResponse of ContainerResponse</returns>
-        ApiResponse<ContainerResponse> GetBackendInfoWithHttpInfo (string backendId);
+        /// <returns>ApiResponse of BackendResponse</returns>
+        ApiResponse<BackendResponse> GetBackendInfoWithHttpInfo (string backendId);
         /// <summary>
         /// Get container information
         /// </summary>
@@ -243,8 +295,8 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </remarks>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ContainerResponse</returns>
-        ContainerResponse ListContainers (string backendId);
+        /// <returns>List&lt;ContainerResponse&gt;</returns>
+        List<ContainerResponse> ListContainers (string backendId);
 
         /// <summary>
         /// List containers
@@ -254,8 +306,94 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </remarks>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ApiResponse of ContainerResponse</returns>
-        ApiResponse<ContainerResponse> ListContainersWithHttpInfo (string backendId);
+        /// <returns>ApiResponse of List&lt;ContainerResponse&gt;</returns>
+        ApiResponse<List<ContainerResponse>> ListContainersWithHttpInfo (string backendId);
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="objectPath">objectPath</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        List<ObjectResponse> ListObjects (string containerId, string objectPath);
+
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="objectPath">objectPath</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        ApiResponse<List<ObjectResponse>> ListObjectsWithHttpInfo (string containerId, string objectPath);
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        List<ObjectResponse> ListObjectsInFolder (string containerId);
+
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        ApiResponse<List<ObjectResponse>> ListObjectsInFolderWithHttpInfo (string containerId);
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        List<ObjectResponse> ListObjectsInFolder1 (string containerId);
+
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        ApiResponse<List<ObjectResponse>> ListObjectsInFolder1WithHttpInfo (string containerId);
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        List<ObjectResponse> ListObjectsInFolder2 (string containerId);
+
+        /// <summary>
+        /// List objects in path
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        ApiResponse<List<ObjectResponse>> ListObjectsInFolder2WithHttpInfo (string containerId);
         /// <summary>
         /// Update a backend
         /// </summary>
@@ -583,27 +721,30 @@ namespace Sphereon.SDK.STORAGE.Api
         }
 
         /// <summary>
-        /// Create a new object within a container Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+        /// Create a new object within a container 
         /// </summary>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
-        /// <returns></returns>
-        public void CreateObject (string containerId, string objectPath, System.IO.Stream stream)
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ObjectResponse</returns>
+        public ObjectResponse CreateObject (string containerId, string objectPath, System.IO.Stream stream, bool? overwrite = null)
         {
-             CreateObjectWithHttpInfo(containerId, objectPath, stream);
+             ApiResponse<ObjectResponse> localVarResponse = CreateObjectWithHttpInfo(containerId, objectPath, stream, overwrite);
+             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new object within a container Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+        /// Create a new object within a container 
         /// </summary>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId">containerId</param>
         /// <param name="objectPath">objectPath</param>
         /// <param name="stream">stream</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> CreateObjectWithHttpInfo (string containerId, string objectPath, System.IO.Stream stream)
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ApiResponse of ObjectResponse</returns>
+        public ApiResponse< ObjectResponse > CreateObjectWithHttpInfo (string containerId, string objectPath, System.IO.Stream stream, bool? overwrite = null)
         {
             // verify the required parameter 'containerId' is set
             if (containerId == null)
@@ -631,7 +772,7 @@ namespace Sphereon.SDK.STORAGE.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*_/_*"
+                "application/json"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
@@ -642,6 +783,7 @@ namespace Sphereon.SDK.STORAGE.Api
             localVarPathParams.Add("format", "json");
             if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
             if (objectPath != null) localVarPathParams.Add("objectPath", Configuration.ApiClient.ParameterToString(objectPath)); // path parameter
+            if (overwrite != null) localVarQueryParams.Add("overwrite", Configuration.ApiClient.ParameterToString(overwrite)); // query parameter
             if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
 
             // authentication (oauth2schema) required
@@ -664,10 +806,182 @@ namespace Sphereon.SDK.STORAGE.Api
                 if (exception != null) throw exception;
             }
 
-            
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<ObjectResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (ObjectResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ObjectResponse)));
+            
+        }
+
+        /// <summary>
+        /// Create a new object within a container 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ObjectResponse</returns>
+        public ObjectResponse CreateObjectInFolder (string containerId, System.IO.Stream stream, bool? overwrite = null)
+        {
+             ApiResponse<ObjectResponse> localVarResponse = CreateObjectInFolderWithHttpInfo(containerId, stream, overwrite);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Create a new object within a container 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ApiResponse of ObjectResponse</returns>
+        public ApiResponse< ObjectResponse > CreateObjectInFolderWithHttpInfo (string containerId, System.IO.Stream stream, bool? overwrite = null)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling StorageApi->CreateObjectInFolder");
+            // verify the required parameter 'stream' is set
+            if (stream == null)
+                throw new ApiException(400, "Missing required parameter 'stream' when calling StorageApi->CreateObjectInFolder");
+
+            var localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/**";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "multipart/form-data"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+            if (overwrite != null) localVarQueryParams.Add("overwrite", Configuration.ApiClient.ParameterToString(overwrite)); // query parameter
+            if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CreateObjectInFolder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ObjectResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ObjectResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ObjectResponse)));
+            
+        }
+
+        /// <summary>
+        /// Create a new object within a container 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ObjectResponse</returns>
+        public ObjectResponse CreateObjectInFolder1 (string containerId, System.IO.Stream stream, bool? overwrite = null)
+        {
+             ApiResponse<ObjectResponse> localVarResponse = CreateObjectInFolder1WithHttpInfo(containerId, stream, overwrite);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Create a new object within a container 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="stream">stream</param>
+        /// <param name="overwrite">overwrite (optional)</param>
+        /// <returns>ApiResponse of ObjectResponse</returns>
+        public ApiResponse< ObjectResponse > CreateObjectInFolder1WithHttpInfo (string containerId, System.IO.Stream stream, bool? overwrite = null)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling StorageApi->CreateObjectInFolder1");
+            // verify the required parameter 'stream' is set
+            if (stream == null)
+                throw new ApiException(400, "Missing required parameter 'stream' when calling StorageApi->CreateObjectInFolder1");
+
+            var localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "multipart/form-data"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+            if (overwrite != null) localVarQueryParams.Add("overwrite", Configuration.ApiClient.ParameterToString(overwrite)); // query parameter
+            if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CreateObjectInFolder1", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ObjectResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ObjectResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ObjectResponse)));
+            
         }
 
         /// <summary>
@@ -914,10 +1228,10 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </summary>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ContainerResponse</returns>
-        public ContainerResponse GetBackendInfo (string backendId)
+        /// <returns>BackendResponse</returns>
+        public BackendResponse GetBackendInfo (string backendId)
         {
-             ApiResponse<ContainerResponse> localVarResponse = GetBackendInfoWithHttpInfo(backendId);
+             ApiResponse<BackendResponse> localVarResponse = GetBackendInfoWithHttpInfo(backendId);
              return localVarResponse.Data;
         }
 
@@ -926,8 +1240,8 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </summary>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ApiResponse of ContainerResponse</returns>
-        public ApiResponse< ContainerResponse > GetBackendInfoWithHttpInfo (string backendId)
+        /// <returns>ApiResponse of BackendResponse</returns>
+        public ApiResponse< BackendResponse > GetBackendInfoWithHttpInfo (string backendId)
         {
             // verify the required parameter 'backendId' is set
             if (backendId == null)
@@ -980,9 +1294,9 @@ namespace Sphereon.SDK.STORAGE.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ContainerResponse>(localVarStatusCode,
+            return new ApiResponse<BackendResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ContainerResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ContainerResponse)));
+                (BackendResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(BackendResponse)));
             
         }
 
@@ -1152,10 +1466,10 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </summary>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ContainerResponse</returns>
-        public ContainerResponse ListContainers (string backendId)
+        /// <returns>List&lt;ContainerResponse&gt;</returns>
+        public List<ContainerResponse> ListContainers (string backendId)
         {
-             ApiResponse<ContainerResponse> localVarResponse = ListContainersWithHttpInfo(backendId);
+             ApiResponse<List<ContainerResponse>> localVarResponse = ListContainersWithHttpInfo(backendId);
              return localVarResponse.Data;
         }
 
@@ -1164,8 +1478,8 @@ namespace Sphereon.SDK.STORAGE.Api
         /// </summary>
         /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="backendId">backendId</param>
-        /// <returns>ApiResponse of ContainerResponse</returns>
-        public ApiResponse< ContainerResponse > ListContainersWithHttpInfo (string backendId)
+        /// <returns>ApiResponse of List&lt;ContainerResponse&gt;</returns>
+        public ApiResponse< List<ContainerResponse> > ListContainersWithHttpInfo (string backendId)
         {
             // verify the required parameter 'backendId' is set
             if (backendId == null)
@@ -1218,9 +1532,323 @@ namespace Sphereon.SDK.STORAGE.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ContainerResponse>(localVarStatusCode,
+            return new ApiResponse<List<ContainerResponse>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ContainerResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ContainerResponse)));
+                (List<ContainerResponse>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ContainerResponse>)));
+            
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="objectPath">objectPath</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        public List<ObjectResponse> ListObjects (string containerId, string objectPath)
+        {
+             ApiResponse<List<ObjectResponse>> localVarResponse = ListObjectsWithHttpInfo(containerId, objectPath);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <param name="objectPath">objectPath</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        public ApiResponse< List<ObjectResponse> > ListObjectsWithHttpInfo (string containerId, string objectPath)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling StorageApi->ListObjects");
+            // verify the required parameter 'objectPath' is set
+            if (objectPath == null)
+                throw new ApiException(400, "Missing required parameter 'objectPath' when calling StorageApi->ListObjects");
+
+            var localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+            if (objectPath != null) localVarPathParams.Add("objectPath", Configuration.ApiClient.ParameterToString(objectPath)); // path parameter
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListObjects", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<ObjectResponse>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<ObjectResponse>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ObjectResponse>)));
+            
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        public List<ObjectResponse> ListObjectsInFolder (string containerId)
+        {
+             ApiResponse<List<ObjectResponse>> localVarResponse = ListObjectsInFolderWithHttpInfo(containerId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        public ApiResponse< List<ObjectResponse> > ListObjectsInFolderWithHttpInfo (string containerId)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling StorageApi->ListObjectsInFolder");
+
+            var localVarPath = "/bucket-storage/0.7/containers/{containerId}/list";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListObjectsInFolder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<ObjectResponse>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<ObjectResponse>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ObjectResponse>)));
+            
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        public List<ObjectResponse> ListObjectsInFolder1 (string containerId)
+        {
+             ApiResponse<List<ObjectResponse>> localVarResponse = ListObjectsInFolder1WithHttpInfo(containerId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        public ApiResponse< List<ObjectResponse> > ListObjectsInFolder1WithHttpInfo (string containerId)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling StorageApi->ListObjectsInFolder1");
+
+            var localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/**";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListObjectsInFolder1", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<ObjectResponse>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<ObjectResponse>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ObjectResponse>)));
+            
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>List&lt;ObjectResponse&gt;</returns>
+        public List<ObjectResponse> ListObjectsInFolder2 (string containerId)
+        {
+             ApiResponse<List<ObjectResponse>> localVarResponse = ListObjectsInFolder2WithHttpInfo(containerId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List objects in path 
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.STORAGE.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId">containerId</param>
+        /// <returns>ApiResponse of List&lt;ObjectResponse&gt;</returns>
+        public ApiResponse< List<ObjectResponse> > ListObjectsInFolder2WithHttpInfo (string containerId)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling StorageApi->ListObjectsInFolder2");
+
+            var localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListObjectsInFolder2", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<ObjectResponse>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<ObjectResponse>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ObjectResponse>)));
             
         }
 

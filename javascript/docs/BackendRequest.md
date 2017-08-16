@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 ## Enum: BackendTypeEnum
 
 
-* `FILESYSTEM` (value: `"FILESYSTEM"`)
+* `SHARED_STORAGE` (value: `"SHARED_STORAGE"`)
 
 * `AMAZON_S3` (value: `"AMAZON_S3"`)
 

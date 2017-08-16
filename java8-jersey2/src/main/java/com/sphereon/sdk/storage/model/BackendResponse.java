@@ -34,8 +34,45 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * BackendResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:28.434+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-16T15:34:02.364+02:00")
 public class BackendResponse {
+  /**
+   * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
+   */
+  public enum BackendTypeEnum {
+    SHARED_STORAGE("SHARED_STORAGE"),
+    
+    AMAZON_S3("AMAZON_S3"),
+    
+    MS_AZURE_BLOB_STORAGE("MS_AZURE_BLOB_STORAGE"),
+    
+    GOOGLE_CLOUD_STORAGE("GOOGLE_CLOUD_STORAGE");
+
+    private String value;
+
+    BackendTypeEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static BackendTypeEnum fromValue(String text) {
+      for (BackendTypeEnum b : BackendTypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
+
+  @JsonProperty("backendType")
+  private BackendTypeEnum backendType = null;
+
   @JsonProperty("name")
   private String name = null;
 
@@ -81,6 +118,15 @@ public class BackendResponse {
 
   @JsonProperty("parentId")
   private String parentId = null;
+
+   /**
+   * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
+   * @return backendType
+  **/
+  @ApiModelProperty(example = "null", value = "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.")
+  public BackendTypeEnum getBackendType() {
+    return backendType;
+  }
 
   public BackendResponse name(String name) {
     this.name = name;
@@ -164,7 +210,8 @@ public class BackendResponse {
       return false;
     }
     BackendResponse backendResponse = (BackendResponse) o;
-    return Objects.equals(this.name, backendResponse.name) &&
+    return Objects.equals(this.backendType, backendResponse.backendType) &&
+        Objects.equals(this.name, backendResponse.name) &&
         Objects.equals(this.id, backendResponse.id) &&
         Objects.equals(this.state, backendResponse.state) &&
         Objects.equals(this.parentId, backendResponse.parentId);
@@ -172,7 +219,7 @@ public class BackendResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, id, state, parentId);
+    return Objects.hash(backendType, name, id, state, parentId);
   }
 
 
@@ -181,6 +228,7 @@ public class BackendResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class BackendResponse {\n");
     
+    sb.append("    backendType: ").append(toIndentedString(backendType)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");

@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sphereon.sdk</groupId>
-  <artifactId>storage-sdk-java8</artifactId>
+  <artifactId>template-processor-sdk-java8</artifactId>
   <packaging>jar</packaging>
-  <name>storage-sdk-java8</name>
+  <name>template-processor-sdk-java8</name>
   <version>0.7.0</version>
   <scm>
     <connection>scm:git:git@github.com:swagger-api/swagger-mustache.git</connection>

@@ -7,6 +7,8 @@ Method | HTTP request | Description
 [**createBackend**](StorageApi.md#createBackend) | **POST** /bucket-storage/0.7/backends | Create a new backend
 [**createContainer**](StorageApi.md#createContainer) | **POST** /bucket-storage/0.7/containers | Create a new container
 [**createObject**](StorageApi.md#createObject) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Create a new object within a container
+[**createObjectInFolder**](StorageApi.md#createObjectInFolder) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/** | Create a new object within a container
+[**createObjectInFolder1**](StorageApi.md#createObjectInFolder1) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/** | Create a new object within a container
 [**deleteBackend**](StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
 [**deleteContainer**](StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
 [**deleteObject**](StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
@@ -14,6 +16,10 @@ Method | HTTP request | Description
 [**getContainerInfo**](StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
 [**getObject**](StorageApi.md#getObject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 [**listContainers**](StorageApi.md#listContainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
+[**listObjects**](StorageApi.md#listObjects) | **GET** /bucket-storage/0.7/containers/{containerId}/list/{objectPath} | List objects in path
+[**listObjectsInFolder**](StorageApi.md#listObjectsInFolder) | **GET** /bucket-storage/0.7/containers/{containerId}/list | List objects in path
+[**listObjectsInFolder1**](StorageApi.md#listObjectsInFolder1) | **GET** /bucket-storage/0.7/containers/{containerId}/list/** | List objects in path
+[**listObjectsInFolder2**](StorageApi.md#listObjectsInFolder2) | **GET** /bucket-storage/0.7/containers/{containerId}/list/{objectPath}/** | List objects in path
 [**updateBackend**](StorageApi.md#updateBackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
 [**updateContainer**](StorageApi.md#updateContainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -122,11 +128,9 @@ Name | Type | Description  | Notes
 
 <a name="createObject"></a>
 # **createObject**
-> createObject(containerId, objectPath, stream)
+> ObjectResponse createObject(containerId, objectPath, stream, opts)
 
 Create a new object within a container
-
-Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
 
 ### Example
 ```javascript
@@ -145,15 +149,18 @@ var objectPath = "objectPath_example"; // String | objectPath
 
 var stream = "/path/to/file.txt"; // File | stream
 
+var opts = { 
+  'overwrite': true // Boolean | overwrite
+};
 
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createObject(containerId, objectPath, stream, callback);
+apiInstance.createObject(containerId, objectPath, stream, opts, callback);
 ```
 
 ### Parameters
@@ -163,10 +170,11 @@ Name | Type | Description  | Notes
  **containerId** | **String**| containerId | 
  **objectPath** | **String**| objectPath | 
  **stream** | **File**| stream | 
+ **overwrite** | **Boolean**| overwrite | [optional] 
 
 ### Return type
 
-null (empty response body)
+[**ObjectResponse**](ObjectResponse.md)
 
 ### Authorization
 
@@ -175,7 +183,119 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: *_/_*
+ - **Accept**: application/json
+
+<a name="createObjectInFolder"></a>
+# **createObjectInFolder**
+> ObjectResponse createObjectInFolder(containerId, stream, opts)
+
+Create a new object within a container
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+var stream = "/path/to/file.txt"; // File | stream
+
+var opts = { 
+  'overwrite': true // Boolean | overwrite
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.createObjectInFolder(containerId, stream, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+ **stream** | **File**| stream | 
+ **overwrite** | **Boolean**| overwrite | [optional] 
+
+### Return type
+
+[**ObjectResponse**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+<a name="createObjectInFolder1"></a>
+# **createObjectInFolder1**
+> ObjectResponse createObjectInFolder1(containerId, stream, opts)
+
+Create a new object within a container
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+var stream = "/path/to/file.txt"; // File | stream
+
+var opts = { 
+  'overwrite': true // Boolean | overwrite
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.createObjectInFolder1(containerId, stream, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+ **stream** | **File**| stream | 
+ **overwrite** | **Boolean**| overwrite | [optional] 
+
+### Return type
+
+[**ObjectResponse**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
 
 <a name="deleteBackend"></a>
 # **deleteBackend**
@@ -339,7 +459,7 @@ null (empty response body)
 
 <a name="getBackendInfo"></a>
 # **getBackendInfo**
-> ContainerResponse getBackendInfo(backendId)
+> BackendResponse getBackendInfo(backendId)
 
 Get backend information
 
@@ -377,7 +497,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ContainerResponse**](ContainerResponse.md)
+[**BackendResponse**](BackendResponse.md)
 
 ### Authorization
 
@@ -495,7 +615,7 @@ Name | Type | Description  | Notes
 
 <a name="listContainers"></a>
 # **listContainers**
-> ContainerResponse listContainers(backendId)
+> [ContainerResponse] listContainers(backendId)
 
 List containers
 
@@ -533,7 +653,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ContainerResponse**](ContainerResponse.md)
+[**[ContainerResponse]**](ContainerResponse.md)
 
 ### Authorization
 
@@ -543,6 +663,205 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json;charset=UTF-8
+
+<a name="listObjects"></a>
+# **listObjects**
+> [ObjectResponse] listObjects(containerId, objectPath)
+
+List objects in path
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+var objectPath = "objectPath_example"; // String | objectPath
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.listObjects(containerId, objectPath, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+ **objectPath** | **String**| objectPath | 
+
+### Return type
+
+[**[ObjectResponse]**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listObjectsInFolder"></a>
+# **listObjectsInFolder**
+> [ObjectResponse] listObjectsInFolder(containerId)
+
+List objects in path
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.listObjectsInFolder(containerId, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+
+### Return type
+
+[**[ObjectResponse]**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listObjectsInFolder1"></a>
+# **listObjectsInFolder1**
+> [ObjectResponse] listObjectsInFolder1(containerId)
+
+List objects in path
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.listObjectsInFolder1(containerId, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+
+### Return type
+
+[**[ObjectResponse]**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listObjectsInFolder2"></a>
+# **listObjectsInFolder2**
+> [ObjectResponse] listObjectsInFolder2(containerId)
+
+List objects in path
+
+### Example
+```javascript
+var Storage = require('storage');
+var defaultClient = Storage.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new Storage.StorageApi();
+
+var containerId = "containerId_example"; // String | containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.listObjectsInFolder2(containerId, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId | 
+
+### Return type
+
+[**[ObjectResponse]**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateBackend"></a>
 # **updateBackend**

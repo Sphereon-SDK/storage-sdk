@@ -708,7 +708,7 @@ margin-bottom: 20px;
     "backendType" : {
       "type" : "string",
       "description" : "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.",
-      "enum" : [ "FILESYSTEM", "AMAZON_S3", "MS_AZURE_BLOB_STORAGE", "GOOGLE_CLOUD_STORAGE" ]
+      "enum" : [ "SHARED_STORAGE", "AMAZON_S3", "MS_AZURE_BLOB_STORAGE", "GOOGLE_CLOUD_STORAGE" ]
     },
     "name" : {
       "type" : "string"
@@ -729,6 +729,12 @@ margin-bottom: 20px;
   defs.BackendResponse = {
   "type" : "object",
   "properties" : {
+    "backendType" : {
+      "type" : "string",
+      "description" : "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.",
+      "readOnly" : true,
+      "enum" : [ "SHARED_STORAGE", "AMAZON_S3", "MS_AZURE_BLOB_STORAGE", "GOOGLE_CLOUD_STORAGE" ]
+    },
     "name" : {
       "type" : "string"
     },
@@ -835,13 +841,39 @@ margin-bottom: 20px;
     }
   }
 };
+  defs.ObjectResponse = {
+  "type" : "object",
+  "properties" : {
+    "fileName" : {
+      "type" : "string"
+    },
+    "containerName" : {
+      "type" : "string",
+      "description" : "The container in which the container will be stored or is stored."
+    },
+    "contentLength" : {
+      "type" : "integer",
+      "format" : "int64"
+    },
+    "folderName" : {
+      "type" : "string"
+    },
+    "state" : {
+      "type" : "string",
+      "enum" : [ "REQUEST", "CREATED", "UPDATED", "DELETED" ]
+    },
+    "contentType" : {
+      "type" : "string"
+    }
+  }
+};
   defs.RequestCredentials = {
   "type" : "object",
   "properties" : {
     "credentialType" : {
       "type" : "string",
       "description" : "The credentials class type to be used.",
-      "enum" : [ "com.sphereon.libs.storage.client.api.model.credentials.NoCredentials", "com.sphereon.libs.storage.client.api.model.credentials.OAuthCredentials", "com.sphereon.libs.storage.client.api.model.credentials.OAuth2Credentials", "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials" ]
+      "enum" : [ "com.sphereon.libs.storage.client.api.model.credentials.NoCredentials", "com.sphereon.libs.storage.client.api.model.credentials.OAuthCredentials", "com.sphereon.libs.storage.client.api.model.credentials.OAuth2Credentials", "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials", "com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters" ]
     },
     "oauth2Credentials" : {
       "description" : "The oauth2Credentials for this backend.",
@@ -904,6 +936,12 @@ margin-bottom: 20px;
                                     <li data-group="Storage" data-name="createObject" class="">
                                         <a href="#api-Storage-createObject">createObject</a>
                                     </li>
+                                    <li data-group="Storage" data-name="createObjectInFolder" class="">
+                                        <a href="#api-Storage-createObjectInFolder">createObjectInFolder</a>
+                                    </li>
+                                    <li data-group="Storage" data-name="createObjectInFolder1" class="">
+                                        <a href="#api-Storage-createObjectInFolder1">createObjectInFolder1</a>
+                                    </li>
                                     <li data-group="Storage" data-name="deleteBackend" class="">
                                         <a href="#api-Storage-deleteBackend">deleteBackend</a>
                                     </li>
@@ -924,6 +962,18 @@ margin-bottom: 20px;
                                     </li>
                                     <li data-group="Storage" data-name="listContainers" class="">
                                         <a href="#api-Storage-listContainers">listContainers</a>
+                                    </li>
+                                    <li data-group="Storage" data-name="listObjects" class="">
+                                        <a href="#api-Storage-listObjects">listObjects</a>
+                                    </li>
+                                    <li data-group="Storage" data-name="listObjectsInFolder" class="">
+                                        <a href="#api-Storage-listObjectsInFolder">listObjectsInFolder</a>
+                                    </li>
+                                    <li data-group="Storage" data-name="listObjectsInFolder1" class="">
+                                        <a href="#api-Storage-listObjectsInFolder1">listObjectsInFolder1</a>
+                                    </li>
+                                    <li data-group="Storage" data-name="listObjectsInFolder2" class="">
+                                        <a href="#api-Storage-listObjectsInFolder2">listObjectsInFolder2</a>
                                     </li>
                                     <li data-group="Storage" data-name="updateBackend" class="">
                                         <a href="#api-Storage-updateBackend">updateBackend</a>
@@ -2030,7 +2080,7 @@ try {
                                             <div class="clearfix"></div>
 
                                             <p></p>
-                                            <p>Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned</p>
+                                            <p></p>
                                             <p></p>
                                             <br />
 
@@ -2073,7 +2123,7 @@ try {
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="examples-Storage-createObject-0-curl">
                                                     <pre class="prettyprint"><code class="language-bsh">
-curl -X <span style="text-transform: uppercase;">post</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/objects/{objectPath}"
+curl -X <span style="text-transform: uppercase;">post</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/objects/{objectPath}?overwrite="
 
 
 </code></pre>
@@ -2102,8 +2152,10 @@ public class StorageApiExample {
         String containerId = containerId_example; // String | containerId
         String objectPath = objectPath_example; // String | objectPath
         file stream = /path/to/file.txt; // file | stream
+        Boolean overwrite = true; // Boolean | overwrite
         try {
-            apiInstance.createObject(containerId, objectPath, stream);
+            ObjectResponse result = apiInstance.createObject(containerId, objectPath, stream, overwrite);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StorageApi#createObject");
             e.printStackTrace();
@@ -2126,8 +2178,10 @@ public class StorageApiExample {
         String containerId = containerId_example; // String | containerId
         String objectPath = objectPath_example; // String | objectPath
         file stream = /path/to/file.txt; // file | stream
+        Boolean overwrite = true; // Boolean | overwrite
         try {
-            apiInstance.createObject(containerId, objectPath, stream);
+            ObjectResponse result = apiInstance.createObject(containerId, objectPath, stream, overwrite);
+            System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StorageApi#createObject");
             e.printStackTrace();
@@ -2155,6 +2209,7 @@ Configuration *apiConfig = [Configuration sharedConfig];
 String *containerId = containerId_example; // containerId
 String *objectPath = objectPath_example; // objectPath
 file *stream = /path/to/file.txt; // stream
+Boolean *overwrite = true; // overwrite (optional)
 
 StorageApi *apiInstance = [[StorageApi alloc] init];
 
@@ -2162,7 +2217,11 @@ StorageApi *apiInstance = [[StorageApi alloc] init];
 [apiInstance createObjectWith:containerId
     objectPath:objectPath
     stream:stream
-              completionHandler: ^(NSError* error) {
+    overwrite:overwrite
+              completionHandler: ^(ObjectResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -2187,15 +2246,18 @@ var objectPath = objectPath_example; // {String} objectPath
 
 var stream = /path/to/file.txt; // {file} stream
 
+var opts = { 
+  'overwrite': true // {Boolean} overwrite
+};
 
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.createObject(containerId, objectPath, stream, callback);
+api.createObject(containerId, objectPath, stream, opts, callback);
 
                                                     </code></pre>
                                                 </div>
@@ -2226,11 +2288,13 @@ namespace Example
             var containerId = containerId_example;  // String | containerId
             var objectPath = objectPath_example;  // String | objectPath
             var stream = new file(); // file | stream
+            var overwrite = true;  // Boolean | overwrite (optional) 
 
             try
             {
                 // Create a new object within a container
-                apiInstance.createObject(containerId, objectPath, stream);
+                ObjectResponse result = apiInstance.createObject(containerId, objectPath, stream, overwrite);
+                Debug.WriteLine(result);
             }
             catch (Exception e)
             {
@@ -2256,9 +2320,11 @@ $api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
 $containerId = containerId_example; // String | containerId
 $objectPath = objectPath_example; // String | objectPath
 $stream = /path/to/file.txt; // file | stream
+$overwrite = true; // Boolean | overwrite
 
 try {
-    $api_instance->createObject($containerId, $objectPath, $stream);
+    $result = $api_instance->createObject($containerId, $objectPath, $stream, $overwrite);
+    print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling StorageApi->createObject: ', $e->getMessage(), PHP_EOL;
 }
@@ -2354,6 +2420,47 @@ try {
 
 
 
+                                                <div class="methodsubtabletitle">Query parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">overwrite</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "overwrite",
+  "in" : "query",
+  "description" : "overwrite",
+  "required" : false,
+  "type" : "boolean"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_createObject_overwrite');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_createObject_overwrite"></div>
+</td>
+</tr>
+
+                                                </table>
 
                                             <h2>Responses</h2>
 
@@ -2388,7 +2495,10 @@ try {
                                                             <script>
                                                                 $(document).ready(function() {
                                                                     var schemaWrapper = {
-  "description" : "Object created"
+  "description" : "Object created",
+  "schema" : {
+    "$ref" : "#/definitions/ObjectResponse"
+  }
 };
                                                                     var schema = schemaWrapper.schema;
                                                                     schemaWrapper.definitions = defs;
@@ -2575,6 +2685,1226 @@ try {
                                                             </script>
                                                         </div>
                                                         <input id='examples-Storage-createObject-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-Storage-createObjectInFolder">
+
+                                        <article id="api-Storage-createObjectInFolder-0" data-group="User" data-name="createObjectInFolder" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>createObjectInFolder</h1>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p></p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/bucket-storage/0.7/containers/{containerId}/objects/**</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-Storage-createObjectInFolder-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-createObjectInFolder-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-Storage-createObjectInFolder-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-Storage-createObjectInFolder-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-createObjectInFolder-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-Storage-createObjectInFolder-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-Storage-createObjectInFolder-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-createObjectInFolder-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-createObjectInFolder-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-Storage-createObjectInFolder-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">post</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/objects/**?overwrite="
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import com.sphereon.sdk.storage.*;
+import com.sphereon.sdk.storage.auth.*;
+import com.sphereon.sdk.storage.model.*;
+import api.StorageApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        file stream = /path/to/file.txt; // file | stream
+        Boolean overwrite = true; // Boolean | overwrite
+        try {
+            ObjectResponse result = apiInstance.createObjectInFolder(containerId, stream, overwrite);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#createObjectInFolder");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import api.StorageApi;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        file stream = /path/to/file.txt; // file | stream
+        Boolean overwrite = true; // Boolean | overwrite
+        try {
+            ObjectResponse result = apiInstance.createObjectInFolder(containerId, stream, overwrite);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#createObjectInFolder");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2schema)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+String *containerId = containerId_example; // containerId
+file *stream = /path/to/file.txt; // stream
+Boolean *overwrite = true; // overwrite (optional)
+
+StorageApi *apiInstance = [[StorageApi alloc] init];
+
+// Create a new object within a container
+[apiInstance createObjectInFolderWith:containerId
+    stream:stream
+    overwrite:overwrite
+              completionHandler: ^(ObjectResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+var defaultClient = .ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = "YOUR ACCESS TOKEN"
+
+var api = new .StorageApi()
+
+var containerId = containerId_example; // {String} containerId
+
+var stream = /path/to/file.txt; // {file} stream
+
+var opts = { 
+  'overwrite': true // {Boolean} overwrite
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.createObjectInFolder(containerId, stream, opts, callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-Storage-createObjectInFolder-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using model;
+
+namespace Example
+{
+    public class createObjectInFolderExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // String | containerId
+            var stream = new file(); // file | stream
+            var overwrite = true;  // Boolean | overwrite (optional) 
+
+            try
+            {
+                // Create a new object within a container
+                ObjectResponse result = apiInstance.createObjectInFolder(containerId, stream, overwrite);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.createObjectInFolder: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure OAuth2 access token for authorization: oauth2schema
+com.sphereon.sdk.storage\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+$api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
+$containerId = containerId_example; // String | containerId
+$stream = /path/to/file.txt; // file | stream
+$overwrite = true; // Boolean | overwrite
+
+try {
+    $result = $api_instance->createObjectInFolder($containerId, $stream, $overwrite);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StorageApi->createObjectInFolder: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+                                                <div class="methodsubtabletitle">Path parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">containerId*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "containerId",
+  "in" : "path",
+  "description" : "containerId",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_createObjectInFolder_containerId');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_createObjectInFolder_containerId"></div>
+</td>
+</tr>
+
+                                                </table>
+
+
+
+
+                                                <div class="methodsubtabletitle">Query parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">overwrite</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "overwrite",
+  "in" : "query",
+  "description" : "overwrite",
+  "required" : false,
+  "type" : "boolean"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_createObjectInFolder_overwrite');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_createObjectInFolder_overwrite"></div>
+</td>
+</tr>
+
+                                                </table>
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 201 - Object created </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-createObjectInFolder-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-createObjectInFolder-schema">
+
+
+
+
+                                                        <div id='examples-Storage-createObjectInFolder-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Object created",
+  "schema" : {
+    "$ref" : "#/definitions/ObjectResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-createObjectInFolder-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-createObjectInFolder-schema-201');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-createObjectInFolder-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 400 - Invalid container or object request </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-createObjectInFolder-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-createObjectInFolder-schema">
+
+
+
+
+                                                        <div id='examples-Storage-createObjectInFolder-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Invalid container or object request",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-createObjectInFolder-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-createObjectInFolder-schema-400');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-createObjectInFolder-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 404 - Container was not found </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-createObjectInFolder-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-createObjectInFolder-schema">
+
+
+
+
+                                                        <div id='examples-Storage-createObjectInFolder-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Container was not found",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-createObjectInFolder-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-createObjectInFolder-schema-404');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-createObjectInFolder-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-Storage-createObjectInFolder1">
+
+                                        <article id="api-Storage-createObjectInFolder1-0" data-group="User" data-name="createObjectInFolder1" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>createObjectInFolder1</h1>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p></p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-Storage-createObjectInFolder1-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-createObjectInFolder1-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-Storage-createObjectInFolder1-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-Storage-createObjectInFolder1-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-createObjectInFolder1-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-Storage-createObjectInFolder1-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-Storage-createObjectInFolder1-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-createObjectInFolder1-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-createObjectInFolder1-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-Storage-createObjectInFolder1-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">post</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**?overwrite="
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import com.sphereon.sdk.storage.*;
+import com.sphereon.sdk.storage.auth.*;
+import com.sphereon.sdk.storage.model.*;
+import api.StorageApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        file stream = /path/to/file.txt; // file | stream
+        Boolean overwrite = true; // Boolean | overwrite
+        try {
+            ObjectResponse result = apiInstance.createObjectInFolder1(containerId, stream, overwrite);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#createObjectInFolder1");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import api.StorageApi;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        file stream = /path/to/file.txt; // file | stream
+        Boolean overwrite = true; // Boolean | overwrite
+        try {
+            ObjectResponse result = apiInstance.createObjectInFolder1(containerId, stream, overwrite);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#createObjectInFolder1");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2schema)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+String *containerId = containerId_example; // containerId
+file *stream = /path/to/file.txt; // stream
+Boolean *overwrite = true; // overwrite (optional)
+
+StorageApi *apiInstance = [[StorageApi alloc] init];
+
+// Create a new object within a container
+[apiInstance createObjectInFolder1With:containerId
+    stream:stream
+    overwrite:overwrite
+              completionHandler: ^(ObjectResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+var defaultClient = .ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = "YOUR ACCESS TOKEN"
+
+var api = new .StorageApi()
+
+var containerId = containerId_example; // {String} containerId
+
+var stream = /path/to/file.txt; // {file} stream
+
+var opts = { 
+  'overwrite': true // {Boolean} overwrite
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.createObjectInFolder1(containerId, stream, opts, callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using model;
+
+namespace Example
+{
+    public class createObjectInFolder1Example
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // String | containerId
+            var stream = new file(); // file | stream
+            var overwrite = true;  // Boolean | overwrite (optional) 
+
+            try
+            {
+                // Create a new object within a container
+                ObjectResponse result = apiInstance.createObjectInFolder1(containerId, stream, overwrite);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.createObjectInFolder1: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-createObjectInFolder1-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure OAuth2 access token for authorization: oauth2schema
+com.sphereon.sdk.storage\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+$api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
+$containerId = containerId_example; // String | containerId
+$stream = /path/to/file.txt; // file | stream
+$overwrite = true; // Boolean | overwrite
+
+try {
+    $result = $api_instance->createObjectInFolder1($containerId, $stream, $overwrite);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StorageApi->createObjectInFolder1: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+                                                <div class="methodsubtabletitle">Path parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">containerId*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "containerId",
+  "in" : "path",
+  "description" : "containerId",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_createObjectInFolder1_containerId');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_createObjectInFolder1_containerId"></div>
+</td>
+</tr>
+
+                                                </table>
+
+
+
+
+                                                <div class="methodsubtabletitle">Query parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">overwrite</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "overwrite",
+  "in" : "query",
+  "description" : "overwrite",
+  "required" : false,
+  "type" : "boolean"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_createObjectInFolder1_overwrite');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_createObjectInFolder1_overwrite"></div>
+</td>
+</tr>
+
+                                                </table>
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 201 - Object created </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-createObjectInFolder1-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-createObjectInFolder1-schema">
+
+
+
+
+                                                        <div id='examples-Storage-createObjectInFolder1-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Object created",
+  "schema" : {
+    "$ref" : "#/definitions/ObjectResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-createObjectInFolder1-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-createObjectInFolder1-schema-201');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-createObjectInFolder1-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 400 - Invalid container or object request </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-createObjectInFolder1-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-createObjectInFolder1-schema">
+
+
+
+
+                                                        <div id='examples-Storage-createObjectInFolder1-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Invalid container or object request",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-createObjectInFolder1-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-createObjectInFolder1-schema-400');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-createObjectInFolder1-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 404 - Container was not found </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-createObjectInFolder1-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-createObjectInFolder1-schema">
+
+
+
+
+                                                        <div id='examples-Storage-createObjectInFolder1-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Container was not found",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-createObjectInFolder1-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-createObjectInFolder1-schema-404');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-createObjectInFolder1-schema-data' type='hidden' value=''></input>
 
 
 
@@ -4351,7 +5681,7 @@ public class StorageApiExample {
         StorageApi apiInstance = new StorageApi();
         String backendId = backendId_example; // String | backendId
         try {
-            ContainerResponse result = apiInstance.getBackendInfo(backendId);
+            BackendResponse result = apiInstance.getBackendInfo(backendId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StorageApi#getBackendInfo");
@@ -4374,7 +5704,7 @@ public class StorageApiExample {
         StorageApi apiInstance = new StorageApi();
         String backendId = backendId_example; // String | backendId
         try {
-            ContainerResponse result = apiInstance.getBackendInfo(backendId);
+            BackendResponse result = apiInstance.getBackendInfo(backendId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StorageApi#getBackendInfo");
@@ -4406,7 +5736,7 @@ StorageApi *apiInstance = [[StorageApi alloc] init];
 
 // Get backend information
 [apiInstance getBackendInfoWith:backendId
-              completionHandler: ^(ContainerResponse output, NSError* error) {
+              completionHandler: ^(BackendResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4471,7 +5801,7 @@ namespace Example
             try
             {
                 // Get backend information
-                ContainerResponse result = apiInstance.getBackendInfo(backendId);
+                BackendResponse result = apiInstance.getBackendInfo(backendId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4598,7 +5928,7 @@ try {
                                                                     var schemaWrapper = {
   "description" : "Container info returned",
   "schema" : {
-    "$ref" : "#/definitions/ContainerResponse"
+    "$ref" : "#/definitions/BackendResponse"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -6049,7 +7379,7 @@ public class StorageApiExample {
         StorageApi apiInstance = new StorageApi();
         String backendId = backendId_example; // String | backendId
         try {
-            ContainerResponse result = apiInstance.listContainers(backendId);
+            array[ContainerResponse] result = apiInstance.listContainers(backendId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StorageApi#listContainers");
@@ -6072,7 +7402,7 @@ public class StorageApiExample {
         StorageApi apiInstance = new StorageApi();
         String backendId = backendId_example; // String | backendId
         try {
-            ContainerResponse result = apiInstance.listContainers(backendId);
+            array[ContainerResponse] result = apiInstance.listContainers(backendId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StorageApi#listContainers");
@@ -6104,7 +7434,7 @@ StorageApi *apiInstance = [[StorageApi alloc] init];
 
 // List containers
 [apiInstance listContainersWith:backendId
-              completionHandler: ^(ContainerResponse output, NSError* error) {
+              completionHandler: ^(array[ContainerResponse] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -6169,7 +7499,7 @@ namespace Example
             try
             {
                 // List containers
-                ContainerResponse result = apiInstance.listContainers(backendId);
+                array[ContainerResponse] result = apiInstance.listContainers(backendId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -6296,7 +7626,10 @@ try {
                                                                     var schemaWrapper = {
   "description" : "Container info returned",
   "schema" : {
-    "$ref" : "#/definitions/ContainerResponse"
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/ContainerResponse"
+    }
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -6484,6 +7817,2267 @@ try {
                                                             </script>
                                                         </div>
                                                         <input id='examples-Storage-listContainers-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-Storage-listObjects">
+
+                                        <article id="api-Storage-listObjects-0" data-group="User" data-name="listObjects" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>listObjects</h1>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p></p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/bucket-storage/0.7/containers/{containerId}/list/{objectPath}</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-Storage-listObjects-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjects-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-Storage-listObjects-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-Storage-listObjects-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjects-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjects-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-Storage-listObjects-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjects-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjects-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-Storage-listObjects-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">get</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/list/{objectPath}"
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-Storage-listObjects-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import com.sphereon.sdk.storage.*;
+import com.sphereon.sdk.storage.auth.*;
+import com.sphereon.sdk.storage.model.*;
+import api.StorageApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        String objectPath = objectPath_example; // String | objectPath
+        try {
+            array[ObjectResponse] result = apiInstance.listObjects(containerId, objectPath);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjects");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjects-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import api.StorageApi;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        String objectPath = objectPath_example; // String | objectPath
+        try {
+            array[ObjectResponse] result = apiInstance.listObjects(containerId, objectPath);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjects");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-Storage-listObjects-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjects-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2schema)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+String *containerId = containerId_example; // containerId
+String *objectPath = objectPath_example; // objectPath
+
+StorageApi *apiInstance = [[StorageApi alloc] init];
+
+// List objects in path
+[apiInstance listObjectsWith:containerId
+    objectPath:objectPath
+              completionHandler: ^(array[ObjectResponse] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-Storage-listObjects-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+var defaultClient = .ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = "YOUR ACCESS TOKEN"
+
+var api = new .StorageApi()
+
+var containerId = containerId_example; // {String} containerId
+
+var objectPath = objectPath_example; // {String} objectPath
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.listObjects(containerId, objectPath, callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-Storage-listObjects-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-Storage-listObjects-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using model;
+
+namespace Example
+{
+    public class listObjectsExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // String | containerId
+            var objectPath = objectPath_example;  // String | objectPath
+
+            try
+            {
+                // List objects in path
+                array[ObjectResponse] result = apiInstance.listObjects(containerId, objectPath);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.listObjects: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjects-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure OAuth2 access token for authorization: oauth2schema
+com.sphereon.sdk.storage\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+$api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
+$containerId = containerId_example; // String | containerId
+$objectPath = objectPath_example; // String | objectPath
+
+try {
+    $result = $api_instance->listObjects($containerId, $objectPath);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StorageApi->listObjects: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+                                                <div class="methodsubtabletitle">Path parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">containerId*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "containerId",
+  "in" : "path",
+  "description" : "containerId",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_listObjects_containerId');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_listObjects_containerId"></div>
+</td>
+</tr>
+
+                                                        <tr><td style="width:150px;">objectPath*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "objectPath",
+  "in" : "path",
+  "description" : "objectPath",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_listObjects_objectPath');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_listObjects_objectPath"></div>
+</td>
+</tr>
+
+                                                </table>
+
+
+
+
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 201 - Created </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjects-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjects-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjects-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Created",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/ObjectResponse"
+    }
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjects-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjects-schema-201');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjects-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 400 - Invalid container or object request </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjects-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjects-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjects-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Invalid container or object request",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjects-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjects-schema-400');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjects-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 404 - Container was not found </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjects-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjects-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjects-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Container was not found",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjects-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjects-schema-404');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjects-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-Storage-listObjectsInFolder">
+
+                                        <article id="api-Storage-listObjectsInFolder-0" data-group="User" data-name="listObjectsInFolder" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>listObjectsInFolder</h1>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p></p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/bucket-storage/0.7/containers/{containerId}/list</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-Storage-listObjectsInFolder-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjectsInFolder-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-Storage-listObjectsInFolder-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-Storage-listObjectsInFolder-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-Storage-listObjectsInFolder-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjectsInFolder-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-Storage-listObjectsInFolder-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">get</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/list"
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import com.sphereon.sdk.storage.*;
+import com.sphereon.sdk.storage.auth.*;
+import com.sphereon.sdk.storage.model.*;
+import api.StorageApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        try {
+            array[ObjectResponse] result = apiInstance.listObjectsInFolder(containerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjectsInFolder");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import api.StorageApi;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        try {
+            array[ObjectResponse] result = apiInstance.listObjectsInFolder(containerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjectsInFolder");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2schema)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+String *containerId = containerId_example; // containerId
+
+StorageApi *apiInstance = [[StorageApi alloc] init];
+
+// List objects in path
+[apiInstance listObjectsInFolderWith:containerId
+              completionHandler: ^(array[ObjectResponse] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+var defaultClient = .ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = "YOUR ACCESS TOKEN"
+
+var api = new .StorageApi()
+
+var containerId = containerId_example; // {String} containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.listObjectsInFolder(containerId, callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using model;
+
+namespace Example
+{
+    public class listObjectsInFolderExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // String | containerId
+
+            try
+            {
+                // List objects in path
+                array[ObjectResponse] result = apiInstance.listObjectsInFolder(containerId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.listObjectsInFolder: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure OAuth2 access token for authorization: oauth2schema
+com.sphereon.sdk.storage\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+$api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
+$containerId = containerId_example; // String | containerId
+
+try {
+    $result = $api_instance->listObjectsInFolder($containerId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StorageApi->listObjectsInFolder: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+                                                <div class="methodsubtabletitle">Path parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">containerId*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "containerId",
+  "in" : "path",
+  "description" : "containerId",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_listObjectsInFolder_containerId');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_listObjectsInFolder_containerId"></div>
+</td>
+</tr>
+
+                                                </table>
+
+
+
+
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 201 - Created </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Created",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/ObjectResponse"
+    }
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder-schema-201');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 400 - Invalid container or object request </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Invalid container or object request",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder-schema-400');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 404 - Container was not found </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Container was not found",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder-schema-404');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-Storage-listObjectsInFolder1">
+
+                                        <article id="api-Storage-listObjectsInFolder1-0" data-group="User" data-name="listObjectsInFolder1" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>listObjectsInFolder1</h1>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p></p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/bucket-storage/0.7/containers/{containerId}/list/**</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-Storage-listObjectsInFolder1-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjectsInFolder1-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-Storage-listObjectsInFolder1-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-Storage-listObjectsInFolder1-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder1-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder1-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-Storage-listObjectsInFolder1-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder1-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjectsInFolder1-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-Storage-listObjectsInFolder1-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">get</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/list/**"
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import com.sphereon.sdk.storage.*;
+import com.sphereon.sdk.storage.auth.*;
+import com.sphereon.sdk.storage.model.*;
+import api.StorageApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        try {
+            array[ObjectResponse] result = apiInstance.listObjectsInFolder1(containerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjectsInFolder1");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import api.StorageApi;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        try {
+            array[ObjectResponse] result = apiInstance.listObjectsInFolder1(containerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjectsInFolder1");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2schema)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+String *containerId = containerId_example; // containerId
+
+StorageApi *apiInstance = [[StorageApi alloc] init];
+
+// List objects in path
+[apiInstance listObjectsInFolder1With:containerId
+              completionHandler: ^(array[ObjectResponse] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+var defaultClient = .ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = "YOUR ACCESS TOKEN"
+
+var api = new .StorageApi()
+
+var containerId = containerId_example; // {String} containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.listObjectsInFolder1(containerId, callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using model;
+
+namespace Example
+{
+    public class listObjectsInFolder1Example
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // String | containerId
+
+            try
+            {
+                // List objects in path
+                array[ObjectResponse] result = apiInstance.listObjectsInFolder1(containerId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.listObjectsInFolder1: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder1-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure OAuth2 access token for authorization: oauth2schema
+com.sphereon.sdk.storage\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+$api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
+$containerId = containerId_example; // String | containerId
+
+try {
+    $result = $api_instance->listObjectsInFolder1($containerId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StorageApi->listObjectsInFolder1: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+                                                <div class="methodsubtabletitle">Path parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">containerId*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "containerId",
+  "in" : "path",
+  "description" : "containerId",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_listObjectsInFolder1_containerId');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_listObjectsInFolder1_containerId"></div>
+</td>
+</tr>
+
+                                                </table>
+
+
+
+
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 201 - Created </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder1-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder1-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder1-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Created",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/ObjectResponse"
+    }
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder1-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder1-schema-201');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder1-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 400 - Invalid container or object request </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder1-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder1-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder1-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Invalid container or object request",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder1-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder1-schema-400');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder1-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 404 - Container was not found </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder1-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder1-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder1-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Container was not found",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder1-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder1-schema-404');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder1-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+
+
+
+
+
+                                        </article>
+
+                                    </div>
+
+                                    <hr>
+
+
+
+
+
+
+
+
+                                    <div id="api-Storage-listObjectsInFolder2">
+
+                                        <article id="api-Storage-listObjectsInFolder2-0" data-group="User" data-name="listObjectsInFolder2" data-version="0">
+                                            <div class="pull-left">
+                                                <h1>listObjectsInFolder2</h1>
+                                            </div>
+                                            <div class="pull-right">
+
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <p></p>
+                                            <p></p>
+                                            <p></p>
+                                            <br />
+
+                                            <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**</span></code></pre>
+
+                                            <p>
+                                                <h3>Usage and SDK Samples</h3>
+                                            </p>
+
+                                            <ul class="nav nav-tabs nav-tabs-examples">
+                                                <li class="active">
+                                                    <a href="#examples-Storage-listObjectsInFolder2-0-curl">Curl</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjectsInFolder2-0-java">Java</a>
+            </li>
+            <li class="">
+              <a href="#examples-Storage-listObjectsInFolder2-0-android">Android</a>
+            </li>
+            <!--<li class="">
+              <a href="#examples-Storage-listObjectsInFolder2-0-groovy">Groovy</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder2-0-objc">Obj-C</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder2-0-javascript">JavaScript</a>
+                                                </li>
+                                                <!--<li class="">
+              <a href="#examples-Storage-listObjectsInFolder2-0-angular">Angular</a>
+            </li>-->
+                                                <li class="">
+                                                    <a href="#examples-Storage-listObjectsInFolder2-0-csharp">C#</a>
+                                                </li>
+                                                <li class="">
+              <a href="#examples-Storage-listObjectsInFolder2-0-php">PHP</a>
+            </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="examples-Storage-listObjectsInFolder2-0-curl">
+                                                    <pre class="prettyprint"><code class="language-bsh">
+curl -X <span style="text-transform: uppercase;">get</span> -H "apiKey: [[apiKey]]" -H "apiSecret: [[apiSecret]]" "https://gw.api.cloud.sphereon.com//bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**"
+
+
+</code></pre>
+                                                </div>
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-java">
+                                                  <pre class="prettyprint"><code class="language-java">
+import com.sphereon.sdk.storage.*;
+import com.sphereon.sdk.storage.auth.*;
+import com.sphereon.sdk.storage.model.*;
+import api.StorageApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        try {
+            array[ObjectResponse] result = apiInstance.listObjectsInFolder2(containerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjectsInFolder2");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-android">
+                                                  <pre class="prettyprint"><code class="language-java">
+import api.StorageApi;
+
+public class StorageApiExample {
+
+    public static void main(String[] args) {
+        StorageApi apiInstance = new StorageApi();
+        String containerId = containerId_example; // String | containerId
+        try {
+            array[ObjectResponse] result = apiInstance.listObjectsInFolder2(containerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StorageApi#listObjectsInFolder2");
+            e.printStackTrace();
+        }
+    }
+}
+
+                                                  </code></pre>
+          </div>
+
+          <!--
+          <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-groovy">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div> -->
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-objc">
+                                                    <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: oauth2schema)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
+
+
+String *containerId = containerId_example; // containerId
+
+StorageApi *apiInstance = [[StorageApi alloc] init];
+
+// List objects in path
+[apiInstance listObjectsInFolder2With:containerId
+              completionHandler: ^(array[ObjectResponse] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+
+                                                    </code></pre>
+                                                </div>
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-javascript">
+                                                    <pre class="prettyprint"><code class="language-js">
+var  = require('');
+var defaultClient = .ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2schema
+var oauth2schema = defaultClient.authentications['oauth2schema'];
+oauth2schema.accessToken = "YOUR ACCESS TOKEN"
+
+var api = new .StorageApi()
+
+var containerId = containerId_example; // {String} containerId
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.listObjectsInFolder2(containerId, callback);
+
+                                                    </code></pre>
+                                                </div>
+
+                                                <!--<div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-angular">
+            <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+          </div>-->
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-csharp">
+                                                    <pre class="prettyprint"><code class="language-cs">
+using System;
+using System.Diagnostics;
+using .Api;
+using .Client;
+using model;
+
+namespace Example
+{
+    public class listObjectsInFolder2Example
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // String | containerId
+
+            try
+            {
+                // List objects in path
+                array[ObjectResponse] result = apiInstance.listObjectsInFolder2(containerId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.listObjectsInFolder2: " + e.Message );
+            }
+        }
+    }
+}
+
+                                                    </code></pre>
+                                                </div>
+
+
+                                                <div class="tab-pane" id="examples-Storage-listObjectsInFolder2-0-php">
+                                                  <pre class="prettyprint"><code class="language-php">
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure OAuth2 access token for authorization: oauth2schema
+com.sphereon.sdk.storage\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+$api_instance = new com.sphereon.sdk.storage\Api\StorageApi();
+$containerId = containerId_example; // String | containerId
+
+try {
+    $result = $api_instance->listObjectsInFolder2($containerId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StorageApi->listObjectsInFolder2: ', $e->getMessage(), PHP_EOL;
+}
+
+                                                  </code></pre>
+          </div>
+
+                                            </div>
+
+
+
+
+
+                                            <h2>Parameters</h2>
+
+
+
+                                                <div class="methodsubtabletitle">Path parameters</div>
+                                                <table id="methodsubtable">
+                                                    <tr>
+                                                        <th width="150px">Name</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                    <!---->
+                                                        <tr><td style="width:150px;">containerId*</td>
+<td>
+
+
+<script>
+												$(document).ready(function() {
+													var schemaWrapper = {
+  "name" : "containerId",
+  "in" : "path",
+  "description" : "containerId",
+  "required" : true,
+  "type" : "string"
+};
+													var schema = schemaWrapper;
+
+
+
+
+													var view = new JSONSchemaView(schema,0);
+													var result = $('#d2e199_listObjectsInFolder2_containerId');
+													result.empty();
+													result.append(view.render());
+
+
+
+
+
+												});
+												</script>
+												<div id="d2e199_listObjectsInFolder2_containerId"></div>
+</td>
+</tr>
+
+                                                </table>
+
+
+
+
+
+                                            <h2>Responses</h2>
+
+                                                <h3> Status: 201 - Created </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder2-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder2-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder2-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Created",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/ObjectResponse"
+    }
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder2-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder2-schema-201');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder2-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 400 - Invalid container or object request </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder2-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder2-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder2-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Invalid container or object request",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder2-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder2-schema-400');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder2-schema-data' type='hidden' value=''></input>
+
+
+
+
+
+
+                                                    </div>
+
+
+
+
+                                                </div>
+
+
+
+
+                                                <h3> Status: 404 - Container was not found </h3>
+
+                                                <ul class="nav nav-tabs nav-tabs-examples" >
+
+                                                    <li class="active">
+                                                        <a href="#examples-Storage-listObjectsInFolder2-schema">Schema</a>
+                                                    </li>
+
+
+                                                </ul>
+
+
+
+
+
+
+
+                                                <div class="tab-content" style='margin-bottom: 10px;'>
+
+
+
+                                                    <div class="tab-pane active" id="examples-Storage-listObjectsInFolder2-schema">
+
+
+
+
+                                                        <div id='examples-Storage-listObjectsInFolder2-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var schemaWrapper = {
+  "description" : "Container was not found",
+  "schema" : {
+    "$ref" : "#/definitions/ErrorResponse"
+  }
+};
+                                                                    var schema = schemaWrapper.schema;
+                                                                    schemaWrapper.definitions = defs;
+                                                                    //console.log(JSON.stringify(schema))
+                                                                    JsonRefs.resolveRefs(schemaWrapper, {
+                                                                        "depth": 3,
+                                                                        "resolveRemoteRefs": false,
+                                                                        "resolveFileRefs": false
+                                                                    }, function(err, resolved, metadata) {
+
+                                                                        //console.log(JSON.stringify(resolved));
+
+
+
+                                                                        var view = new JSONSchemaView(resolved.schema, 3);
+                                                                        $('#examples-Storage-listObjectsInFolder2-schema-data').val(JSON.stringify(resolved.schema));
+                                                                        var result = $('#examples-Storage-listObjectsInFolder2-schema-404');
+                                                                        result.empty();
+                                                                        result.append(view.render());
+                                                                    });
+
+
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                        <input id='examples-Storage-listObjectsInFolder2-schema-data' type='hidden' value=''></input>
 
 
 
@@ -7763,7 +11357,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2017-08-04T10:21:51.605+02:00
+                    Generated 2017-08-16T15:34:29.501+02:00
                 </div>
             </div>
         </div>

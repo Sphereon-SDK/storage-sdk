@@ -25,12 +25,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/BackendRequest', 'SphereonSdkStorage/model/BackendResponse', 'SphereonSdkStorage/model/ContainerRequest', 'SphereonSdkStorage/model/ContainerResponse', 'SphereonSdkStorage/model/Error', 'SphereonSdkStorage/model/ErrorResponse', 'SphereonSdkStorage/model/OAuth2Credentials', 'SphereonSdkStorage/model/OAuthCredentials', 'SphereonSdkStorage/model/RequestCredentials', 'SphereonSdkStorage/model/UsernamePasswordCredentials', 'SphereonSdkStorage/api/StorageApi'], factory);
+    define(['SphereonSdkStorage/ApiClient', 'SphereonSdkStorage/model/BackendRequest', 'SphereonSdkStorage/model/BackendResponse', 'SphereonSdkStorage/model/ContainerRequest', 'SphereonSdkStorage/model/ContainerResponse', 'SphereonSdkStorage/model/Error', 'SphereonSdkStorage/model/ErrorResponse', 'SphereonSdkStorage/model/OAuth2Credentials', 'SphereonSdkStorage/model/OAuthCredentials', 'SphereonSdkStorage/model/ObjectResponse', 'SphereonSdkStorage/model/RequestCredentials', 'SphereonSdkStorage/model/UsernamePasswordCredentials', 'SphereonSdkStorage/api/StorageApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/BackendRequest'), require('./model/BackendResponse'), require('./model/ContainerRequest'), require('./model/ContainerResponse'), require('./model/Error'), require('./model/ErrorResponse'), require('./model/OAuth2Credentials'), require('./model/OAuthCredentials'), require('./model/RequestCredentials'), require('./model/UsernamePasswordCredentials'), require('./api/StorageApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/BackendRequest'), require('./model/BackendResponse'), require('./model/ContainerRequest'), require('./model/ContainerResponse'), require('./model/Error'), require('./model/ErrorResponse'), require('./model/OAuth2Credentials'), require('./model/OAuthCredentials'), require('./model/ObjectResponse'), require('./model/RequestCredentials'), require('./model/UsernamePasswordCredentials'), require('./api/StorageApi'));
   }
-}(function(ApiClient, BackendRequest, BackendResponse, ContainerRequest, ContainerResponse, Error, ErrorResponse, OAuth2Credentials, OAuthCredentials, RequestCredentials, UsernamePasswordCredentials, StorageApi) {
+}(function(ApiClient, BackendRequest, BackendResponse, ContainerRequest, ContainerResponse, Error, ErrorResponse, OAuth2Credentials, OAuthCredentials, ObjectResponse, RequestCredentials, UsernamePasswordCredentials, StorageApi) {
   'use strict';
 
   /**
@@ -110,6 +110,11 @@
      * @property {module:SphereonSdkStorage/model/OAuthCredentials}
      */
     OAuthCredentials: OAuthCredentials,
+    /**
+     * The ObjectResponse model constructor.
+     * @property {module:SphereonSdkStorage/model/ObjectResponse}
+     */
+    ObjectResponse: ObjectResponse,
     /**
      * The RequestCredentials model constructor.
      * @property {module:SphereonSdkStorage/model/RequestCredentials}

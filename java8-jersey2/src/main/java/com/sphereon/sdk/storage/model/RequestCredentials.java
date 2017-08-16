@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * RequestCredentials
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:28.434+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-16T15:34:02.364+02:00")
 public class RequestCredentials {
   /**
    * The credentials class type to be used.
@@ -49,7 +49,9 @@ public class RequestCredentials {
     
     OAUTH2CREDENTIALS("com.sphereon.libs.storage.client.api.model.credentials.OAuth2Credentials"),
     
-    USERNAMEPASSWORDCREDENTIALS("com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials");
+    USERNAMEPASSWORDCREDENTIALS("com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials"),
+    
+    CLAIMPARAMETERS("com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters");
 
     private String value;
 

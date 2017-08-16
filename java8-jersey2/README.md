@@ -91,13 +91,15 @@ public class StorageApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://gw.api.cloud.sphereon.com/*
+All URIs are relative to *https://gw.api.cloud.sphereon.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *StorageApi* | [**createBackend**](docs/StorageApi.md#createBackend) | **POST** /bucket-storage/0.7/backends | Create a new backend
 *StorageApi* | [**createContainer**](docs/StorageApi.md#createContainer) | **POST** /bucket-storage/0.7/containers | Create a new container
 *StorageApi* | [**createObject**](docs/StorageApi.md#createObject) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Create a new object within a container
+*StorageApi* | [**createObjectInFolder**](docs/StorageApi.md#createObjectInFolder) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/** | Create a new object within a container
+*StorageApi* | [**createObjectInFolder1**](docs/StorageApi.md#createObjectInFolder1) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/** | Create a new object within a container
 *StorageApi* | [**deleteBackend**](docs/StorageApi.md#deleteBackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
 *StorageApi* | [**deleteContainer**](docs/StorageApi.md#deleteContainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
 *StorageApi* | [**deleteObject**](docs/StorageApi.md#deleteObject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
@@ -105,6 +107,10 @@ Class | Method | HTTP request | Description
 *StorageApi* | [**getContainerInfo**](docs/StorageApi.md#getContainerInfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
 *StorageApi* | [**getObject**](docs/StorageApi.md#getObject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 *StorageApi* | [**listContainers**](docs/StorageApi.md#listContainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
+*StorageApi* | [**listObjects**](docs/StorageApi.md#listObjects) | **GET** /bucket-storage/0.7/containers/{containerId}/list/{objectPath} | List objects in path
+*StorageApi* | [**listObjectsInFolder**](docs/StorageApi.md#listObjectsInFolder) | **GET** /bucket-storage/0.7/containers/{containerId}/list | List objects in path
+*StorageApi* | [**listObjectsInFolder1**](docs/StorageApi.md#listObjectsInFolder1) | **GET** /bucket-storage/0.7/containers/{containerId}/list/** | List objects in path
+*StorageApi* | [**listObjectsInFolder2**](docs/StorageApi.md#listObjectsInFolder2) | **GET** /bucket-storage/0.7/containers/{containerId}/list/{objectPath}/** | List objects in path
 *StorageApi* | [**updateBackend**](docs/StorageApi.md#updateBackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
 *StorageApi* | [**updateContainer**](docs/StorageApi.md#updateContainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -119,6 +125,7 @@ Class | Method | HTTP request | Description
  - [ErrorResponse](docs/ErrorResponse.md)
  - [OAuth2Credentials](docs/OAuth2Credentials.md)
  - [OAuthCredentials](docs/OAuthCredentials.md)
+ - [ObjectResponse](docs/ObjectResponse.md)
  - [RequestCredentials](docs/RequestCredentials.md)
  - [UsernamePasswordCredentials](docs/UsernamePasswordCredentials.md)
 
@@ -130,7 +137,7 @@ Authentication schemes defined for the API:
 
 - **Type**: OAuth
 - **Flow**: application
-- **Authorizatoin URL**: 
+- **Authorization URL**: 
 - **Scopes**: 
   - global: accessEverything
 

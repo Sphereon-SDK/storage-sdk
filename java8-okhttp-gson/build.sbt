@@ -1,7 +1,7 @@
 lazy val root = (project in file(".")).
   settings(
     organization := "com.sphereon.sdk",
-    name := "storage-sdk-java8",
+    name := "template-processor-sdk-java8",
     version := "0.7.0",
     scalaVersion := "2.11.4",
     scalacOptions ++= Seq("-feature"),

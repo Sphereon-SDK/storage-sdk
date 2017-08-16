@@ -21,6 +21,8 @@ Name | Type | Description | Notes
 
 * `UsernamePasswordCredentials` (value: `"com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials"`)
 
+* `ClaimParameters` (value: `"com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters"`)
+
 
 
 

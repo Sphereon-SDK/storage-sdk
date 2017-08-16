@@ -12,6 +12,7 @@ import com.sphereon.sdk.storage.model.BackendResponse;
 import com.sphereon.sdk.storage.model.ErrorResponse;
 import com.sphereon.sdk.storage.model.ContainerResponse;
 import com.sphereon.sdk.storage.model.ContainerRequest;
+import com.sphereon.sdk.storage.model.ObjectResponse;
 import java.io.File;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:28.434+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-16T15:34:02.364+02:00")
 public class StorageApi {
   private ApiClient apiClient;
 
@@ -123,13 +124,15 @@ public class StorageApi {
       }
   /**
    * Create a new object within a container
-   * Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+   * 
    * @param containerId containerId (required)
    * @param objectPath objectPath (required)
    * @param stream stream (required)
+   * @param overwrite overwrite (optional)
+   * @return ObjectResponse
    * @throws ApiException if fails to make API call
    */
-  public void createObject(String containerId, String objectPath, File stream) throws ApiException {
+  public ObjectResponse createObject(String containerId, String objectPath, File stream, Boolean overwrite) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'containerId' is set
@@ -157,13 +160,14 @@ public class StorageApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "overwrite", overwrite));
 
     
     if (stream != null)
       localVarFormParams.put("stream", stream);
 
     final String[] localVarAccepts = {
-      "*_/_*"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -174,9 +178,113 @@ public class StorageApi {
 
     String[] localVarAuthNames = new String[] { "oauth2schema" };
 
+    GenericType<ObjectResponse> localVarReturnType = new GenericType<ObjectResponse>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Create a new object within a container
+   * 
+   * @param containerId containerId (required)
+   * @param stream stream (required)
+   * @param overwrite overwrite (optional)
+   * @return ObjectResponse
+   * @throws ApiException if fails to make API call
+   */
+  public ObjectResponse createObjectInFolder(String containerId, File stream, Boolean overwrite) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'containerId' is set
+    if (containerId == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerId' when calling createObjectInFolder");
+    }
+    
+    // verify the required parameter 'stream' is set
+    if (stream == null) {
+      throw new ApiException(400, "Missing the required parameter 'stream' when calling createObjectInFolder");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/**".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
 
-    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-  }
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "overwrite", overwrite));
+
+    
+    if (stream != null)
+      localVarFormParams.put("stream", stream);
+
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "multipart/form-data"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<ObjectResponse> localVarReturnType = new GenericType<ObjectResponse>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Create a new object within a container
+   * 
+   * @param containerId containerId (required)
+   * @param stream stream (required)
+   * @param overwrite overwrite (optional)
+   * @return ObjectResponse
+   * @throws ApiException if fails to make API call
+   */
+  public ObjectResponse createObjectInFolder1(String containerId, File stream, Boolean overwrite) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'containerId' is set
+    if (containerId == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerId' when calling createObjectInFolder1");
+    }
+    
+    // verify the required parameter 'stream' is set
+    if (stream == null) {
+      throw new ApiException(400, "Missing the required parameter 'stream' when calling createObjectInFolder1");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "overwrite", overwrite));
+
+    
+    if (stream != null)
+      localVarFormParams.put("stream", stream);
+
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "multipart/form-data"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<ObjectResponse> localVarReturnType = new GenericType<ObjectResponse>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
   /**
    * Delete a backend
    * Delete a backend
@@ -315,10 +423,10 @@ public class StorageApi {
    * Get backend information
    * Get information on a backend
    * @param backendId backendId (required)
-   * @return ContainerResponse
+   * @return BackendResponse
    * @throws ApiException if fails to make API call
    */
-  public ContainerResponse getBackendInfo(String backendId) throws ApiException {
+  public BackendResponse getBackendInfo(String backendId) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'backendId' is set
@@ -350,7 +458,7 @@ public class StorageApi {
 
     String[] localVarAuthNames = new String[] { "oauth2schema" };
 
-    GenericType<ContainerResponse> localVarReturnType = new GenericType<ContainerResponse>() {};
+    GenericType<BackendResponse> localVarReturnType = new GenericType<BackendResponse>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
@@ -448,10 +556,10 @@ public class StorageApi {
    * List containers
    * List containers for the given backend name or id.
    * @param backendId backendId (required)
-   * @return ContainerResponse
+   * @return List<ContainerResponse>
    * @throws ApiException if fails to make API call
    */
-  public ContainerResponse listContainers(String backendId) throws ApiException {
+  public List<ContainerResponse> listContainers(String backendId) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'backendId' is set
@@ -483,7 +591,182 @@ public class StorageApi {
 
     String[] localVarAuthNames = new String[] { "oauth2schema" };
 
-    GenericType<ContainerResponse> localVarReturnType = new GenericType<ContainerResponse>() {};
+    GenericType<List<ContainerResponse>> localVarReturnType = new GenericType<List<ContainerResponse>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @param objectPath objectPath (required)
+   * @return List<ObjectResponse>
+   * @throws ApiException if fails to make API call
+   */
+  public List<ObjectResponse> listObjects(String containerId, String objectPath) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'containerId' is set
+    if (containerId == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerId' when calling listObjects");
+    }
+    
+    // verify the required parameter 'objectPath' is set
+    if (objectPath == null) {
+      throw new ApiException(400, "Missing the required parameter 'objectPath' when calling listObjects");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()))
+      .replaceAll("\\{" + "objectPath" + "\\}", apiClient.escapeString(objectPath.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<List<ObjectResponse>> localVarReturnType = new GenericType<List<ObjectResponse>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @return List<ObjectResponse>
+   * @throws ApiException if fails to make API call
+   */
+  public List<ObjectResponse> listObjectsInFolder(String containerId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'containerId' is set
+    if (containerId == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerId' when calling listObjectsInFolder");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<List<ObjectResponse>> localVarReturnType = new GenericType<List<ObjectResponse>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @return List<ObjectResponse>
+   * @throws ApiException if fails to make API call
+   */
+  public List<ObjectResponse> listObjectsInFolder1(String containerId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'containerId' is set
+    if (containerId == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerId' when calling listObjectsInFolder1");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/**".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<List<ObjectResponse>> localVarReturnType = new GenericType<List<ObjectResponse>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @return List<ObjectResponse>
+   * @throws ApiException if fails to make API call
+   */
+  public List<ObjectResponse> listObjectsInFolder2(String containerId) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'containerId' is set
+    if (containerId == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerId' when calling listObjectsInFolder2");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "oauth2schema" };
+
+    GenericType<List<ObjectResponse>> localVarReturnType = new GenericType<List<ObjectResponse>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**

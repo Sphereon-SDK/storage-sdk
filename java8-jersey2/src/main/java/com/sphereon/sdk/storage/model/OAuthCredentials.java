@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * OAuthCredentials
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:28.434+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-16T15:34:02.364+02:00")
 public class OAuthCredentials {
   /**
    * Gets or Sets authenticationProvider

@@ -60,6 +60,7 @@
 
 
 
+
   };
 
   /**
@@ -73,6 +74,9 @@
     if (data) {
       obj = obj || new exports();
 
+      if (data.hasOwnProperty('backendType')) {
+        obj['backendType'] = ApiClient.convertToType(data['backendType'], 'String');
+      }
       if (data.hasOwnProperty('name')) {
         obj['name'] = ApiClient.convertToType(data['name'], 'String');
       }
@@ -89,6 +93,11 @@
     return obj;
   }
 
+  /**
+   * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
+   * @member {module:SphereonSdkStorage/model/BackendResponse.BackendTypeEnum} backendType
+   */
+  exports.prototype['backendType'] = undefined;
   /**
    * @member {String} name
    */
@@ -107,6 +116,33 @@
    */
   exports.prototype['parentId'] = undefined;
 
+
+  /**
+   * Allowed values for the <code>backendType</code> property.
+   * @enum {String}
+   * @readonly
+   */
+  exports.BackendTypeEnum = {
+    /**
+     * value: "SHARED_STORAGE"
+     * @const
+     */
+    "SHARED_STORAGE": "SHARED_STORAGE",
+    /**
+     * value: "AMAZON_S3"
+     * @const
+     */
+    "AMAZON_S3": "AMAZON_S3",
+    /**
+     * value: "MS_AZURE_BLOB_STORAGE"
+     * @const
+     */
+    "MS_AZURE_BLOB_STORAGE": "MS_AZURE_BLOB_STORAGE",
+    /**
+     * value: "GOOGLE_CLOUD_STORAGE"
+     * @const
+     */
+    "GOOGLE_CLOUD_STORAGE": "GOOGLE_CLOUD_STORAGE"  };
 
   /**
    * Allowed values for the <code>state</code> property.

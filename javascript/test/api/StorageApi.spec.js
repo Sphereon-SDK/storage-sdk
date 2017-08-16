@@ -89,6 +89,26 @@
         done();
       });
     });
+    describe('createObjectInFolder', function() {
+      it('should call createObjectInFolder successfully', function(done) {
+        //uncomment below and update the code to test createObjectInFolder
+        //instance.createObjectInFolder(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('createObjectInFolder1', function() {
+      it('should call createObjectInFolder1 successfully', function(done) {
+        //uncomment below and update the code to test createObjectInFolder1
+        //instance.createObjectInFolder1(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('deleteBackend', function() {
       it('should call deleteBackend successfully', function(done) {
         //uncomment below and update the code to test deleteBackend
@@ -153,6 +173,46 @@
       it('should call listContainers successfully', function(done) {
         //uncomment below and update the code to test listContainers
         //instance.listContainers(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('listObjects', function() {
+      it('should call listObjects successfully', function(done) {
+        //uncomment below and update the code to test listObjects
+        //instance.listObjects(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('listObjectsInFolder', function() {
+      it('should call listObjectsInFolder successfully', function(done) {
+        //uncomment below and update the code to test listObjectsInFolder
+        //instance.listObjectsInFolder(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('listObjectsInFolder1', function() {
+      it('should call listObjectsInFolder1 successfully', function(done) {
+        //uncomment below and update the code to test listObjectsInFolder1
+        //instance.listObjectsInFolder1(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('listObjectsInFolder2', function() {
+      it('should call listObjectsInFolder2 successfully', function(done) {
+        //uncomment below and update the code to test listObjectsInFolder2
+        //instance.listObjectsInFolder2(pet, function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

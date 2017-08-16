@@ -115,15 +115,49 @@
         "consumes": ["application/json"]
       }
     },
+    "/bucket-storage/0.7/containers/{containerId}/list": {"get": {
+      "summary": "List objects in path",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json"],
+      "operationId": "listObjectsInFolder",
+      "responses": {
+        "201": {
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ObjectResponse"}
+          },
+          "description": "Created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid container or object request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Container was not found"
+        }
+      },
+      "parameters": [{
+        "in": "path",
+        "name": "containerId",
+        "description": "containerId",
+        "type": "string",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json"]
+    }},
     "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}": {
       "post": {
         "summary": "Create a new object within a container",
         "security": [{"oauth2schema": ["global"]}],
-        "produces": ["*/*"],
-        "description": "Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned",
+        "produces": ["application/json"],
         "operationId": "createObject",
         "responses": {
-          "201": {"description": "Object created"},
+          "201": {
+            "schema": {"$ref": "#/definitions/ObjectResponse"},
+            "description": "Object created"
+          },
           "400": {
             "schema": {"$ref": "#/definitions/ErrorResponse"},
             "description": "Invalid container or object request"
@@ -147,6 +181,13 @@
             "description": "objectPath",
             "type": "string",
             "required": true
+          },
+          {
+            "in": "query",
+            "name": "overwrite",
+            "description": "overwrite",
+            "type": "boolean",
+            "required": false
           },
           {
             "in": "formData",
@@ -249,7 +290,10 @@
       "operationId": "listContainers",
       "responses": {
         "200": {
-          "schema": {"$ref": "#/definitions/ContainerResponse"},
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ContainerResponse"}
+          },
           "description": "Container info returned"
         },
         "400": {
@@ -319,7 +363,7 @@
         "operationId": "getBackendInfo",
         "responses": {
           "200": {
-            "schema": {"$ref": "#/definitions/ContainerResponse"},
+            "schema": {"$ref": "#/definitions/BackendResponse"},
             "description": "Container info returned"
           },
           "400": {
@@ -368,6 +412,51 @@
         "consumes": ["application/json"]
       }
     },
+    "/bucket-storage/0.7/containers/{containerId}/objects/**": {"post": {
+      "summary": "Create a new object within a container",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json"],
+      "operationId": "createObjectInFolder",
+      "responses": {
+        "201": {
+          "schema": {"$ref": "#/definitions/ObjectResponse"},
+          "description": "Object created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid container or object request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Container was not found"
+        }
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "containerId",
+          "description": "containerId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "in": "query",
+          "name": "overwrite",
+          "description": "overwrite",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "in": "formData",
+          "name": "stream",
+          "description": "stream",
+          "type": "file",
+          "required": true
+        }
+      ],
+      "tags": ["Storage"],
+      "consumes": ["multipart/form-data"]
+    }},
     "/bucket-storage/0.7/backends": {"post": {
       "summary": "Create a new backend",
       "security": [{"oauth2schema": ["global"]}],
@@ -393,6 +482,115 @@
       }],
       "tags": ["Storage"],
       "consumes": ["application/json;charset=UTF-8"]
+    }},
+    "/bucket-storage/0.7/containers/{containerId}/list/**": {"get": {
+      "summary": "List objects in path",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json"],
+      "operationId": "listObjectsInFolder_1",
+      "responses": {
+        "201": {
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ObjectResponse"}
+          },
+          "description": "Created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid container or object request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Container was not found"
+        }
+      },
+      "parameters": [{
+        "in": "path",
+        "name": "containerId",
+        "description": "containerId",
+        "type": "string",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json"]
+    }},
+    "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**": {"get": {
+      "summary": "List objects in path",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json"],
+      "operationId": "listObjectsInFolder_2",
+      "responses": {
+        "201": {
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ObjectResponse"}
+          },
+          "description": "Created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid container or object request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Container was not found"
+        }
+      },
+      "parameters": [{
+        "in": "path",
+        "name": "containerId",
+        "description": "containerId",
+        "type": "string",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json"]
+    }},
+    "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**": {"post": {
+      "summary": "Create a new object within a container",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json"],
+      "operationId": "createObjectInFolder_1",
+      "responses": {
+        "201": {
+          "schema": {"$ref": "#/definitions/ObjectResponse"},
+          "description": "Object created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid container or object request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Container was not found"
+        }
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "containerId",
+          "description": "containerId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "in": "query",
+          "name": "overwrite",
+          "description": "overwrite",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "in": "formData",
+          "name": "stream",
+          "description": "stream",
+          "type": "file",
+          "required": true
+        }
+      ],
+      "tags": ["Storage"],
+      "consumes": ["multipart/form-data"]
     }},
     "/bucket-storage/0.7/containers": {"post": {
       "summary": "Create a new container",
@@ -423,6 +621,47 @@
       }],
       "tags": ["Storage"],
       "consumes": ["application/json;charset=UTF-8"]
+    }},
+    "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}": {"get": {
+      "summary": "List objects in path",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json"],
+      "operationId": "listObjects",
+      "responses": {
+        "201": {
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ObjectResponse"}
+          },
+          "description": "Created"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid container or object request"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Container was not found"
+        }
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "containerId",
+          "description": "containerId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "in": "path",
+          "name": "objectPath",
+          "description": "objectPath",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "tags": ["Storage"],
+      "consumes": ["application/json"]
     }}
   },
   "host": "gw.api.cloud.sphereon.com",
@@ -441,7 +680,7 @@
           "description": "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.",
           "type": "string",
           "enum": [
-            "FILESYSTEM",
+            "SHARED_STORAGE",
             "AMAZON_S3",
             "MS_AZURE_BLOB_STORAGE",
             "GOOGLE_CLOUD_STORAGE"
@@ -496,6 +735,17 @@
     "BackendResponse": {
       "type": "object",
       "properties": {
+        "backendType": {
+          "description": "The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+            "SHARED_STORAGE",
+            "AMAZON_S3",
+            "MS_AZURE_BLOB_STORAGE",
+            "GOOGLE_CLOUD_STORAGE"
+          ]
+        },
         "name": {"type": "string"},
         "id": {"type": "string"},
         "state": {
@@ -535,30 +785,13 @@
         "message": {"type": "string"}
       }
     },
-    "RequestCredentials": {
+    "ContainerRequest": {
       "type": "object",
       "properties": {
-        "credentialType": {
-          "description": "The credentials class type to be used.",
-          "type": "string",
-          "enum": [
-            "com.sphereon.libs.storage.client.api.model.credentials.NoCredentials",
-            "com.sphereon.libs.storage.client.api.model.credentials.OAuthCredentials",
-            "com.sphereon.libs.storage.client.api.model.credentials.OAuth2Credentials",
-            "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials"
-          ]
-        },
-        "oauth2Credentials": {
-          "description": "The oauth2Credentials for this backend.",
-          "$ref": "#/definitions/OAuth2Credentials"
-        },
-        "oauthCredentials": {
-          "description": "The usernamePasswordCredentials for this backend.",
-          "$ref": "#/definitions/OAuthCredentials"
-        },
-        "usernamePasswordCredentials": {
-          "description": "The usernamePasswordCredentials for this backend.",
-          "$ref": "#/definitions/UsernamePasswordCredentials"
+        "name": {"type": "string"},
+        "backendId": {
+          "description": "The backend in which the container will be stored or is stored.",
+          "type": "string"
         }
       }
     },
@@ -575,15 +808,66 @@
         "token": {"type": "string"}
       }
     },
-    "ContainerRequest": {
+    "RequestCredentials": {
       "type": "object",
       "properties": {
-        "name": {"type": "string"},
-        "backendId": {
-          "description": "The backend in which the container will be stored or is stored.",
-          "type": "string"
+        "credentialType": {
+          "description": "The credentials class type to be used.",
+          "type": "string",
+          "enum": [
+            "com.sphereon.libs.storage.client.api.model.credentials.NoCredentials",
+            "com.sphereon.libs.storage.client.api.model.credentials.OAuthCredentials",
+            "com.sphereon.libs.storage.client.api.model.credentials.OAuth2Credentials",
+            "com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials",
+            "com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters"
+          ]
+        },
+        "oauth2Credentials": {
+          "description": "The oauth2Credentials for this backend.",
+          "$ref": "#/definitions/OAuth2Credentials"
+        },
+        "oauthCredentials": {
+          "description": "The usernamePasswordCredentials for this backend.",
+          "$ref": "#/definitions/OAuthCredentials"
+        },
+        "usernamePasswordCredentials": {
+          "description": "The usernamePasswordCredentials for this backend.",
+          "$ref": "#/definitions/UsernamePasswordCredentials"
         }
       }
+    },
+    "ObjectResponse": {
+      "type": "object",
+      "properties": {
+        "fileName": {"type": "string"},
+        "containerName": {
+          "description": "The container in which the container will be stored or is stored.",
+          "type": "string"
+        },
+        "contentLength": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "folderName": {"type": "string"},
+        "state": {
+          "type": "string",
+          "enum": [
+            "REQUEST",
+            "CREATED",
+            "UPDATED",
+            "DELETED"
+          ]
+        },
+        "contentType": {"type": "string"}
+      }
+    },
+    "ErrorResponse": {
+      "description": "The error response",
+      "type": "object",
+      "properties": {"errors": {
+        "type": "array",
+        "items": {"$ref": "#/definitions/Error"}
+      }}
     },
     "UsernamePasswordCredentials": {
       "type": "object",
@@ -599,14 +883,6 @@
         "domain": {"type": "string"},
         "userName": {"type": "string"}
       }
-    },
-    "ErrorResponse": {
-      "description": "The error response",
-      "type": "object",
-      "properties": {"errors": {
-        "type": "array",
-        "items": {"$ref": "#/definitions/Error"}
-      }}
     }
   },
   "swagger": "2.0",

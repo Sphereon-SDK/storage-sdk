@@ -7,6 +7,8 @@ Method | HTTP request | Description
 [**createBackend**](StorageApi.md#createBackend) | **POST** bucket-storage/0.7/backends | Create a new backend
 [**createContainer**](StorageApi.md#createContainer) | **POST** bucket-storage/0.7/containers | Create a new container
 [**createObject**](StorageApi.md#createObject) | **POST** bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Create a new object within a container
+[**createObjectInFolder**](StorageApi.md#createObjectInFolder) | **POST** bucket-storage/0.7/containers/{containerId}/objects/** | Create a new object within a container
+[**createObjectInFolder1**](StorageApi.md#createObjectInFolder1) | **POST** bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/** | Create a new object within a container
 [**deleteBackend**](StorageApi.md#deleteBackend) | **DELETE** bucket-storage/0.7/backends/{backendId} | Delete a backend
 [**deleteContainer**](StorageApi.md#deleteContainer) | **DELETE** bucket-storage/0.7/containers/{containerId} | Delete an existing container
 [**deleteObject**](StorageApi.md#deleteObject) | **DELETE** bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
@@ -14,6 +16,10 @@ Method | HTTP request | Description
 [**getContainerInfo**](StorageApi.md#getContainerInfo) | **GET** bucket-storage/0.7/containers/{containerId} | Get container information
 [**getObject**](StorageApi.md#getObject) | **GET** bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
 [**listContainers**](StorageApi.md#listContainers) | **GET** bucket-storage/0.7/backends/{backendId}/containers | List containers
+[**listObjects**](StorageApi.md#listObjects) | **GET** bucket-storage/0.7/containers/{containerId}/list/{objectPath} | List objects in path
+[**listObjectsInFolder**](StorageApi.md#listObjectsInFolder) | **GET** bucket-storage/0.7/containers/{containerId}/list | List objects in path
+[**listObjectsInFolder1**](StorageApi.md#listObjectsInFolder1) | **GET** bucket-storage/0.7/containers/{containerId}/list/** | List objects in path
+[**listObjectsInFolder2**](StorageApi.md#listObjectsInFolder2) | **GET** bucket-storage/0.7/containers/{containerId}/list/{objectPath}/** | List objects in path
 [**updateBackend**](StorageApi.md#updateBackend) | **POST** bucket-storage/0.7/backends/{backendId} | Update a backend
 [**updateContainer**](StorageApi.md#updateContainer) | **POST** bucket-storage/0.7/containers/{containerId} | Update a container
 
@@ -126,11 +132,9 @@ Name | Type | Description  | Notes
 
 <a name="createObject"></a>
 # **createObject**
-> Void createObject(containerId, objectPath, stream)
+> ObjectResponse createObject(containerId, objectPath, stream, overwrite)
 
 Create a new object within a container
-
-Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
 
 ### Example
 ```java
@@ -151,8 +155,9 @@ StorageApi apiInstance = new StorageApi();
 String containerId = "containerId_example"; // String | containerId
 String objectPath = "objectPath_example"; // String | objectPath
 File stream = new File("/path/to/file.txt"); // File | stream
+Boolean overwrite = true; // Boolean | overwrite
 try {
-    Void result = apiInstance.createObject(containerId, objectPath, stream);
+    ObjectResponse result = apiInstance.createObject(containerId, objectPath, stream, overwrite);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling StorageApi#createObject");
@@ -167,10 +172,11 @@ Name | Type | Description  | Notes
  **containerId** | **String**| containerId |
  **objectPath** | **String**| objectPath |
  **stream** | **File**| stream |
+ **overwrite** | **Boolean**| overwrite | [optional]
 
 ### Return type
 
-[**Void**](.md)
+[**ObjectResponse**](ObjectResponse.md)
 
 ### Authorization
 
@@ -179,7 +185,117 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: *_/_*
+ - **Accept**: application/json
+
+<a name="createObjectInFolder"></a>
+# **createObjectInFolder**
+> ObjectResponse createObjectInFolder(containerId, stream, overwrite)
+
+Create a new object within a container
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+File stream = new File("/path/to/file.txt"); // File | stream
+Boolean overwrite = true; // Boolean | overwrite
+try {
+    ObjectResponse result = apiInstance.createObjectInFolder(containerId, stream, overwrite);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#createObjectInFolder");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+ **stream** | **File**| stream |
+ **overwrite** | **Boolean**| overwrite | [optional]
+
+### Return type
+
+[**ObjectResponse**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+<a name="createObjectInFolder1"></a>
+# **createObjectInFolder1**
+> ObjectResponse createObjectInFolder1(containerId, stream, overwrite)
+
+Create a new object within a container
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+File stream = new File("/path/to/file.txt"); // File | stream
+Boolean overwrite = true; // Boolean | overwrite
+try {
+    ObjectResponse result = apiInstance.createObjectInFolder1(containerId, stream, overwrite);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#createObjectInFolder1");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+ **stream** | **File**| stream |
+ **overwrite** | **Boolean**| overwrite | [optional]
+
+### Return type
+
+[**ObjectResponse**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
 
 <a name="deleteBackend"></a>
 # **deleteBackend**
@@ -346,7 +462,7 @@ Name | Type | Description  | Notes
 
 <a name="getBackendInfo"></a>
 # **getBackendInfo**
-> ContainerResponse getBackendInfo(backendId)
+> BackendResponse getBackendInfo(backendId)
 
 Get backend information
 
@@ -370,7 +486,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 StorageApi apiInstance = new StorageApi();
 String backendId = "backendId_example"; // String | backendId
 try {
-    ContainerResponse result = apiInstance.getBackendInfo(backendId);
+    BackendResponse result = apiInstance.getBackendInfo(backendId);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling StorageApi#getBackendInfo");
@@ -386,7 +502,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ContainerResponse**](ContainerResponse.md)
+[**BackendResponse**](BackendResponse.md)
 
 ### Authorization
 
@@ -507,7 +623,7 @@ Name | Type | Description  | Notes
 
 <a name="listContainers"></a>
 # **listContainers**
-> ContainerResponse listContainers(backendId)
+> List&lt;ContainerResponse&gt; listContainers(backendId)
 
 List containers
 
@@ -531,7 +647,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 StorageApi apiInstance = new StorageApi();
 String backendId = "backendId_example"; // String | backendId
 try {
-    ContainerResponse result = apiInstance.listContainers(backendId);
+    List<ContainerResponse> result = apiInstance.listContainers(backendId);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling StorageApi#listContainers");
@@ -547,7 +663,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ContainerResponse**](ContainerResponse.md)
+[**List&lt;ContainerResponse&gt;**](ContainerResponse.md)
 
 ### Authorization
 
@@ -557,6 +673,212 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json;charset=UTF-8
+
+<a name="listObjects"></a>
+# **listObjects**
+> List&lt;ObjectResponse&gt; listObjects(containerId, objectPath)
+
+List objects in path
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+String objectPath = "objectPath_example"; // String | objectPath
+try {
+    List<ObjectResponse> result = apiInstance.listObjects(containerId, objectPath);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#listObjects");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+ **objectPath** | **String**| objectPath |
+
+### Return type
+
+[**List&lt;ObjectResponse&gt;**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listObjectsInFolder"></a>
+# **listObjectsInFolder**
+> List&lt;ObjectResponse&gt; listObjectsInFolder(containerId)
+
+List objects in path
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+try {
+    List<ObjectResponse> result = apiInstance.listObjectsInFolder(containerId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#listObjectsInFolder");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+
+### Return type
+
+[**List&lt;ObjectResponse&gt;**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listObjectsInFolder1"></a>
+# **listObjectsInFolder1**
+> List&lt;ObjectResponse&gt; listObjectsInFolder1(containerId)
+
+List objects in path
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+try {
+    List<ObjectResponse> result = apiInstance.listObjectsInFolder1(containerId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#listObjectsInFolder1");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+
+### Return type
+
+[**List&lt;ObjectResponse&gt;**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listObjectsInFolder2"></a>
+# **listObjectsInFolder2**
+> List&lt;ObjectResponse&gt; listObjectsInFolder2(containerId)
+
+List objects in path
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.storage.handler.ApiClient;
+//import com.sphereon.sdk.storage.handler.ApiException;
+//import com.sphereon.sdk.storage.handler.Configuration;
+//import com.sphereon.sdk.storage.handler.auth.*;
+//import com.sphereon.sdk.storage.api.StorageApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+StorageApi apiInstance = new StorageApi();
+String containerId = "containerId_example"; // String | containerId
+try {
+    List<ObjectResponse> result = apiInstance.listObjectsInFolder2(containerId);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling StorageApi#listObjectsInFolder2");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **String**| containerId |
+
+### Return type
+
+[**List&lt;ObjectResponse&gt;**](ObjectResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateBackend"></a>
 # **updateBackend**

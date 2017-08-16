@@ -30,7 +30,7 @@ import com.sphereon.sdk.storage.handler.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-04T10:21:44.220+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-08-16T15:34:24.782+02:00")
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

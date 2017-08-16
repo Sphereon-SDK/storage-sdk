@@ -65,6 +65,12 @@
       //expect(instance).to.be.a(Storage.BackendResponse);
     });
 
+    it('should have the property backendType (base name: "backendType")', function() {
+      // uncomment below and update the code to test the property backendType
+      //var instane = new Storage.BackendResponse();
+      //expect(instance).to.be();
+    });
+
     it('should have the property name (base name: "name")', function() {
       // uncomment below and update the code to test the property name
       //var instane = new Storage.BackendResponse();

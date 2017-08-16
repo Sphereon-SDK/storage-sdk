@@ -125,10 +125,10 @@
    */
   exports.BackendTypeEnum = {
     /**
-     * value: "FILESYSTEM"
+     * value: "SHARED_STORAGE"
      * @const
      */
-    "FILESYSTEM": "FILESYSTEM",
+    "SHARED_STORAGE": "SHARED_STORAGE",
     /**
      * value: "AMAZON_S3"
      * @const

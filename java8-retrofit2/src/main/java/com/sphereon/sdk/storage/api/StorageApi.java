@@ -13,6 +13,7 @@ import com.sphereon.sdk.storage.model.BackendResponse;
 import com.sphereon.sdk.storage.model.ErrorResponse;
 import com.sphereon.sdk.storage.model.ContainerResponse;
 import com.sphereon.sdk.storage.model.ContainerRequest;
+import com.sphereon.sdk.storage.model.ObjectResponse;
 import java.io.File;
 
 import java.util.ArrayList;
@@ -53,17 +54,48 @@ public interface StorageApi {
 
   /**
    * Create a new object within a container
-   * Create a new object within a container. If the container did not exist yet, it will be created on the fly with a default policy, hence no 404 http status will be returned
+   * 
    * @param containerId containerId (required)
    * @param objectPath objectPath (required)
    * @param stream stream (required)
-   * @return Call&lt;Void&gt;
+   * @param overwrite overwrite (optional)
+   * @return Call&lt;ObjectResponse&gt;
    */
   
   @retrofit2.http.Multipart
   @POST("bucket-storage/0.7/containers/{containerId}/objects/{objectPath}")
-  Call<Void> createObject(
-    @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath, @retrofit2.http.Part("stream\"; filename=\"stream") RequestBody stream
+  Call<ObjectResponse> createObject(
+    @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath, @retrofit2.http.Part("stream\"; filename=\"stream") RequestBody stream, @retrofit2.http.Query("overwrite") Boolean overwrite
+  );
+
+  /**
+   * Create a new object within a container
+   * 
+   * @param containerId containerId (required)
+   * @param stream stream (required)
+   * @param overwrite overwrite (optional)
+   * @return Call&lt;ObjectResponse&gt;
+   */
+  
+  @retrofit2.http.Multipart
+  @POST("bucket-storage/0.7/containers/{containerId}/objects/**")
+  Call<ObjectResponse> createObjectInFolder(
+    @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Part("stream\"; filename=\"stream") RequestBody stream, @retrofit2.http.Query("overwrite") Boolean overwrite
+  );
+
+  /**
+   * Create a new object within a container
+   * 
+   * @param containerId containerId (required)
+   * @param stream stream (required)
+   * @param overwrite overwrite (optional)
+   * @return Call&lt;ObjectResponse&gt;
+   */
+  
+  @retrofit2.http.Multipart
+  @POST("bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**")
+  Call<ObjectResponse> createObjectInFolder1(
+    @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Part("stream\"; filename=\"stream") RequestBody stream, @retrofit2.http.Query("overwrite") Boolean overwrite
   );
 
   /**
@@ -117,14 +149,14 @@ public interface StorageApi {
    * Get backend information
    * Get information on a backend
    * @param backendId backendId (required)
-   * @return Call&lt;ContainerResponse&gt;
+   * @return Call&lt;BackendResponse&gt;
    */
   
   @Headers({
   	"Content-Type:application/json" 
   })
   @GET("bucket-storage/0.7/backends/{backendId}")
-  Call<ContainerResponse> getBackendInfo(
+  Call<BackendResponse> getBackendInfo(
     @retrofit2.http.Path("backendId") String backendId
   );
 
@@ -163,15 +195,76 @@ public interface StorageApi {
    * List containers
    * List containers for the given backend name or id.
    * @param backendId backendId (required)
-   * @return Call&lt;ContainerResponse&gt;
+   * @return Call&lt;List<ContainerResponse>&gt;
    */
   
   @Headers({
   	"Content-Type:application/json" 
   })
   @GET("bucket-storage/0.7/backends/{backendId}/containers")
-  Call<ContainerResponse> listContainers(
+  Call<List<ContainerResponse>> listContainers(
     @retrofit2.http.Path("backendId") String backendId
+  );
+
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @param objectPath objectPath (required)
+   * @return Call&lt;List<ObjectResponse>&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.7/containers/{containerId}/list/{objectPath}")
+  Call<List<ObjectResponse>> listObjects(
+    @retrofit2.http.Path("containerId") String containerId, @retrofit2.http.Path("objectPath") String objectPath
+  );
+
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @return Call&lt;List<ObjectResponse>&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.7/containers/{containerId}/list")
+  Call<List<ObjectResponse>> listObjectsInFolder(
+    @retrofit2.http.Path("containerId") String containerId
+  );
+
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @return Call&lt;List<ObjectResponse>&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.7/containers/{containerId}/list/**")
+  Call<List<ObjectResponse>> listObjectsInFolder1(
+    @retrofit2.http.Path("containerId") String containerId
+  );
+
+  /**
+   * List objects in path
+   * 
+   * @param containerId containerId (required)
+   * @return Call&lt;List<ObjectResponse>&gt;
+   */
+  
+  @Headers({
+  	"Content-Type:application/json" 
+  })
+  @GET("bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**")
+  Call<List<ObjectResponse>> listObjectsInFolder2(
+    @retrofit2.http.Path("containerId") String containerId
   );
 
   /**

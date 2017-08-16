@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 ## Enum: BackendTypeEnum
 Name | Value
 ---- | -----
-FILESYSTEM | &quot;FILESYSTEM&quot;
+SHARED_STORAGE | &quot;SHARED_STORAGE&quot;
 AMAZON_S3 | &quot;AMAZON_S3&quot;
 MS_AZURE_BLOB_STORAGE | &quot;MS_AZURE_BLOB_STORAGE&quot;
 GOOGLE_CLOUD_STORAGE | &quot;GOOGLE_CLOUD_STORAGE&quot;

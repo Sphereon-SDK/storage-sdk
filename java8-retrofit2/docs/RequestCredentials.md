@@ -18,6 +18,7 @@ NOCREDENTIALS | &quot;com.sphereon.libs.storage.client.api.model.credentials.NoC
 OAUTHCREDENTIALS | &quot;com.sphereon.libs.storage.client.api.model.credentials.OAuthCredentials&quot;
 OAUTH2CREDENTIALS | &quot;com.sphereon.libs.storage.client.api.model.credentials.OAuth2Credentials&quot;
 USERNAMEPASSWORDCREDENTIALS | &quot;com.sphereon.libs.storage.client.api.model.credentials.UsernamePasswordCredentials&quot;
+CLAIMPARAMETERS | &quot;com.sphereon.libs.storage.client.api.model.credentials.ClaimParameters&quot;
 
 
 

@@ -40,6 +40,39 @@ namespace Sphereon.SDK.STORAGE.Model
     public partial class BackendResponse :  IEquatable<BackendResponse>
     {
         /// <summary>
+        /// The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
+        /// </summary>
+        /// <value>The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum BackendTypeEnum
+        {
+            
+            /// <summary>
+            /// Enum SHAREDSTORAGE for "SHARED_STORAGE"
+            /// </summary>
+            [EnumMember(Value = "SHARED_STORAGE")]
+            SHAREDSTORAGE,
+            
+            /// <summary>
+            /// Enum AMAZONS3 for "AMAZON_S3"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3")]
+            AMAZONS3,
+            
+            /// <summary>
+            /// Enum MSAZUREBLOBSTORAGE for "MS_AZURE_BLOB_STORAGE"
+            /// </summary>
+            [EnumMember(Value = "MS_AZURE_BLOB_STORAGE")]
+            MSAZUREBLOBSTORAGE,
+            
+            /// <summary>
+            /// Enum GOOGLECLOUDSTORAGE for "GOOGLE_CLOUD_STORAGE"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_CLOUD_STORAGE")]
+            GOOGLECLOUDSTORAGE
+        }
+
+        /// <summary>
         /// Gets or Sets State
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -71,6 +104,12 @@ namespace Sphereon.SDK.STORAGE.Model
             DELETED
         }
 
+        /// <summary>
+        /// The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
+        /// </summary>
+        /// <value>The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.</value>
+        [DataMember(Name="backendType", EmitDefaultValue=false)]
+        public BackendTypeEnum? BackendType { get; set; }
         /// <summary>
         /// Gets or Sets State
         /// </summary>
@@ -115,6 +154,7 @@ namespace Sphereon.SDK.STORAGE.Model
         {
             var sb = new StringBuilder();
             sb.Append("class BackendResponse {\n");
+            sb.Append("  BackendType: ").Append(BackendType).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
@@ -156,6 +196,11 @@ namespace Sphereon.SDK.STORAGE.Model
 
             return 
                 (
+                    this.BackendType == other.BackendType ||
+                    this.BackendType != null &&
+                    this.BackendType.Equals(other.BackendType)
+                ) && 
+                (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
@@ -188,6 +233,8 @@ namespace Sphereon.SDK.STORAGE.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
+                if (this.BackendType != null)
+                    hash = hash * 59 + this.BackendType.GetHashCode();
                 if (this.Name != null)
                     hash = hash * 59 + this.Name.GetHashCode();
                 if (this.Id != null)
