@@ -1,27 +1,26 @@
 # Sphereon.SDK.Storage.Api.StorageApi
 
-All URIs are relative to *https://gw.api.cloud.sphereon.com/*
+All URIs are relative to *https://gw.api.cloud.sphereon.com/bucket-storage/0.7*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateBackend**](StorageApi.md#createbackend) | **POST** /bucket-storage/0.7/backends | Create a new backend
-[**CreateContainer**](StorageApi.md#createcontainer) | **POST** /bucket-storage/0.7/containers | Create a new container
-[**CreateObject**](StorageApi.md#createobject) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Create a new object within a container
-[**CreateObjectInFolder**](StorageApi.md#createobjectinfolder) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/** | Create a new object within a container
-[**CreateObjectInFolder1**](StorageApi.md#createobjectinfolder1) | **POST** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/** | Create a new object within a container
-[**DeleteBackend**](StorageApi.md#deletebackend) | **DELETE** /bucket-storage/0.7/backends/{backendId} | Delete a backend
-[**DeleteContainer**](StorageApi.md#deletecontainer) | **DELETE** /bucket-storage/0.7/containers/{containerId} | Delete an existing container
-[**DeleteObject**](StorageApi.md#deleteobject) | **DELETE** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
-[**GetBackendInfo**](StorageApi.md#getbackendinfo) | **GET** /bucket-storage/0.7/backends/{backendId} | Get backend information
-[**GetContainerInfo**](StorageApi.md#getcontainerinfo) | **GET** /bucket-storage/0.7/containers/{containerId} | Get container information
-[**GetObject**](StorageApi.md#getobject) | **GET** /bucket-storage/0.7/containers/{containerId}/objects/{objectPath} | Get an existing object from a container
-[**ListContainers**](StorageApi.md#listcontainers) | **GET** /bucket-storage/0.7/backends/{backendId}/containers | List containers
-[**ListObjects**](StorageApi.md#listobjects) | **GET** /bucket-storage/0.7/containers/{containerId}/list/{objectPath} | List objects in path
-[**ListObjectsInFolder**](StorageApi.md#listobjectsinfolder) | **GET** /bucket-storage/0.7/containers/{containerId}/list | List objects in path
-[**ListObjectsInFolder1**](StorageApi.md#listobjectsinfolder1) | **GET** /bucket-storage/0.7/containers/{containerId}/list/** | List objects in path
-[**ListObjectsInFolder2**](StorageApi.md#listobjectsinfolder2) | **GET** /bucket-storage/0.7/containers/{containerId}/list/{objectPath}/** | List objects in path
-[**UpdateBackend**](StorageApi.md#updatebackend) | **POST** /bucket-storage/0.7/backends/{backendId} | Update a backend
-[**UpdateContainer**](StorageApi.md#updatecontainer) | **POST** /bucket-storage/0.7/containers/{containerId} | Update a container
+[**CreateBackend**](StorageApi.md#createbackend) | **POST** /backends | Create a new backend
+[**CreateContainer**](StorageApi.md#createcontainer) | **POST** /containers | Create a new container
+[**CreateObject**](StorageApi.md#createobject) | **POST** /containers/{containerId}/objects/{objectPath} | Create a new object within a container
+[**DeleteBackend**](StorageApi.md#deletebackend) | **DELETE** /backends/{backendId} | Delete a backend
+[**DeleteContainer**](StorageApi.md#deletecontainer) | **DELETE** /containers/{containerId} | Delete an existing container
+[**DeleteObject**](StorageApi.md#deleteobject) | **DELETE** /containers/{containerId}/objects/{objectPath} | Delete an existing object from a container.
+[**DeleteObject1**](StorageApi.md#deleteobject1) | **DELETE** /containers/{containerId}/objects | Delete an existing object from a container by stream location.
+[**GetBackendInfo**](StorageApi.md#getbackendinfo) | **GET** /backends/{backendId} | Get backend information
+[**GetContainerInfo**](StorageApi.md#getcontainerinfo) | **GET** /containers/{containerId} | Get container information
+[**GetObject**](StorageApi.md#getobject) | **GET** /containers/{containerId}/objects/{objectPath} | Get an existing object from a container
+[**GetObject1**](StorageApi.md#getobject1) | **POST** /containers/{containerId}/objects | Get an existing object from a container by stream location
+[**ListContainers**](StorageApi.md#listcontainers) | **GET** /backends/{backendId}/containers | List containers
+[**ListObjects**](StorageApi.md#listobjects) | **GET** /containers/{containerId}/info | List objects in path
+[**ListObjects1**](StorageApi.md#listobjects1) | **GET** /containers/{containerId}/info/{objectPath} | List objects in path
+[**ListObjects2**](StorageApi.md#listobjects2) | **POST** /containers/{containerId}/info | List objects in path by stream location
+[**UpdateBackend**](StorageApi.md#updatebackend) | **POST** /backends/{backendId} | Update a backend
+[**UpdateContainer**](StorageApi.md#updatecontainer) | **POST** /containers/{containerId} | Update a container
 
 
 <a name="createbackend"></a>
@@ -156,9 +155,11 @@ Name | Type | Description  | Notes
 
 <a name="createobject"></a>
 # **CreateObject**
-> ObjectResponse CreateObject (string containerId, string objectPath, System.IO.Stream stream, string overwriteMode = null)
+> ObjectResponse CreateObject (string containerId, string objectPath, System.IO.Stream stream, string creationMode = null)
 
 Create a new object within a container
+
+Create a new object within a container. Query parameter creationMode accepts values NEW_ONLY to create a new object, REQUIRE_EXISTING to update an object and ALLOW_EXISTING to create a new object or overwrite an existing object.
 
 ### Example
 ```csharp
@@ -182,12 +183,12 @@ namespace Example
             var containerId = containerId_example;  // string | containerId
             var objectPath = objectPath_example;  // string | objectPath
             var stream = new System.IO.Stream(); // System.IO.Stream | stream
-            var overwriteMode = overwriteMode_example;  // string | overwriteMode (optional) 
+            var creationMode = creationMode_example;  // string | creationMode (optional) 
 
             try
             {
                 // Create a new object within a container
-                ObjectResponse result = apiInstance.CreateObject(containerId, objectPath, stream, overwriteMode);
+                ObjectResponse result = apiInstance.CreateObject(containerId, objectPath, stream, creationMode);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -206,141 +207,7 @@ Name | Type | Description  | Notes
  **containerId** | **string**| containerId | 
  **objectPath** | **string**| objectPath | 
  **stream** | **System.IO.Stream**| stream | 
- **overwriteMode** | **string**| overwriteMode | [optional] 
-
-### Return type
-
-[**ObjectResponse**](ObjectResponse.md)
-
-### Authorization
-
-[oauth2schema](../README.md#oauth2schema)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="createobjectinfolder"></a>
-# **CreateObjectInFolder**
-> ObjectResponse CreateObjectInFolder (string containerId, System.IO.Stream stream, string overwriteMode = null)
-
-Create a new object within a container
-
-### Example
-```csharp
-using System;
-using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
-
-namespace Example
-{
-    public class CreateObjectInFolderExample
-    {
-        public void main()
-        {
-            
-            // Configure OAuth2 access token for authorization: oauth2schema
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new StorageApi();
-            var containerId = containerId_example;  // string | containerId
-            var stream = new System.IO.Stream(); // System.IO.Stream | stream
-            var overwriteMode = overwriteMode_example;  // string | overwriteMode (optional) 
-
-            try
-            {
-                // Create a new object within a container
-                ObjectResponse result = apiInstance.CreateObjectInFolder(containerId, stream, overwriteMode);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling StorageApi.CreateObjectInFolder: " + e.Message );
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **containerId** | **string**| containerId | 
- **stream** | **System.IO.Stream**| stream | 
- **overwriteMode** | **string**| overwriteMode | [optional] 
-
-### Return type
-
-[**ObjectResponse**](ObjectResponse.md)
-
-### Authorization
-
-[oauth2schema](../README.md#oauth2schema)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="createobjectinfolder1"></a>
-# **CreateObjectInFolder1**
-> ObjectResponse CreateObjectInFolder1 (string containerId, System.IO.Stream stream, string overwriteMode = null)
-
-Create a new object within a container
-
-### Example
-```csharp
-using System;
-using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
-
-namespace Example
-{
-    public class CreateObjectInFolder1Example
-    {
-        public void main()
-        {
-            
-            // Configure OAuth2 access token for authorization: oauth2schema
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new StorageApi();
-            var containerId = containerId_example;  // string | containerId
-            var stream = new System.IO.Stream(); // System.IO.Stream | stream
-            var overwriteMode = overwriteMode_example;  // string | overwriteMode (optional) 
-
-            try
-            {
-                // Create a new object within a container
-                ObjectResponse result = apiInstance.CreateObjectInFolder1(containerId, stream, overwriteMode);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling StorageApi.CreateObjectInFolder1: " + e.Message );
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **containerId** | **string**| containerId | 
- **stream** | **System.IO.Stream**| stream | 
- **overwriteMode** | **string**| overwriteMode | [optional] 
+ **creationMode** | **string**| creationMode | [optional] 
 
 ### Return type
 
@@ -555,6 +422,72 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="deleteobject1"></a>
+# **DeleteObject1**
+> void DeleteObject1 (string containerId, StreamLocation streamLocation)
+
+Delete an existing object from a container by stream location.
+
+Delete an existing object from a container by stream location. There is no request nor response body for a delete request.
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Storage.Api;
+using Sphereon.SDK.Storage.Client;
+using Sphereon.SDK.Storage.Model;
+
+namespace Example
+{
+    public class DeleteObject1Example
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // string | containerId
+            var streamLocation = new StreamLocation(); // StreamLocation | streamLocation
+
+            try
+            {
+                // Delete an existing object from a container by stream location.
+                apiInstance.DeleteObject1(containerId, streamLocation);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.DeleteObject1: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **string**| containerId | 
+ **streamLocation** | [**StreamLocation**](StreamLocation.md)| streamLocation | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json;charset=UTF-8
+ - **Accept**: *_/_*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="getbackendinfo"></a>
 # **GetBackendInfo**
 > BackendResponse GetBackendInfo (string backendId)
@@ -752,6 +685,73 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="getobject1"></a>
+# **GetObject1**
+> byte[] GetObject1 (string containerId, StreamLocation streamLocation)
+
+Get an existing object from a container by stream location
+
+Get an existing object from a container by stream location
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Storage.Api;
+using Sphereon.SDK.Storage.Client;
+using Sphereon.SDK.Storage.Model;
+
+namespace Example
+{
+    public class GetObject1Example
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new StorageApi();
+            var containerId = containerId_example;  // string | containerId
+            var streamLocation = new StreamLocation(); // StreamLocation | streamLocation
+
+            try
+            {
+                // Get an existing object from a container by stream location
+                byte[] result = apiInstance.GetObject1(containerId, streamLocation);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling StorageApi.GetObject1: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **string**| containerId | 
+ **streamLocation** | [**StreamLocation**](StreamLocation.md)| streamLocation | 
+
+### Return type
+
+**byte[]**
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json;charset=UTF-8
+ - **Accept**: application/octet-stream, application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="listcontainers"></a>
 # **ListContainers**
 > List<ContainerResponse> ListContainers (string backendId)
@@ -819,9 +819,11 @@ Name | Type | Description  | Notes
 
 <a name="listobjects"></a>
 # **ListObjects**
-> List<ObjectInfoResponse> ListObjects (string containerId, string objectPath)
+> ObjectInfoResponse ListObjects (string containerId, string objectPath)
 
 List objects in path
+
+Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
 
 ### Example
 ```csharp
@@ -848,7 +850,7 @@ namespace Example
             try
             {
                 // List objects in path
-                List&lt;ObjectInfoResponse&gt; result = apiInstance.ListObjects(containerId, objectPath);
+                ObjectInfoResponse result = apiInstance.ListObjects(containerId, objectPath);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -869,7 +871,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List<ObjectInfoResponse>**](ObjectInfoResponse.md)
+[**ObjectInfoResponse**](ObjectInfoResponse.md)
 
 ### Authorization
 
@@ -882,11 +884,13 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listobjectsinfolder"></a>
-# **ListObjectsInFolder**
-> List<ObjectInfoResponse> ListObjectsInFolder (string containerId)
+<a name="listobjects1"></a>
+# **ListObjects1**
+> ObjectInfoResponse ListObjects1 (string containerId, string objectPath)
 
 List objects in path
+
+Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
 
 ### Example
 ```csharp
@@ -898,7 +902,7 @@ using Sphereon.SDK.Storage.Model;
 
 namespace Example
 {
-    public class ListObjectsInFolderExample
+    public class ListObjects1Example
     {
         public void main()
         {
@@ -908,16 +912,17 @@ namespace Example
 
             var apiInstance = new StorageApi();
             var containerId = containerId_example;  // string | containerId
+            var objectPath = objectPath_example;  // string | objectPath
 
             try
             {
                 // List objects in path
-                List&lt;ObjectInfoResponse&gt; result = apiInstance.ListObjectsInFolder(containerId);
+                ObjectInfoResponse result = apiInstance.ListObjects1(containerId, objectPath);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling StorageApi.ListObjectsInFolder: " + e.Message );
+                Debug.Print("Exception when calling StorageApi.ListObjects1: " + e.Message );
             }
         }
     }
@@ -929,10 +934,11 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **containerId** | **string**| containerId | 
+ **objectPath** | **string**| objectPath | 
 
 ### Return type
 
-[**List<ObjectInfoResponse>**](ObjectInfoResponse.md)
+[**ObjectInfoResponse**](ObjectInfoResponse.md)
 
 ### Authorization
 
@@ -945,74 +951,13 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listobjectsinfolder1"></a>
-# **ListObjectsInFolder1**
-> List<ObjectInfoResponse> ListObjectsInFolder1 (string containerId)
+<a name="listobjects2"></a>
+# **ListObjects2**
+> ObjectInfoResponse ListObjects2 (string containerId, StreamLocation streamLocation)
 
-List objects in path
+List objects in path by stream location
 
-### Example
-```csharp
-using System;
-using System.Diagnostics;
-using Sphereon.SDK.Storage.Api;
-using Sphereon.SDK.Storage.Client;
-using Sphereon.SDK.Storage.Model;
-
-namespace Example
-{
-    public class ListObjectsInFolder1Example
-    {
-        public void main()
-        {
-            
-            // Configure OAuth2 access token for authorization: oauth2schema
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new StorageApi();
-            var containerId = containerId_example;  // string | containerId
-
-            try
-            {
-                // List objects in path
-                List&lt;ObjectInfoResponse&gt; result = apiInstance.ListObjectsInFolder1(containerId);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling StorageApi.ListObjectsInFolder1: " + e.Message );
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **containerId** | **string**| containerId | 
-
-### Return type
-
-[**List<ObjectInfoResponse>**](ObjectInfoResponse.md)
-
-### Authorization
-
-[oauth2schema](../README.md#oauth2schema)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="listobjectsinfolder2"></a>
-# **ListObjectsInFolder2**
-> List<ObjectInfoResponse> ListObjectsInFolder2 (string containerId)
-
-List objects in path
+Returns object information on the given stream location. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
 
 ### Example
 ```csharp
@@ -1024,7 +969,7 @@ using Sphereon.SDK.Storage.Model;
 
 namespace Example
 {
-    public class ListObjectsInFolder2Example
+    public class ListObjects2Example
     {
         public void main()
         {
@@ -1034,16 +979,17 @@ namespace Example
 
             var apiInstance = new StorageApi();
             var containerId = containerId_example;  // string | containerId
+            var streamLocation = new StreamLocation(); // StreamLocation | streamLocation
 
             try
             {
-                // List objects in path
-                List&lt;ObjectInfoResponse&gt; result = apiInstance.ListObjectsInFolder2(containerId);
+                // List objects in path by stream location
+                ObjectInfoResponse result = apiInstance.ListObjects2(containerId, streamLocation);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling StorageApi.ListObjectsInFolder2: " + e.Message );
+                Debug.Print("Exception when calling StorageApi.ListObjects2: " + e.Message );
             }
         }
     }
@@ -1055,10 +1001,11 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **containerId** | **string**| containerId | 
+ **streamLocation** | [**StreamLocation**](StreamLocation.md)| streamLocation | 
 
 ### Return type
 
-[**List<ObjectInfoResponse>**](ObjectInfoResponse.md)
+[**ObjectInfoResponse**](ObjectInfoResponse.md)
 
 ### Authorization
 
@@ -1066,7 +1013,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: application/json;charset=UTF-8
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

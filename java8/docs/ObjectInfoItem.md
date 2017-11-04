@@ -1,10 +1,10 @@
 
-# ObjectInfoResponse
+# ObjectInfoItem
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**objectInfoList** | [**List&lt;ObjectInfoItem&gt;**](ObjectInfoItem.md) |  |  [optional]
+**streamInfo** | [**StreamInfo**](StreamInfo.md) |  |  [optional]
 
 
 

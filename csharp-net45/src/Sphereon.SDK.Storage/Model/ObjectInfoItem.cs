@@ -34,25 +34,25 @@ using Newtonsoft.Json.Converters;
 namespace Sphereon.SDK.Storage.Model
 {
     /// <summary>
-    /// ObjectInfoResponse
+    /// ObjectInfoItem
     /// </summary>
     [DataContract]
-    public partial class ObjectInfoResponse :  IEquatable<ObjectInfoResponse>
+    public partial class ObjectInfoItem :  IEquatable<ObjectInfoItem>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectInfoResponse" /> class.
+        /// Initializes a new instance of the <see cref="ObjectInfoItem" /> class.
         /// </summary>
-        /// <param name="ObjectInfoList">ObjectInfoList.</param>
-        public ObjectInfoResponse(List<ObjectInfoItem> ObjectInfoList = null)
+        /// <param name="StreamInfo">StreamInfo.</param>
+        public ObjectInfoItem(StreamInfo StreamInfo = null)
         {
-            this.ObjectInfoList = ObjectInfoList;
+            this.StreamInfo = StreamInfo;
         }
         
         /// <summary>
-        /// Gets or Sets ObjectInfoList
+        /// Gets or Sets StreamInfo
         /// </summary>
-        [DataMember(Name="objectInfoList", EmitDefaultValue=false)]
-        public List<ObjectInfoItem> ObjectInfoList { get; set; }
+        [DataMember(Name="streamInfo", EmitDefaultValue=false)]
+        public StreamInfo StreamInfo { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -60,8 +60,8 @@ namespace Sphereon.SDK.Storage.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class ObjectInfoResponse {\n");
-            sb.Append("  ObjectInfoList: ").Append(ObjectInfoList).Append("\n");
+            sb.Append("class ObjectInfoItem {\n");
+            sb.Append("  StreamInfo: ").Append(StreamInfo).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -83,15 +83,15 @@ namespace Sphereon.SDK.Storage.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as ObjectInfoResponse);
+            return this.Equals(obj as ObjectInfoItem);
         }
 
         /// <summary>
-        /// Returns true if ObjectInfoResponse instances are equal
+        /// Returns true if ObjectInfoItem instances are equal
         /// </summary>
-        /// <param name="other">Instance of ObjectInfoResponse to be compared</param>
+        /// <param name="other">Instance of ObjectInfoItem to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ObjectInfoResponse other)
+        public bool Equals(ObjectInfoItem other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -99,9 +99,9 @@ namespace Sphereon.SDK.Storage.Model
 
             return 
                 (
-                    this.ObjectInfoList == other.ObjectInfoList ||
-                    this.ObjectInfoList != null &&
-                    this.ObjectInfoList.SequenceEqual(other.ObjectInfoList)
+                    this.StreamInfo == other.StreamInfo ||
+                    this.StreamInfo != null &&
+                    this.StreamInfo.Equals(other.StreamInfo)
                 );
         }
 
@@ -116,8 +116,8 @@ namespace Sphereon.SDK.Storage.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.ObjectInfoList != null)
-                    hash = hash * 59 + this.ObjectInfoList.GetHashCode();
+                if (this.StreamInfo != null)
+                    hash = hash * 59 + this.StreamInfo.GetHashCode();
                 return hash;
             }
         }

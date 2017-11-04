@@ -70,6 +70,11 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="fileName", EmitDefaultValue=false)]
         public string FileName { get; set; }
         /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        [DataMember(Name="id", EmitDefaultValue=false)]
+        public string Id { get; private set; }
+        /// <summary>
         /// Gets or Sets ContainerId
         /// </summary>
         [DataMember(Name="containerId", EmitDefaultValue=false)]
@@ -85,6 +90,7 @@ namespace Sphereon.SDK.Storage.Model
             sb.Append("  FolderPath: ").Append(FolderPath).Append("\n");
             sb.Append("  OriginalFileName: ").Append(OriginalFileName).Append("\n");
             sb.Append("  FileName: ").Append(FileName).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -138,6 +144,11 @@ namespace Sphereon.SDK.Storage.Model
                     this.FileName.Equals(other.FileName)
                 ) && 
                 (
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
+                ) && 
+                (
                     this.ContainerId == other.ContainerId ||
                     this.ContainerId != null &&
                     this.ContainerId.Equals(other.ContainerId)
@@ -161,6 +172,8 @@ namespace Sphereon.SDK.Storage.Model
                     hash = hash * 59 + this.OriginalFileName.GetHashCode();
                 if (this.FileName != null)
                     hash = hash * 59 + this.FileName.GetHashCode();
+                if (this.Id != null)
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.ContainerId != null)
                     hash = hash * 59 + this.ContainerId.GetHashCode();
                 return hash;

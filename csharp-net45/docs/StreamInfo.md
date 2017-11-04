@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **ETag** | **string** |  | [optional] 
 **Etag** | **string** |  | [optional] 
 **TimeCreated** | **DateTime?** |  | [optional] 
-**BackendLocation** | [**BackendLocation**](BackendLocation.md) |  | [optional] 
+**Region** | **string** |  | [optional] 
 **ContentType** | **string** |  | [optional] 
 **TimeModified** | **DateTime?** |  | [optional] 
 **UserMetadata** | **Dictionary&lt;string, string&gt;** |  | [optional] 

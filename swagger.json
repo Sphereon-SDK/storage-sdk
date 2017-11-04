@@ -1,7 +1,40 @@
 {
-  "basePath": "/",
+  "basePath": "/bucket-storage/0.7",
   "paths": {
-    "/bucket-storage/0.7/containers/{containerId}": {
+    "/backends/{backendId}/containers": {"get": {
+      "summary": "List containers",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "List containers for the given backend name or id.",
+      "operationId": "listContainers",
+      "responses": {
+        "200": {
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ContainerResponse"}
+          },
+          "description": "Container info returned"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid backend name or id"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Backend does not exist"
+        }
+      },
+      "parameters": [{
+        "in": "path",
+        "name": "backendId",
+        "description": "backendId",
+        "type": "string",
+        "required": true
+      }],
+      "tags": ["Storage"],
+      "consumes": ["application/json"]
+    }},
+    "/containers/{containerId}": {
       "post": {
         "summary": "Update a container",
         "security": [{"oauth2schema": ["global"]}],
@@ -115,43 +148,122 @@
         "consumes": ["application/json"]
       }
     },
-    "/bucket-storage/0.7/containers/{containerId}/list": {"get": {
-      "summary": "List objects in path",
+    "/containers": {"post": {
+      "summary": "Create a new container",
       "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json"],
-      "operationId": "listObjectsInFolder",
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Create a new container",
+      "operationId": "createContainer",
       "responses": {
         "201": {
-          "schema": {
-            "type": "array",
-            "items": {"$ref": "#/definitions/ObjectInfoResponse"}
-          },
-          "description": "Created"
+          "schema": {"$ref": "#/definitions/ContainerResponse"},
+          "description": "Container created"
         },
         "400": {
           "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid container or object request"
+          "description": "Invalid Container request"
         },
         "404": {
           "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Container was not found"
+          "description": "Backend was not found"
         }
       },
       "parameters": [{
-        "in": "path",
-        "name": "containerId",
-        "description": "containerId",
-        "type": "string",
+        "schema": {"$ref": "#/definitions/ContainerRequest"},
+        "in": "body",
+        "name": "containerRequest",
+        "description": "containerRequest",
         "required": true
       }],
       "tags": ["Storage"],
-      "consumes": ["application/json"]
+      "consumes": ["application/json;charset=UTF-8"]
     }},
-    "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}": {
+    "/containers/{containerId}/info": {
+      "post": {
+        "summary": "List objects in path by stream location",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json"],
+        "description": "Returns object information on the given stream location. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.",
+        "operationId": "listObjects_2",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/ObjectInfoResponse"},
+            "description": "Object information result"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object request"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "schema": {"$ref": "#/definitions/StreamLocation"},
+            "in": "body",
+            "name": "streamLocation",
+            "description": "streamLocation",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json;charset=UTF-8"]
+      },
+      "get": {
+        "summary": "List objects in path",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json"],
+        "description": "Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.",
+        "operationId": "listObjects",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/ObjectInfoResponse"},
+            "description": "Object information result"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object request"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "objectPath",
+            "description": "objectPath",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json"]
+      }
+    },
+    "/containers/{containerId}/objects/{objectPath}": {
       "post": {
         "summary": "Create a new object within a container",
         "security": [{"oauth2schema": ["global"]}],
         "produces": ["application/json"],
+        "description": "Create a new object within a container. Query parameter creationMode accepts values NEW_ONLY to create a new object, REQUIRE_EXISTING to update an object and ALLOW_EXISTING to create a new object or overwrite an existing object.",
         "operationId": "createObject",
         "responses": {
           "201": {
@@ -184,13 +296,14 @@
           },
           {
             "in": "query",
-            "name": "overwriteMode",
-            "description": "overwriteMode",
+            "name": "creationMode",
+            "description": "creationMode",
             "type": "string",
             "required": false,
             "enum": [
-              "DONT_OVERWRITE",
-              "OVERWRITE"
+              "NEW_ONLY",
+              "REQUIRE_EXISTING",
+              "ALLOW_EXISTING"
             ]
           },
           {
@@ -286,40 +399,116 @@
         "consumes": ["application/json"]
       }
     },
-    "/bucket-storage/0.7/backends/{backendId}/containers": {"get": {
-      "summary": "List containers",
+    "/containers/{containerId}/objects": {
+      "post": {
+        "summary": "Get an existing object from a container by stream location",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": [
+          "application/octet-stream",
+          "application/json;charset=UTF-8"
+        ],
+        "description": "Get an existing object from a container by stream location",
+        "operationId": "getObject_1",
+        "responses": {
+          "200": {
+            "schema": {
+              "format": "byte",
+              "type": "string"
+            },
+            "description": "Object retrieved"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object name"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Object or container did not exist"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "schema": {"$ref": "#/definitions/StreamLocation"},
+            "in": "body",
+            "name": "streamLocation",
+            "description": "streamLocation",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json;charset=UTF-8"]
+      },
+      "delete": {
+        "summary": "Delete an existing object from a container by stream location.",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["*/*"],
+        "description": "Delete an existing object from a container by stream location. There is no request nor response body for a delete request.",
+        "operationId": "deleteObject_1",
+        "responses": {
+          "200": {"description": "Object deleted"},
+          "400": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Invalid container or object name"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/ErrorResponse"},
+            "description": "Container or object was not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "containerId",
+            "description": "containerId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "schema": {"$ref": "#/definitions/StreamLocation"},
+            "in": "body",
+            "name": "streamLocation",
+            "description": "streamLocation",
+            "required": true
+          }
+        ],
+        "tags": ["Storage"],
+        "consumes": ["application/json;charset=UTF-8"]
+      }
+    },
+    "/backends": {"post": {
+      "summary": "Create a new backend",
       "security": [{"oauth2schema": ["global"]}],
       "produces": ["application/json;charset=UTF-8"],
-      "description": "List containers for the given backend name or id.",
-      "operationId": "listContainers",
+      "description": "Create a new backend",
+      "operationId": "createBackend",
       "responses": {
-        "200": {
-          "schema": {
-            "type": "array",
-            "items": {"$ref": "#/definitions/ContainerResponse"}
-          },
-          "description": "Container info returned"
+        "201": {
+          "schema": {"$ref": "#/definitions/BackendResponse"},
+          "description": "Backend created"
         },
         "400": {
           "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid backend name or id"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Backend does not exist"
+          "description": "Invalid backend request"
         }
       },
       "parameters": [{
-        "in": "path",
-        "name": "backendId",
-        "description": "backendId",
-        "type": "string",
+        "schema": {"$ref": "#/definitions/BackendRequest"},
+        "in": "body",
+        "name": "backendRequest",
+        "description": "backendRequest",
         "required": true
       }],
       "tags": ["Storage"],
-      "consumes": ["application/json"]
+      "consumes": ["application/json;charset=UTF-8"]
     }},
-    "/bucket-storage/0.7/backends/{backendId}": {
+    "/backends/{backendId}": {
       "post": {
         "summary": "Update a backend",
         "security": [{"oauth2schema": ["global"]}],
@@ -416,236 +605,16 @@
         "consumes": ["application/json"]
       }
     },
-    "/bucket-storage/0.7/containers/{containerId}/objects/**": {"post": {
-      "summary": "Create a new object within a container",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json"],
-      "operationId": "createObjectInFolder",
-      "responses": {
-        "201": {
-          "schema": {"$ref": "#/definitions/ObjectResponse"},
-          "description": "Object created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid container or object request"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Container was not found"
-        }
-      },
-      "parameters": [
-        {
-          "in": "path",
-          "name": "containerId",
-          "description": "containerId",
-          "type": "string",
-          "required": true
-        },
-        {
-          "in": "query",
-          "name": "overwriteMode",
-          "description": "overwriteMode",
-          "type": "string",
-          "required": false,
-          "enum": [
-            "DONT_OVERWRITE",
-            "OVERWRITE"
-          ]
-        },
-        {
-          "in": "formData",
-          "name": "stream",
-          "description": "stream",
-          "type": "file",
-          "required": true
-        }
-      ],
-      "tags": ["Storage"],
-      "consumes": ["multipart/form-data"]
-    }},
-    "/bucket-storage/0.7/backends": {"post": {
-      "summary": "Create a new backend",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json;charset=UTF-8"],
-      "description": "Create a new backend",
-      "operationId": "createBackend",
-      "responses": {
-        "201": {
-          "schema": {"$ref": "#/definitions/BackendResponse"},
-          "description": "Backend created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid backend request"
-        }
-      },
-      "parameters": [{
-        "schema": {"$ref": "#/definitions/BackendRequest"},
-        "in": "body",
-        "name": "backendRequest",
-        "description": "backendRequest",
-        "required": true
-      }],
-      "tags": ["Storage"],
-      "consumes": ["application/json;charset=UTF-8"]
-    }},
-    "/bucket-storage/0.7/containers/{containerId}/list/**": {"get": {
+    "/containers/{containerId}/info/{objectPath}": {"get": {
       "summary": "List objects in path",
       "security": [{"oauth2schema": ["global"]}],
       "produces": ["application/json"],
-      "operationId": "listObjectsInFolder_1",
+      "description": "Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.",
+      "operationId": "listObjects_1",
       "responses": {
-        "201": {
-          "schema": {
-            "type": "array",
-            "items": {"$ref": "#/definitions/ObjectInfoResponse"}
-          },
-          "description": "Created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid container or object request"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Container was not found"
-        }
-      },
-      "parameters": [{
-        "in": "path",
-        "name": "containerId",
-        "description": "containerId",
-        "type": "string",
-        "required": true
-      }],
-      "tags": ["Storage"],
-      "consumes": ["application/json"]
-    }},
-    "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**": {"get": {
-      "summary": "List objects in path",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json"],
-      "operationId": "listObjectsInFolder_2",
-      "responses": {
-        "201": {
-          "schema": {
-            "type": "array",
-            "items": {"$ref": "#/definitions/ObjectInfoResponse"}
-          },
-          "description": "Created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid container or object request"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Container was not found"
-        }
-      },
-      "parameters": [{
-        "in": "path",
-        "name": "containerId",
-        "description": "containerId",
-        "type": "string",
-        "required": true
-      }],
-      "tags": ["Storage"],
-      "consumes": ["application/json"]
-    }},
-    "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**": {"post": {
-      "summary": "Create a new object within a container",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json"],
-      "operationId": "createObjectInFolder_1",
-      "responses": {
-        "201": {
-          "schema": {"$ref": "#/definitions/ObjectResponse"},
-          "description": "Object created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid container or object request"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Container was not found"
-        }
-      },
-      "parameters": [
-        {
-          "in": "path",
-          "name": "containerId",
-          "description": "containerId",
-          "type": "string",
-          "required": true
-        },
-        {
-          "in": "query",
-          "name": "overwriteMode",
-          "description": "overwriteMode",
-          "type": "string",
-          "required": false,
-          "enum": [
-            "DONT_OVERWRITE",
-            "OVERWRITE"
-          ]
-        },
-        {
-          "in": "formData",
-          "name": "stream",
-          "description": "stream",
-          "type": "file",
-          "required": true
-        }
-      ],
-      "tags": ["Storage"],
-      "consumes": ["multipart/form-data"]
-    }},
-    "/bucket-storage/0.7/containers": {"post": {
-      "summary": "Create a new container",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json;charset=UTF-8"],
-      "description": "Create a new container",
-      "operationId": "createContainer",
-      "responses": {
-        "201": {
-          "schema": {"$ref": "#/definitions/ContainerResponse"},
-          "description": "Container created"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid Container request"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Backend was not found"
-        }
-      },
-      "parameters": [{
-        "schema": {"$ref": "#/definitions/ContainerRequest"},
-        "in": "body",
-        "name": "containerRequest",
-        "description": "containerRequest",
-        "required": true
-      }],
-      "tags": ["Storage"],
-      "consumes": ["application/json;charset=UTF-8"]
-    }},
-    "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}": {"get": {
-      "summary": "List objects in path",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/json"],
-      "operationId": "listObjects",
-      "responses": {
-        "201": {
-          "schema": {
-            "type": "array",
-            "items": {"$ref": "#/definitions/ObjectInfoResponse"}
-          },
-          "description": "Created"
+        "200": {
+          "schema": {"$ref": "#/definitions/ObjectInfoResponse"},
+          "description": "Object information result"
         },
         "400": {
           "schema": {"$ref": "#/definitions/ErrorResponse"},
@@ -695,11 +664,44 @@
             "SHARED_STORAGE",
             "AMAZON_S3",
             "MS_AZURE_BLOB_STORAGE",
-            "GOOGLE_CLOUD_STORAGE"
+            "GOOGLE_CLOUD_STORAGE",
+            "XILLIO_ENGINE"
           ]
         },
         "name": {"type": "string"},
         "description": {"type": "string"},
+        "region": {
+          "description": "The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.",
+          "type": "string",
+          "enum": [
+            "AMAZON_S3_AP_NORTHEAST_1",
+            "AMAZON_S3_AP_NORTHEAST_2",
+            "AMAZON_S3_AP_SOUTH_1",
+            "AMAZON_S3_AP_SOUTHEAST_1",
+            "AMAZON_S3_AP_SOUTHEAST_2",
+            "AMAZON_S3_CA_CENTRAL_1",
+            "AMAZON_S3_CN_NORTH_1",
+            "AMAZON_S3_EU_CENTRAL_1",
+            "AMAZON_S3_EU_WEST_1",
+            "AMAZON_S3_EU_WEST_2",
+            "AMAZON_S3_SA_EAST_1",
+            "AMAZON_S3_US_EAST_1",
+            "AMAZON_S3_US_EAST_2",
+            "AMAZON_S3_US_STANDARD",
+            "AMAZON_S3_US_WEST_1",
+            "AMAZON_S3_US_WEST_2",
+            "GOOGLE_STORAGE_ASIA",
+            "GOOGLE_STORAGE_ASIA_EAST1",
+            "GOOGLE_STORAGE_EU",
+            "GOOGLE_STORAGE_US",
+            "GOOGLE_STORAGE_US_CENTRAL1",
+            "GOOGLE_STORAGE_US_CENTRAL2",
+            "GOOGLE_STORAGE_US_EAST1",
+            "GOOGLE_STORAGE_US_EAST2",
+            "GOOGLE_STORAGE_US_EAST3",
+            "GOOGLE_STORAGE_US_WEST1"
+          ]
+        },
         "parentId": {
           "description": "The backend that is used for when properties are not set. This allows usernamePasswordCredentials to be set at one backend and used by multiple backends.",
           "type": "string"
@@ -755,7 +757,8 @@
             "SHARED_STORAGE",
             "AMAZON_S3",
             "MS_AZURE_BLOB_STORAGE",
-            "GOOGLE_CLOUD_STORAGE"
+            "GOOGLE_CLOUD_STORAGE",
+            "XILLIO_ENGINE"
           ]
         },
         "name": {"type": "string"},
@@ -767,6 +770,38 @@
             "CREATED",
             "UPDATED",
             "DELETED"
+          ]
+        },
+        "region": {
+          "description": "The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.",
+          "type": "string",
+          "enum": [
+            "AMAZON_S3_AP_NORTHEAST_1",
+            "AMAZON_S3_AP_NORTHEAST_2",
+            "AMAZON_S3_AP_SOUTH_1",
+            "AMAZON_S3_AP_SOUTHEAST_1",
+            "AMAZON_S3_AP_SOUTHEAST_2",
+            "AMAZON_S3_CA_CENTRAL_1",
+            "AMAZON_S3_CN_NORTH_1",
+            "AMAZON_S3_EU_CENTRAL_1",
+            "AMAZON_S3_EU_WEST_1",
+            "AMAZON_S3_EU_WEST_2",
+            "AMAZON_S3_SA_EAST_1",
+            "AMAZON_S3_US_EAST_1",
+            "AMAZON_S3_US_EAST_2",
+            "AMAZON_S3_US_STANDARD",
+            "AMAZON_S3_US_WEST_1",
+            "AMAZON_S3_US_WEST_2",
+            "GOOGLE_STORAGE_ASIA",
+            "GOOGLE_STORAGE_ASIA_EAST1",
+            "GOOGLE_STORAGE_EU",
+            "GOOGLE_STORAGE_US",
+            "GOOGLE_STORAGE_US_CENTRAL1",
+            "GOOGLE_STORAGE_US_CENTRAL2",
+            "GOOGLE_STORAGE_US_EAST1",
+            "GOOGLE_STORAGE_US_EAST2",
+            "GOOGLE_STORAGE_US_EAST3",
+            "GOOGLE_STORAGE_US_WEST1"
           ]
         },
         "parentId": {
@@ -845,6 +880,10 @@
         "folderPath": {"type": "string"},
         "originalFileName": {"type": "string"},
         "fileName": {"type": "string"},
+        "id": {
+          "readOnly": true,
+          "type": "string"
+        },
         "containerId": {"type": "string"}
       }
     },
@@ -888,7 +927,37 @@
           "format": "date-time",
           "type": "string"
         },
-        "backendLocation": {"$ref": "#/definitions/BackendLocation"},
+        "region": {
+          "type": "string",
+          "enum": [
+            "AMAZON_S3_AP_NORTHEAST_1",
+            "AMAZON_S3_AP_NORTHEAST_2",
+            "AMAZON_S3_AP_SOUTH_1",
+            "AMAZON_S3_AP_SOUTHEAST_1",
+            "AMAZON_S3_AP_SOUTHEAST_2",
+            "AMAZON_S3_CA_CENTRAL_1",
+            "AMAZON_S3_CN_NORTH_1",
+            "AMAZON_S3_EU_CENTRAL_1",
+            "AMAZON_S3_EU_WEST_1",
+            "AMAZON_S3_EU_WEST_2",
+            "AMAZON_S3_SA_EAST_1",
+            "AMAZON_S3_US_EAST_1",
+            "AMAZON_S3_US_EAST_2",
+            "AMAZON_S3_US_STANDARD",
+            "AMAZON_S3_US_WEST_1",
+            "AMAZON_S3_US_WEST_2",
+            "GOOGLE_STORAGE_ASIA",
+            "GOOGLE_STORAGE_ASIA_EAST1",
+            "GOOGLE_STORAGE_EU",
+            "GOOGLE_STORAGE_US",
+            "GOOGLE_STORAGE_US_CENTRAL1",
+            "GOOGLE_STORAGE_US_CENTRAL2",
+            "GOOGLE_STORAGE_US_EAST1",
+            "GOOGLE_STORAGE_US_EAST2",
+            "GOOGLE_STORAGE_US_EAST3",
+            "GOOGLE_STORAGE_US_WEST1"
+          ]
+        },
         "contentType": {"type": "string"},
         "timeModified": {
           "format": "date-time",
@@ -903,6 +972,15 @@
     "ContainerRequest": {
       "type": "object",
       "properties": {
+        "creationMode": {
+          "description": "The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.",
+          "type": "string",
+          "enum": [
+            "NEW_ONLY",
+            "REQUIRE_EXISTING",
+            "ALLOW_EXISTING"
+          ]
+        },
         "name": {"type": "string"},
         "backendId": {
           "description": "The backend in which the container will be stored or is stored.",
@@ -911,6 +989,13 @@
       }
     },
     "ObjectInfoResponse": {
+      "type": "object",
+      "properties": {"objectInfoList": {
+        "type": "array",
+        "items": {"$ref": "#/definitions/ObjectInfoItem"}
+      }}
+    },
+    "ObjectInfoItem": {
       "type": "object",
       "properties": {"streamInfo": {"$ref": "#/definitions/StreamInfo"}}
     },
@@ -936,30 +1021,6 @@
           ]
         },
         "contentType": {"type": "string"}
-      }
-    },
-    "BackendLocation": {
-      "type": "object",
-      "properties": {
-        "parent": {"$ref": "#/definitions/BackendLocation"},
-        "metadata": {"type": "object"},
-        "iso3166Codes": {
-          "type": "array",
-          "items": {"type": "string"}
-        },
-        "scope": {
-          "type": "string",
-          "enum": [
-            "PROVIDER",
-            "REGION",
-            "ZONE",
-            "SYSTEM",
-            "NETWORK",
-            "HOST"
-          ]
-        },
-        "description": {"type": "string"},
-        "id": {"type": "string"}
       }
     }
   },
