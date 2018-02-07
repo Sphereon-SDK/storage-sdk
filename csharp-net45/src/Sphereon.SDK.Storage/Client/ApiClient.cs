@@ -60,17 +60,17 @@ namespace Sphereon.SDK.Storage.Client
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default configuration and base path (https://gw.api.cloud.sphereon.com/).
+        /// with default configuration and base path (https://gw.api.cloud.sphereon.com/bucket-storage/0.7).
         /// </summary>
         public ApiClient()
         {
             Configuration = Configuration.Default;
-            RestClient = new RestClient("https://gw.api.cloud.sphereon.com/");
+            RestClient = new RestClient("https://gw.api.cloud.sphereon.com/bucket-storage/0.7");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (https://gw.api.cloud.sphereon.com/).
+        /// with default base path (https://gw.api.cloud.sphereon.com/bucket-storage/0.7).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config = null)
@@ -80,7 +80,7 @@ namespace Sphereon.SDK.Storage.Client
             else
                 Configuration = config;
 
-            RestClient = new RestClient("https://gw.api.cloud.sphereon.com/");
+            RestClient = new RestClient("https://gw.api.cloud.sphereon.com/bucket-storage/0.7");
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Sphereon.SDK.Storage.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://gw.api.cloud.sphereon.com/")
+        public ApiClient(String basePath = "https://gw.api.cloud.sphereon.com/bucket-storage/0.7")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");

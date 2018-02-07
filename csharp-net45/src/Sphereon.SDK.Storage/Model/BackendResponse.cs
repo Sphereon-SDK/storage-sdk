@@ -69,7 +69,13 @@ namespace Sphereon.SDK.Storage.Model
             /// Enum GOOGLECLOUDSTORAGE for "GOOGLE_CLOUD_STORAGE"
             /// </summary>
             [EnumMember(Value = "GOOGLE_CLOUD_STORAGE")]
-            GOOGLECLOUDSTORAGE
+            GOOGLECLOUDSTORAGE,
+            
+            /// <summary>
+            /// Enum XILLIOENGINE for "XILLIO_ENGINE"
+            /// </summary>
+            [EnumMember(Value = "XILLIO_ENGINE")]
+            XILLIOENGINE
         }
 
         /// <summary>
@@ -105,6 +111,171 @@ namespace Sphereon.SDK.Storage.Model
         }
 
         /// <summary>
+        /// The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.
+        /// </summary>
+        /// <value>The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum RegionEnum
+        {
+            
+            /// <summary>
+            /// Enum AMAZONS3APNORTHEAST1 for "AMAZON_S3_AP_NORTHEAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_NORTHEAST_1")]
+            AMAZONS3APNORTHEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3APNORTHEAST2 for "AMAZON_S3_AP_NORTHEAST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_NORTHEAST_2")]
+            AMAZONS3APNORTHEAST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3APSOUTH1 for "AMAZON_S3_AP_SOUTH_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_SOUTH_1")]
+            AMAZONS3APSOUTH1,
+            
+            /// <summary>
+            /// Enum AMAZONS3APSOUTHEAST1 for "AMAZON_S3_AP_SOUTHEAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_SOUTHEAST_1")]
+            AMAZONS3APSOUTHEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3APSOUTHEAST2 for "AMAZON_S3_AP_SOUTHEAST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_SOUTHEAST_2")]
+            AMAZONS3APSOUTHEAST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3CACENTRAL1 for "AMAZON_S3_CA_CENTRAL_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_CA_CENTRAL_1")]
+            AMAZONS3CACENTRAL1,
+            
+            /// <summary>
+            /// Enum AMAZONS3CNNORTH1 for "AMAZON_S3_CN_NORTH_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_CN_NORTH_1")]
+            AMAZONS3CNNORTH1,
+            
+            /// <summary>
+            /// Enum AMAZONS3EUCENTRAL1 for "AMAZON_S3_EU_CENTRAL_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_EU_CENTRAL_1")]
+            AMAZONS3EUCENTRAL1,
+            
+            /// <summary>
+            /// Enum AMAZONS3EUWEST1 for "AMAZON_S3_EU_WEST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_EU_WEST_1")]
+            AMAZONS3EUWEST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3EUWEST2 for "AMAZON_S3_EU_WEST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_EU_WEST_2")]
+            AMAZONS3EUWEST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3SAEAST1 for "AMAZON_S3_SA_EAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_SA_EAST_1")]
+            AMAZONS3SAEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3USEAST1 for "AMAZON_S3_US_EAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_EAST_1")]
+            AMAZONS3USEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3USEAST2 for "AMAZON_S3_US_EAST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_EAST_2")]
+            AMAZONS3USEAST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3USSTANDARD for "AMAZON_S3_US_STANDARD"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_STANDARD")]
+            AMAZONS3USSTANDARD,
+            
+            /// <summary>
+            /// Enum AMAZONS3USWEST1 for "AMAZON_S3_US_WEST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_WEST_1")]
+            AMAZONS3USWEST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3USWEST2 for "AMAZON_S3_US_WEST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_WEST_2")]
+            AMAZONS3USWEST2,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEASIA for "GOOGLE_STORAGE_ASIA"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_ASIA")]
+            GOOGLESTORAGEASIA,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEASIAEAST1 for "GOOGLE_STORAGE_ASIA_EAST1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_ASIA_EAST1")]
+            GOOGLESTORAGEASIAEAST1,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEEU for "GOOGLE_STORAGE_EU"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_EU")]
+            GOOGLESTORAGEEU,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUS for "GOOGLE_STORAGE_US"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US")]
+            GOOGLESTORAGEUS,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSCENTRAL1 for "GOOGLE_STORAGE_US_CENTRAL1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_CENTRAL1")]
+            GOOGLESTORAGEUSCENTRAL1,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSCENTRAL2 for "GOOGLE_STORAGE_US_CENTRAL2"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_CENTRAL2")]
+            GOOGLESTORAGEUSCENTRAL2,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSEAST1 for "GOOGLE_STORAGE_US_EAST1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_EAST1")]
+            GOOGLESTORAGEUSEAST1,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSEAST2 for "GOOGLE_STORAGE_US_EAST2"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_EAST2")]
+            GOOGLESTORAGEUSEAST2,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSEAST3 for "GOOGLE_STORAGE_US_EAST3"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_EAST3")]
+            GOOGLESTORAGEUSEAST3,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSWEST1 for "GOOGLE_STORAGE_US_WEST1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_WEST1")]
+            GOOGLESTORAGEUSWEST1
+        }
+
+        /// <summary>
         /// The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
         /// </summary>
         /// <value>The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.</value>
@@ -116,17 +287,25 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="state", EmitDefaultValue=false)]
         public StateEnum? State { get; set; }
         /// <summary>
+        /// The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.
+        /// </summary>
+        /// <value>The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.</value>
+        [DataMember(Name="region", EmitDefaultValue=false)]
+        public RegionEnum? Region { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="BackendResponse" /> class.
         /// </summary>
         /// <param name="Name">Name.</param>
         /// <param name="Id">Id.</param>
         /// <param name="State">State.</param>
+        /// <param name="Region">The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account..</param>
         /// <param name="ParentId">The backend that is used for when properties are not set. This allows credentials to be set at one backend and used by multiple backends..</param>
-        public BackendResponse(string Name = null, string Id = null, StateEnum? State = null, string ParentId = null)
+        public BackendResponse(string Name = null, string Id = null, StateEnum? State = null, RegionEnum? Region = null, string ParentId = null)
         {
             this.Name = Name;
             this.Id = Id;
             this.State = State;
+            this.Region = Region;
             this.ParentId = ParentId;
         }
         
@@ -158,6 +337,7 @@ namespace Sphereon.SDK.Storage.Model
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
+            sb.Append("  Region: ").Append(Region).Append("\n");
             sb.Append("  ParentId: ").Append(ParentId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -216,6 +396,11 @@ namespace Sphereon.SDK.Storage.Model
                     this.State.Equals(other.State)
                 ) && 
                 (
+                    this.Region == other.Region ||
+                    this.Region != null &&
+                    this.Region.Equals(other.Region)
+                ) && 
+                (
                     this.ParentId == other.ParentId ||
                     this.ParentId != null &&
                     this.ParentId.Equals(other.ParentId)
@@ -241,6 +426,8 @@ namespace Sphereon.SDK.Storage.Model
                     hash = hash * 59 + this.Id.GetHashCode();
                 if (this.State != null)
                     hash = hash * 59 + this.State.GetHashCode();
+                if (this.Region != null)
+                    hash = hash * 59 + this.Region.GetHashCode();
                 if (this.ParentId != null)
                     hash = hash * 59 + this.ParentId.GetHashCode();
                 return hash;

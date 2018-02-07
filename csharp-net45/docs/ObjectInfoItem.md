@@ -1,9 +1,9 @@
-# Sphereon.SDK.Storage.Model.ObjectInfoResponse
+# Sphereon.SDK.Storage.Model.ObjectInfoItem
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ObjectInfoList** | [**List&lt;ObjectInfoItem&gt;**](ObjectInfoItem.md) |  | [optional] 
+**StreamInfo** | [**StreamInfo**](StreamInfo.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

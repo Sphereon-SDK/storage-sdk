@@ -40,12 +40,47 @@ namespace Sphereon.SDK.Storage.Model
     public partial class ContainerRequest :  IEquatable<ContainerRequest>
     {
         /// <summary>
+        /// The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.
+        /// </summary>
+        /// <value>The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum CreationModeEnum
+        {
+            
+            /// <summary>
+            /// Enum NEWONLY for "NEW_ONLY"
+            /// </summary>
+            [EnumMember(Value = "NEW_ONLY")]
+            NEWONLY,
+            
+            /// <summary>
+            /// Enum REQUIREEXISTING for "REQUIRE_EXISTING"
+            /// </summary>
+            [EnumMember(Value = "REQUIRE_EXISTING")]
+            REQUIREEXISTING,
+            
+            /// <summary>
+            /// Enum ALLOWEXISTING for "ALLOW_EXISTING"
+            /// </summary>
+            [EnumMember(Value = "ALLOW_EXISTING")]
+            ALLOWEXISTING
+        }
+
+        /// <summary>
+        /// The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.
+        /// </summary>
+        /// <value>The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.</value>
+        [DataMember(Name="creationMode", EmitDefaultValue=false)]
+        public CreationModeEnum? CreationMode { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRequest" /> class.
         /// </summary>
+        /// <param name="CreationMode">The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container..</param>
         /// <param name="Name">Name.</param>
         /// <param name="BackendId">The backend in which the container will be stored or is stored..</param>
-        public ContainerRequest(string Name = null, string BackendId = null)
+        public ContainerRequest(CreationModeEnum? CreationMode = null, string Name = null, string BackendId = null)
         {
+            this.CreationMode = CreationMode;
             this.Name = Name;
             this.BackendId = BackendId;
         }
@@ -69,6 +104,7 @@ namespace Sphereon.SDK.Storage.Model
         {
             var sb = new StringBuilder();
             sb.Append("class ContainerRequest {\n");
+            sb.Append("  CreationMode: ").Append(CreationMode).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  BackendId: ").Append(BackendId).Append("\n");
             sb.Append("}\n");
@@ -108,6 +144,11 @@ namespace Sphereon.SDK.Storage.Model
 
             return 
                 (
+                    this.CreationMode == other.CreationMode ||
+                    this.CreationMode != null &&
+                    this.CreationMode.Equals(other.CreationMode)
+                ) && 
+                (
                     this.Name == other.Name ||
                     this.Name != null &&
                     this.Name.Equals(other.Name)
@@ -130,6 +171,8 @@ namespace Sphereon.SDK.Storage.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
+                if (this.CreationMode != null)
+                    hash = hash * 59 + this.CreationMode.GetHashCode();
                 if (this.Name != null)
                     hash = hash * 59 + this.Name.GetHashCode();
                 if (this.BackendId != null)

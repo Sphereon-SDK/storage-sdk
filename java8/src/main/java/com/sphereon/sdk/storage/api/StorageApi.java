@@ -45,6 +45,7 @@ import com.sphereon.sdk.storage.model.ContainerResponse;
 import com.sphereon.sdk.storage.model.ContainerRequest;
 import com.sphereon.sdk.storage.model.ObjectResponse;
 import java.io.File;
+import com.sphereon.sdk.storage.model.StreamLocation;
 import com.sphereon.sdk.storage.model.ObjectInfoResponse;
 
 import java.lang.reflect.Type;
@@ -83,7 +84,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/backends".replaceAll("\\{format\\}","json");
+        String localVarPath = "/backends".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -189,7 +190,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers".replaceAll("\\{format\\}","json");
+        String localVarPath = "/containers".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -285,7 +286,7 @@ public class StorageApi {
         return call;
     }
     /* Build call for createObject */
-    private com.squareup.okhttp.Call createObjectCall(String containerId, String objectPath, File stream, String overwriteMode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createObjectCall(String containerId, String objectPath, File stream, String creationMode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'containerId' is set
@@ -305,13 +306,13 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}/objects/{objectPath}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()))
         .replaceAll("\\{" + "objectPath" + "\\}", apiClient.escapeString(objectPath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        if (overwriteMode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPairs("", "overwriteMode", overwriteMode));
+        if (creationMode != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "creationMode", creationMode));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -349,47 +350,47 @@ public class StorageApi {
 
     /**
      * Create a new object within a container
-     * 
+     * Create a new object within a container. Query parameter creationMode accepts values NEW_ONLY to create a new object, REQUIRE_EXISTING to update an object and ALLOW_EXISTING to create a new object or overwrite an existing object.
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
      * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
+     * @param creationMode creationMode (optional)
      * @return ObjectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ObjectResponse createObject(String containerId, String objectPath, File stream, String overwriteMode) throws ApiException {
-        ApiResponse<ObjectResponse> resp = createObjectWithHttpInfo(containerId, objectPath, stream, overwriteMode);
+    public ObjectResponse createObject(String containerId, String objectPath, File stream, String creationMode) throws ApiException {
+        ApiResponse<ObjectResponse> resp = createObjectWithHttpInfo(containerId, objectPath, stream, creationMode);
         return resp.getData();
     }
 
     /**
      * Create a new object within a container
-     * 
+     * Create a new object within a container. Query parameter creationMode accepts values NEW_ONLY to create a new object, REQUIRE_EXISTING to update an object and ALLOW_EXISTING to create a new object or overwrite an existing object.
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
      * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
+     * @param creationMode creationMode (optional)
      * @return ApiResponse&lt;ObjectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ObjectResponse> createObjectWithHttpInfo(String containerId, String objectPath, File stream, String overwriteMode) throws ApiException {
-        com.squareup.okhttp.Call call = createObjectCall(containerId, objectPath, stream, overwriteMode, null, null);
+    public ApiResponse<ObjectResponse> createObjectWithHttpInfo(String containerId, String objectPath, File stream, String creationMode) throws ApiException {
+        com.squareup.okhttp.Call call = createObjectCall(containerId, objectPath, stream, creationMode, null, null);
         Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * Create a new object within a container (asynchronously)
-     * 
+     * Create a new object within a container. Query parameter creationMode accepts values NEW_ONLY to create a new object, REQUIRE_EXISTING to update an object and ALLOW_EXISTING to create a new object or overwrite an existing object.
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
      * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
+     * @param creationMode creationMode (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createObjectAsync(String containerId, String objectPath, File stream, String overwriteMode, final ApiCallback<ObjectResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call createObjectAsync(String containerId, String objectPath, File stream, String creationMode, final ApiCallback<ObjectResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -410,251 +411,7 @@ public class StorageApi {
             };
         }
 
-        com.squareup.okhttp.Call call = createObjectCall(containerId, objectPath, stream, overwriteMode, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /* Build call for createObjectInFolder */
-    private com.squareup.okhttp.Call createObjectInFolderCall(String containerId, File stream, String overwriteMode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // verify the required parameter 'containerId' is set
-        if (containerId == null) {
-            throw new ApiException("Missing the required parameter 'containerId' when calling createObjectInFolder(Async)");
-        }
-        
-        // verify the required parameter 'stream' is set
-        if (stream == null) {
-            throw new ApiException("Missing the required parameter 'stream' when calling createObjectInFolder(Async)");
-        }
-        
-
-        // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/**".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        if (overwriteMode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPairs("", "overwriteMode", overwriteMode));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-        if (stream != null)
-        localVarFormParams.put("stream", stream);
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "multipart/form-data"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "oauth2schema" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    /**
-     * Create a new object within a container
-     * 
-     * @param containerId containerId (required)
-     * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
-     * @return ObjectResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ObjectResponse createObjectInFolder(String containerId, File stream, String overwriteMode) throws ApiException {
-        ApiResponse<ObjectResponse> resp = createObjectInFolderWithHttpInfo(containerId, stream, overwriteMode);
-        return resp.getData();
-    }
-
-    /**
-     * Create a new object within a container
-     * 
-     * @param containerId containerId (required)
-     * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
-     * @return ApiResponse&lt;ObjectResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<ObjectResponse> createObjectInFolderWithHttpInfo(String containerId, File stream, String overwriteMode) throws ApiException {
-        com.squareup.okhttp.Call call = createObjectInFolderCall(containerId, stream, overwriteMode, null, null);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Create a new object within a container (asynchronously)
-     * 
-     * @param containerId containerId (required)
-     * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call createObjectInFolderAsync(String containerId, File stream, String overwriteMode, final ApiCallback<ObjectResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = createObjectInFolderCall(containerId, stream, overwriteMode, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /* Build call for createObjectInFolder1 */
-    private com.squareup.okhttp.Call createObjectInFolder1Call(String containerId, File stream, String overwriteMode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // verify the required parameter 'containerId' is set
-        if (containerId == null) {
-            throw new ApiException("Missing the required parameter 'containerId' when calling createObjectInFolder1(Async)");
-        }
-        
-        // verify the required parameter 'stream' is set
-        if (stream == null) {
-            throw new ApiException("Missing the required parameter 'stream' when calling createObjectInFolder1(Async)");
-        }
-        
-
-        // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}/**".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        if (overwriteMode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPairs("", "overwriteMode", overwriteMode));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-        if (stream != null)
-        localVarFormParams.put("stream", stream);
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "multipart/form-data"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "oauth2schema" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    /**
-     * Create a new object within a container
-     * 
-     * @param containerId containerId (required)
-     * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
-     * @return ObjectResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ObjectResponse createObjectInFolder1(String containerId, File stream, String overwriteMode) throws ApiException {
-        ApiResponse<ObjectResponse> resp = createObjectInFolder1WithHttpInfo(containerId, stream, overwriteMode);
-        return resp.getData();
-    }
-
-    /**
-     * Create a new object within a container
-     * 
-     * @param containerId containerId (required)
-     * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
-     * @return ApiResponse&lt;ObjectResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<ObjectResponse> createObjectInFolder1WithHttpInfo(String containerId, File stream, String overwriteMode) throws ApiException {
-        com.squareup.okhttp.Call call = createObjectInFolder1Call(containerId, stream, overwriteMode, null, null);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Create a new object within a container (asynchronously)
-     * 
-     * @param containerId containerId (required)
-     * @param stream stream (required)
-     * @param overwriteMode overwriteMode (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call createObjectInFolder1Async(String containerId, File stream, String overwriteMode, final ApiCallback<ObjectResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = createObjectInFolder1Call(containerId, stream, overwriteMode, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = createObjectCall(containerId, objectPath, stream, creationMode, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -670,7 +427,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/backends/{backendId}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/backends/{backendId}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "backendId" + "\\}", apiClient.escapeString(backendId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -777,7 +534,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -894,7 +651,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}/objects/{objectPath}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()))
         .replaceAll("\\{" + "objectPath" + "\\}", apiClient.escapeString(objectPath.toString()));
 
@@ -990,6 +747,117 @@ public class StorageApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    /* Build call for deleteObject1 */
+    private com.squareup.okhttp.Call deleteObject1Call(String containerId, StreamLocation streamLocation, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = streamLocation;
+        
+        // verify the required parameter 'containerId' is set
+        if (containerId == null) {
+            throw new ApiException("Missing the required parameter 'containerId' when calling deleteObject1(Async)");
+        }
+        
+        // verify the required parameter 'streamLocation' is set
+        if (streamLocation == null) {
+            throw new ApiException("Missing the required parameter 'streamLocation' when calling deleteObject1(Async)");
+        }
+        
+
+        // create path and map variables
+        String localVarPath = "/containers/{containerId}/objects".replaceAll("\\{format\\}","json")
+        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*_/_*"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json;charset=UTF-8"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2schema" };
+        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    /**
+     * Delete an existing object from a container by stream location.
+     * Delete an existing object from a container by stream location. There is no request nor response body for a delete request.
+     * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void deleteObject1(String containerId, StreamLocation streamLocation) throws ApiException {
+        deleteObject1WithHttpInfo(containerId, streamLocation);
+    }
+
+    /**
+     * Delete an existing object from a container by stream location.
+     * Delete an existing object from a container by stream location. There is no request nor response body for a delete request.
+     * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> deleteObject1WithHttpInfo(String containerId, StreamLocation streamLocation) throws ApiException {
+        com.squareup.okhttp.Call call = deleteObject1Call(containerId, streamLocation, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Delete an existing object from a container by stream location. (asynchronously)
+     * Delete an existing object from a container by stream location. There is no request nor response body for a delete request.
+     * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call deleteObject1Async(String containerId, StreamLocation streamLocation, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = deleteObject1Call(containerId, streamLocation, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
     /* Build call for getBackendInfo */
     private com.squareup.okhttp.Call getBackendInfoCall(String backendId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -1001,7 +869,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/backends/{backendId}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/backends/{backendId}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "backendId" + "\\}", apiClient.escapeString(backendId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1108,7 +976,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1220,7 +1088,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/objects/{objectPath}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}/objects/{objectPath}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()))
         .replaceAll("\\{" + "objectPath" + "\\}", apiClient.escapeString(objectPath.toString()));
 
@@ -1320,6 +1188,121 @@ public class StorageApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+    /* Build call for getObject1 */
+    private com.squareup.okhttp.Call getObject1Call(String containerId, StreamLocation streamLocation, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = streamLocation;
+        
+        // verify the required parameter 'containerId' is set
+        if (containerId == null) {
+            throw new ApiException("Missing the required parameter 'containerId' when calling getObject1(Async)");
+        }
+        
+        // verify the required parameter 'streamLocation' is set
+        if (streamLocation == null) {
+            throw new ApiException("Missing the required parameter 'streamLocation' when calling getObject1(Async)");
+        }
+        
+
+        // create path and map variables
+        String localVarPath = "/containers/{containerId}/objects".replaceAll("\\{format\\}","json")
+        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/octet-stream", "application/json;charset=UTF-8"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json;charset=UTF-8"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2schema" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    /**
+     * Get an existing object from a container by stream location
+     * Get an existing object from a container by stream location
+     * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
+     * @return byte[]
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public byte[] getObject1(String containerId, StreamLocation streamLocation) throws ApiException {
+        ApiResponse<byte[]> resp = getObject1WithHttpInfo(containerId, streamLocation);
+        return resp.getData();
+    }
+
+    /**
+     * Get an existing object from a container by stream location
+     * Get an existing object from a container by stream location
+     * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
+     * @return ApiResponse&lt;byte[]&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<byte[]> getObject1WithHttpInfo(String containerId, StreamLocation streamLocation) throws ApiException {
+        com.squareup.okhttp.Call call = getObject1Call(containerId, streamLocation, null, null);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Get an existing object from a container by stream location (asynchronously)
+     * Get an existing object from a container by stream location
+     * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call getObject1Async(String containerId, StreamLocation streamLocation, final ApiCallback<byte[]> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = getObject1Call(containerId, streamLocation, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
     /* Build call for listContainers */
     private com.squareup.okhttp.Call listContainersCall(String backendId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -1331,7 +1314,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/backends/{backendId}/containers".replaceAll("\\{format\\}","json")
+        String localVarPath = "/backends/{backendId}/containers".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "backendId" + "\\}", apiClient.escapeString(backendId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1443,7 +1426,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}/info".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()))
         .replaceAll("\\{" + "objectPath" + "\\}", apiClient.escapeString(objectPath.toString()));
 
@@ -1483,41 +1466,41 @@ public class StorageApi {
 
     /**
      * List objects in path
-     * 
+     * Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
-     * @return List&lt;ObjectInfoResponse&gt;
+     * @return ObjectInfoResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<ObjectInfoResponse> listObjects(String containerId, String objectPath) throws ApiException {
-        ApiResponse<List<ObjectInfoResponse>> resp = listObjectsWithHttpInfo(containerId, objectPath);
+    public ObjectInfoResponse listObjects(String containerId, String objectPath) throws ApiException {
+        ApiResponse<ObjectInfoResponse> resp = listObjectsWithHttpInfo(containerId, objectPath);
         return resp.getData();
     }
 
     /**
      * List objects in path
-     * 
+     * Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
-     * @return ApiResponse&lt;List&lt;ObjectInfoResponse&gt;&gt;
+     * @return ApiResponse&lt;ObjectInfoResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<ObjectInfoResponse>> listObjectsWithHttpInfo(String containerId, String objectPath) throws ApiException {
+    public ApiResponse<ObjectInfoResponse> listObjectsWithHttpInfo(String containerId, String objectPath) throws ApiException {
         com.squareup.okhttp.Call call = listObjectsCall(containerId, objectPath, null, null);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectInfoResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * List objects in path (asynchronously)
-     * 
+     * Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
      * @param objectPath objectPath (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listObjectsAsync(String containerId, String objectPath, final ApiCallback<List<ObjectInfoResponse>> callback) throws ApiException {
+    public com.squareup.okhttp.Call listObjectsAsync(String containerId, String objectPath, final ApiCallback<ObjectInfoResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1539,23 +1522,29 @@ public class StorageApi {
         }
 
         com.squareup.okhttp.Call call = listObjectsCall(containerId, objectPath, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectInfoResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    /* Build call for listObjectsInFolder */
-    private com.squareup.okhttp.Call listObjectsInFolderCall(String containerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    /* Build call for listObjects1 */
+    private com.squareup.okhttp.Call listObjects1Call(String containerId, String objectPath, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'containerId' is set
         if (containerId == null) {
-            throw new ApiException("Missing the required parameter 'containerId' when calling listObjectsInFolder(Async)");
+            throw new ApiException("Missing the required parameter 'containerId' when calling listObjects1(Async)");
+        }
+        
+        // verify the required parameter 'objectPath' is set
+        if (objectPath == null) {
+            throw new ApiException("Missing the required parameter 'objectPath' when calling listObjects1(Async)");
         }
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
+        String localVarPath = "/containers/{containerId}/info/{objectPath}".replaceAll("\\{format\\}","json")
+        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()))
+        .replaceAll("\\{" + "objectPath" + "\\}", apiClient.escapeString(objectPath.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1593,38 +1582,41 @@ public class StorageApi {
 
     /**
      * List objects in path
-     * 
+     * Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
-     * @return List&lt;ObjectInfoResponse&gt;
+     * @param objectPath objectPath (required)
+     * @return ObjectInfoResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<ObjectInfoResponse> listObjectsInFolder(String containerId) throws ApiException {
-        ApiResponse<List<ObjectInfoResponse>> resp = listObjectsInFolderWithHttpInfo(containerId);
+    public ObjectInfoResponse listObjects1(String containerId, String objectPath) throws ApiException {
+        ApiResponse<ObjectInfoResponse> resp = listObjects1WithHttpInfo(containerId, objectPath);
         return resp.getData();
     }
 
     /**
      * List objects in path
-     * 
+     * Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
-     * @return ApiResponse&lt;List&lt;ObjectInfoResponse&gt;&gt;
+     * @param objectPath objectPath (required)
+     * @return ApiResponse&lt;ObjectInfoResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<ObjectInfoResponse>> listObjectsInFolderWithHttpInfo(String containerId) throws ApiException {
-        com.squareup.okhttp.Call call = listObjectsInFolderCall(containerId, null, null);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
+    public ApiResponse<ObjectInfoResponse> listObjects1WithHttpInfo(String containerId, String objectPath) throws ApiException {
+        com.squareup.okhttp.Call call = listObjects1Call(containerId, objectPath, null, null);
+        Type localVarReturnType = new TypeToken<ObjectInfoResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * List objects in path (asynchronously)
-     * 
+     * Returns object information on the given path. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
+     * @param objectPath objectPath (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listObjectsInFolderAsync(String containerId, final ApiCallback<List<ObjectInfoResponse>> callback) throws ApiException {
+    public com.squareup.okhttp.Call listObjects1Async(String containerId, String objectPath, final ApiCallback<ObjectInfoResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1645,23 +1637,28 @@ public class StorageApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listObjectsInFolderCall(containerId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
+        com.squareup.okhttp.Call call = listObjects1Call(containerId, objectPath, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<ObjectInfoResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    /* Build call for listObjectsInFolder1 */
-    private com.squareup.okhttp.Call listObjectsInFolder1Call(String containerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
+    /* Build call for listObjects2 */
+    private com.squareup.okhttp.Call listObjects2Call(String containerId, StreamLocation streamLocation, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = streamLocation;
         
         // verify the required parameter 'containerId' is set
         if (containerId == null) {
-            throw new ApiException("Missing the required parameter 'containerId' when calling listObjectsInFolder1(Async)");
+            throw new ApiException("Missing the required parameter 'containerId' when calling listObjects2(Async)");
+        }
+        
+        // verify the required parameter 'streamLocation' is set
+        if (streamLocation == null) {
+            throw new ApiException("Missing the required parameter 'streamLocation' when calling listObjects2(Async)");
         }
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/**".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}/info".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1677,7 +1674,7 @@ public class StorageApi {
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            "application/json"
+            "application/json;charset=UTF-8"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -1695,43 +1692,46 @@ public class StorageApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2schema" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
 
     /**
-     * List objects in path
-     * 
+     * List objects in path by stream location
+     * Returns object information on the given stream location. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
-     * @return List&lt;ObjectInfoResponse&gt;
+     * @param streamLocation streamLocation (required)
+     * @return ObjectInfoResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<ObjectInfoResponse> listObjectsInFolder1(String containerId) throws ApiException {
-        ApiResponse<List<ObjectInfoResponse>> resp = listObjectsInFolder1WithHttpInfo(containerId);
+    public ObjectInfoResponse listObjects2(String containerId, StreamLocation streamLocation) throws ApiException {
+        ApiResponse<ObjectInfoResponse> resp = listObjects2WithHttpInfo(containerId, streamLocation);
         return resp.getData();
     }
 
     /**
-     * List objects in path
-     * 
+     * List objects in path by stream location
+     * Returns object information on the given stream location. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
-     * @return ApiResponse&lt;List&lt;ObjectInfoResponse&gt;&gt;
+     * @param streamLocation streamLocation (required)
+     * @return ApiResponse&lt;ObjectInfoResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<ObjectInfoResponse>> listObjectsInFolder1WithHttpInfo(String containerId) throws ApiException {
-        com.squareup.okhttp.Call call = listObjectsInFolder1Call(containerId, null, null);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
+    public ApiResponse<ObjectInfoResponse> listObjects2WithHttpInfo(String containerId, StreamLocation streamLocation) throws ApiException {
+        com.squareup.okhttp.Call call = listObjects2Call(containerId, streamLocation, null, null);
+        Type localVarReturnType = new TypeToken<ObjectInfoResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
-     * List objects in path (asynchronously)
-     * 
+     * List objects in path by stream location (asynchronously)
+     * Returns object information on the given stream location. When the path points to a file (and if the file exists,) a StreamInfo record of that single file will be returned. When the path points to a folder, the StreamInfo records of all files in that folder will be returned.
      * @param containerId containerId (required)
+     * @param streamLocation streamLocation (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listObjectsInFolder1Async(String containerId, final ApiCallback<List<ObjectInfoResponse>> callback) throws ApiException {
+    public com.squareup.okhttp.Call listObjects2Async(String containerId, StreamLocation streamLocation, final ApiCallback<ObjectInfoResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1752,115 +1752,8 @@ public class StorageApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listObjectsInFolder1Call(containerId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /* Build call for listObjectsInFolder2 */
-    private com.squareup.okhttp.Call listObjectsInFolder2Call(String containerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // verify the required parameter 'containerId' is set
-        if (containerId == null) {
-            throw new ApiException("Missing the required parameter 'containerId' when calling listObjectsInFolder2(Async)");
-        }
-        
-
-        // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}/list/{objectPath}/**".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "oauth2schema" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    /**
-     * List objects in path
-     * 
-     * @param containerId containerId (required)
-     * @return List&lt;ObjectInfoResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public List<ObjectInfoResponse> listObjectsInFolder2(String containerId) throws ApiException {
-        ApiResponse<List<ObjectInfoResponse>> resp = listObjectsInFolder2WithHttpInfo(containerId);
-        return resp.getData();
-    }
-
-    /**
-     * List objects in path
-     * 
-     * @param containerId containerId (required)
-     * @return ApiResponse&lt;List&lt;ObjectInfoResponse&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<List<ObjectInfoResponse>> listObjectsInFolder2WithHttpInfo(String containerId) throws ApiException {
-        com.squareup.okhttp.Call call = listObjectsInFolder2Call(containerId, null, null);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List objects in path (asynchronously)
-     * 
-     * @param containerId containerId (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call listObjectsInFolder2Async(String containerId, final ApiCallback<List<ObjectInfoResponse>> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = listObjectsInFolder2Call(containerId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<ObjectInfoResponse>>(){}.getType();
+        com.squareup.okhttp.Call call = listObjects2Call(containerId, streamLocation, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<ObjectInfoResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -1880,7 +1773,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/backends/{backendId}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/backends/{backendId}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "backendId" + "\\}", apiClient.escapeString(backendId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1995,7 +1888,7 @@ public class StorageApi {
         
 
         // create path and map variables
-        String localVarPath = "/bucket-storage/0.7/containers/{containerId}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/containers/{containerId}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "containerId" + "\\}", apiClient.escapeString(containerId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();

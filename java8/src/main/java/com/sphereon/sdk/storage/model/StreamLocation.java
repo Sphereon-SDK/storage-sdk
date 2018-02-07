@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Location record of data stream
  */
 @ApiModel(description = "Location record of data stream")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-09-13T08:17:36.538+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-04T03:49:14.058+01:00")
 public class StreamLocation   {
   @SerializedName("folderPath")
   private String folderPath = null;
@@ -45,6 +45,9 @@ public class StreamLocation   {
 
   @SerializedName("fileName")
   private String fileName = null;
+
+  @SerializedName("id")
+  private String id = null;
 
   @SerializedName("containerId")
   private String containerId = null;
@@ -103,6 +106,15 @@ public class StreamLocation   {
     this.fileName = fileName;
   }
 
+   /**
+   * Get id
+   * @return id
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public String getId() {
+    return id;
+  }
+
   public StreamLocation containerId(String containerId) {
     this.containerId = containerId;
     return this;
@@ -134,12 +146,13 @@ public class StreamLocation   {
     return Objects.equals(this.folderPath, streamLocation.folderPath) &&
         Objects.equals(this.originalFileName, streamLocation.originalFileName) &&
         Objects.equals(this.fileName, streamLocation.fileName) &&
+        Objects.equals(this.id, streamLocation.id) &&
         Objects.equals(this.containerId, streamLocation.containerId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(folderPath, originalFileName, fileName, containerId);
+    return Objects.hash(folderPath, originalFileName, fileName, id, containerId);
   }
 
   @Override
@@ -150,6 +163,7 @@ public class StreamLocation   {
     sb.append("    folderPath: ").append(toIndentedString(folderPath)).append("\n");
     sb.append("    originalFileName: ").append(toIndentedString(originalFileName)).append("\n");
     sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    containerId: ").append(toIndentedString(containerId)).append("\n");
     sb.append("}");
     return sb.toString();

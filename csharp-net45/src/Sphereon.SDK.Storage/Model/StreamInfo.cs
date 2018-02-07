@@ -40,6 +40,175 @@ namespace Sphereon.SDK.Storage.Model
     public partial class StreamInfo :  IEquatable<StreamInfo>
     {
         /// <summary>
+        /// Gets or Sets Region
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum RegionEnum
+        {
+            
+            /// <summary>
+            /// Enum AMAZONS3APNORTHEAST1 for "AMAZON_S3_AP_NORTHEAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_NORTHEAST_1")]
+            AMAZONS3APNORTHEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3APNORTHEAST2 for "AMAZON_S3_AP_NORTHEAST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_NORTHEAST_2")]
+            AMAZONS3APNORTHEAST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3APSOUTH1 for "AMAZON_S3_AP_SOUTH_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_SOUTH_1")]
+            AMAZONS3APSOUTH1,
+            
+            /// <summary>
+            /// Enum AMAZONS3APSOUTHEAST1 for "AMAZON_S3_AP_SOUTHEAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_SOUTHEAST_1")]
+            AMAZONS3APSOUTHEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3APSOUTHEAST2 for "AMAZON_S3_AP_SOUTHEAST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_AP_SOUTHEAST_2")]
+            AMAZONS3APSOUTHEAST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3CACENTRAL1 for "AMAZON_S3_CA_CENTRAL_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_CA_CENTRAL_1")]
+            AMAZONS3CACENTRAL1,
+            
+            /// <summary>
+            /// Enum AMAZONS3CNNORTH1 for "AMAZON_S3_CN_NORTH_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_CN_NORTH_1")]
+            AMAZONS3CNNORTH1,
+            
+            /// <summary>
+            /// Enum AMAZONS3EUCENTRAL1 for "AMAZON_S3_EU_CENTRAL_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_EU_CENTRAL_1")]
+            AMAZONS3EUCENTRAL1,
+            
+            /// <summary>
+            /// Enum AMAZONS3EUWEST1 for "AMAZON_S3_EU_WEST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_EU_WEST_1")]
+            AMAZONS3EUWEST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3EUWEST2 for "AMAZON_S3_EU_WEST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_EU_WEST_2")]
+            AMAZONS3EUWEST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3SAEAST1 for "AMAZON_S3_SA_EAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_SA_EAST_1")]
+            AMAZONS3SAEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3USEAST1 for "AMAZON_S3_US_EAST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_EAST_1")]
+            AMAZONS3USEAST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3USEAST2 for "AMAZON_S3_US_EAST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_EAST_2")]
+            AMAZONS3USEAST2,
+            
+            /// <summary>
+            /// Enum AMAZONS3USSTANDARD for "AMAZON_S3_US_STANDARD"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_STANDARD")]
+            AMAZONS3USSTANDARD,
+            
+            /// <summary>
+            /// Enum AMAZONS3USWEST1 for "AMAZON_S3_US_WEST_1"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_WEST_1")]
+            AMAZONS3USWEST1,
+            
+            /// <summary>
+            /// Enum AMAZONS3USWEST2 for "AMAZON_S3_US_WEST_2"
+            /// </summary>
+            [EnumMember(Value = "AMAZON_S3_US_WEST_2")]
+            AMAZONS3USWEST2,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEASIA for "GOOGLE_STORAGE_ASIA"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_ASIA")]
+            GOOGLESTORAGEASIA,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEASIAEAST1 for "GOOGLE_STORAGE_ASIA_EAST1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_ASIA_EAST1")]
+            GOOGLESTORAGEASIAEAST1,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEEU for "GOOGLE_STORAGE_EU"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_EU")]
+            GOOGLESTORAGEEU,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUS for "GOOGLE_STORAGE_US"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US")]
+            GOOGLESTORAGEUS,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSCENTRAL1 for "GOOGLE_STORAGE_US_CENTRAL1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_CENTRAL1")]
+            GOOGLESTORAGEUSCENTRAL1,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSCENTRAL2 for "GOOGLE_STORAGE_US_CENTRAL2"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_CENTRAL2")]
+            GOOGLESTORAGEUSCENTRAL2,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSEAST1 for "GOOGLE_STORAGE_US_EAST1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_EAST1")]
+            GOOGLESTORAGEUSEAST1,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSEAST2 for "GOOGLE_STORAGE_US_EAST2"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_EAST2")]
+            GOOGLESTORAGEUSEAST2,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSEAST3 for "GOOGLE_STORAGE_US_EAST3"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_EAST3")]
+            GOOGLESTORAGEUSEAST3,
+            
+            /// <summary>
+            /// Enum GOOGLESTORAGEUSWEST1 for "GOOGLE_STORAGE_US_WEST1"
+            /// </summary>
+            [EnumMember(Value = "GOOGLE_STORAGE_US_WEST1")]
+            GOOGLESTORAGEUSWEST1
+        }
+
+        /// <summary>
+        /// Gets or Sets Region
+        /// </summary>
+        [DataMember(Name="region", EmitDefaultValue=false)]
+        public RegionEnum? Region { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="StreamInfo" /> class.
         /// </summary>
         /// <param name="StreamLocation">StreamLocation.</param>
@@ -49,11 +218,11 @@ namespace Sphereon.SDK.Storage.Model
         /// <param name="ETag">ETag.</param>
         /// <param name="Etag">Etag.</param>
         /// <param name="TimeCreated">TimeCreated.</param>
-        /// <param name="BackendLocation">BackendLocation.</param>
+        /// <param name="Region">Region.</param>
         /// <param name="ContentType">ContentType.</param>
         /// <param name="TimeModified">TimeModified.</param>
         /// <param name="UserMetadata">UserMetadata.</param>
-        public StreamInfo(StreamLocation StreamLocation = null, string ContainerName = null, string ProviderId = null, long? StreamLength = null, string ETag = null, string Etag = null, DateTime? TimeCreated = null, BackendLocation BackendLocation = null, string ContentType = null, DateTime? TimeModified = null, Dictionary<string, string> UserMetadata = null)
+        public StreamInfo(StreamLocation StreamLocation = null, string ContainerName = null, string ProviderId = null, long? StreamLength = null, string ETag = null, string Etag = null, DateTime? TimeCreated = null, RegionEnum? Region = null, string ContentType = null, DateTime? TimeModified = null, Dictionary<string, string> UserMetadata = null)
         {
             this.StreamLocation = StreamLocation;
             this.ContainerName = ContainerName;
@@ -62,7 +231,7 @@ namespace Sphereon.SDK.Storage.Model
             this.ETag = ETag;
             this.Etag = Etag;
             this.TimeCreated = TimeCreated;
-            this.BackendLocation = BackendLocation;
+            this.Region = Region;
             this.ContentType = ContentType;
             this.TimeModified = TimeModified;
             this.UserMetadata = UserMetadata;
@@ -104,11 +273,6 @@ namespace Sphereon.SDK.Storage.Model
         [DataMember(Name="timeCreated", EmitDefaultValue=false)]
         public DateTime? TimeCreated { get; set; }
         /// <summary>
-        /// Gets or Sets BackendLocation
-        /// </summary>
-        [DataMember(Name="backendLocation", EmitDefaultValue=false)]
-        public BackendLocation BackendLocation { get; set; }
-        /// <summary>
         /// Gets or Sets ContentType
         /// </summary>
         [DataMember(Name="contentType", EmitDefaultValue=false)]
@@ -138,7 +302,7 @@ namespace Sphereon.SDK.Storage.Model
             sb.Append("  ETag: ").Append(ETag).Append("\n");
             sb.Append("  Etag: ").Append(Etag).Append("\n");
             sb.Append("  TimeCreated: ").Append(TimeCreated).Append("\n");
-            sb.Append("  BackendLocation: ").Append(BackendLocation).Append("\n");
+            sb.Append("  Region: ").Append(Region).Append("\n");
             sb.Append("  ContentType: ").Append(ContentType).Append("\n");
             sb.Append("  TimeModified: ").Append(TimeModified).Append("\n");
             sb.Append("  UserMetadata: ").Append(UserMetadata).Append("\n");
@@ -214,9 +378,9 @@ namespace Sphereon.SDK.Storage.Model
                     this.TimeCreated.Equals(other.TimeCreated)
                 ) && 
                 (
-                    this.BackendLocation == other.BackendLocation ||
-                    this.BackendLocation != null &&
-                    this.BackendLocation.Equals(other.BackendLocation)
+                    this.Region == other.Region ||
+                    this.Region != null &&
+                    this.Region.Equals(other.Region)
                 ) && 
                 (
                     this.ContentType == other.ContentType ||
@@ -260,8 +424,8 @@ namespace Sphereon.SDK.Storage.Model
                     hash = hash * 59 + this.Etag.GetHashCode();
                 if (this.TimeCreated != null)
                     hash = hash * 59 + this.TimeCreated.GetHashCode();
-                if (this.BackendLocation != null)
-                    hash = hash * 59 + this.BackendLocation.GetHashCode();
+                if (this.Region != null)
+                    hash = hash * 59 + this.Region.GetHashCode();
                 if (this.ContentType != null)
                     hash = hash * 59 + this.ContentType.GetHashCode();
                 if (this.TimeModified != null)

@@ -27,77 +27,35 @@ package com.sphereon.sdk.storage.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
+import com.sphereon.sdk.storage.model.StreamInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
 /**
- * OAuth2Credentials
+ * ObjectInfoItem
  */
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-04T03:49:14.058+01:00")
-public class OAuth2Credentials   {
-  /**
-   * Gets or Sets authenticationProvider
-   */
-  public enum AuthenticationProviderEnum {
-    @SerializedName("API_SUPPLIER")
-    API_SUPPLIER("API_SUPPLIER"),
-    
-    @SerializedName("END_USER")
-    END_USER("END_USER");
+public class ObjectInfoItem   {
+  @SerializedName("streamInfo")
+  private StreamInfo streamInfo = null;
 
-    private String value;
-
-    AuthenticationProviderEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-  }
-
-  @SerializedName("authenticationProvider")
-  private AuthenticationProviderEnum authenticationProvider = null;
-
-  @SerializedName("token")
-  private String token = null;
-
-  public OAuth2Credentials authenticationProvider(AuthenticationProviderEnum authenticationProvider) {
-    this.authenticationProvider = authenticationProvider;
+  public ObjectInfoItem streamInfo(StreamInfo streamInfo) {
+    this.streamInfo = streamInfo;
     return this;
   }
 
    /**
-   * Get authenticationProvider
-   * @return authenticationProvider
+   * Get streamInfo
+   * @return streamInfo
   **/
   @ApiModelProperty(example = "null", value = "")
-  public AuthenticationProviderEnum getAuthenticationProvider() {
-    return authenticationProvider;
+  public StreamInfo getStreamInfo() {
+    return streamInfo;
   }
 
-  public void setAuthenticationProvider(AuthenticationProviderEnum authenticationProvider) {
-    this.authenticationProvider = authenticationProvider;
-  }
-
-  public OAuth2Credentials token(String token) {
-    this.token = token;
-    return this;
-  }
-
-   /**
-   * Get token
-   * @return token
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
+  public void setStreamInfo(StreamInfo streamInfo) {
+    this.streamInfo = streamInfo;
   }
 
 
@@ -109,23 +67,21 @@ public class OAuth2Credentials   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OAuth2Credentials oAuth2Credentials = (OAuth2Credentials) o;
-    return Objects.equals(this.authenticationProvider, oAuth2Credentials.authenticationProvider) &&
-        Objects.equals(this.token, oAuth2Credentials.token);
+    ObjectInfoItem objectInfoItem = (ObjectInfoItem) o;
+    return Objects.equals(this.streamInfo, objectInfoItem.streamInfo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authenticationProvider, token);
+    return Objects.hash(streamInfo);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OAuth2Credentials {\n");
+    sb.append("class ObjectInfoItem {\n");
     
-    sb.append("    authenticationProvider: ").append(toIndentedString(authenticationProvider)).append("\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    streamInfo: ").append(toIndentedString(streamInfo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -27,7 +27,6 @@ package com.sphereon.sdk.storage.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
-import com.sphereon.sdk.storage.model.BackendLocation;
 import com.sphereon.sdk.storage.model.StreamLocation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -41,7 +40,7 @@ import java.util.Map;
  * Information record from a data stream
  */
 @ApiModel(description = "Information record from a data stream")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-09-13T08:17:36.538+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-04T03:49:14.058+01:00")
 public class StreamInfo   {
   @SerializedName("streamLocation")
   private StreamLocation streamLocation = null;
@@ -64,8 +63,102 @@ public class StreamInfo   {
   @SerializedName("timeCreated")
   private OffsetDateTime timeCreated = null;
 
-  @SerializedName("backendLocation")
-  private BackendLocation backendLocation = null;
+  /**
+   * Gets or Sets region
+   */
+  public enum RegionEnum {
+    @SerializedName("AMAZON_S3_AP_NORTHEAST_1")
+    AMAZON_S3_AP_NORTHEAST_1("AMAZON_S3_AP_NORTHEAST_1"),
+    
+    @SerializedName("AMAZON_S3_AP_NORTHEAST_2")
+    AMAZON_S3_AP_NORTHEAST_2("AMAZON_S3_AP_NORTHEAST_2"),
+    
+    @SerializedName("AMAZON_S3_AP_SOUTH_1")
+    AMAZON_S3_AP_SOUTH_1("AMAZON_S3_AP_SOUTH_1"),
+    
+    @SerializedName("AMAZON_S3_AP_SOUTHEAST_1")
+    AMAZON_S3_AP_SOUTHEAST_1("AMAZON_S3_AP_SOUTHEAST_1"),
+    
+    @SerializedName("AMAZON_S3_AP_SOUTHEAST_2")
+    AMAZON_S3_AP_SOUTHEAST_2("AMAZON_S3_AP_SOUTHEAST_2"),
+    
+    @SerializedName("AMAZON_S3_CA_CENTRAL_1")
+    AMAZON_S3_CA_CENTRAL_1("AMAZON_S3_CA_CENTRAL_1"),
+    
+    @SerializedName("AMAZON_S3_CN_NORTH_1")
+    AMAZON_S3_CN_NORTH_1("AMAZON_S3_CN_NORTH_1"),
+    
+    @SerializedName("AMAZON_S3_EU_CENTRAL_1")
+    AMAZON_S3_EU_CENTRAL_1("AMAZON_S3_EU_CENTRAL_1"),
+    
+    @SerializedName("AMAZON_S3_EU_WEST_1")
+    AMAZON_S3_EU_WEST_1("AMAZON_S3_EU_WEST_1"),
+    
+    @SerializedName("AMAZON_S3_EU_WEST_2")
+    AMAZON_S3_EU_WEST_2("AMAZON_S3_EU_WEST_2"),
+    
+    @SerializedName("AMAZON_S3_SA_EAST_1")
+    AMAZON_S3_SA_EAST_1("AMAZON_S3_SA_EAST_1"),
+    
+    @SerializedName("AMAZON_S3_US_EAST_1")
+    AMAZON_S3_US_EAST_1("AMAZON_S3_US_EAST_1"),
+    
+    @SerializedName("AMAZON_S3_US_EAST_2")
+    AMAZON_S3_US_EAST_2("AMAZON_S3_US_EAST_2"),
+    
+    @SerializedName("AMAZON_S3_US_STANDARD")
+    AMAZON_S3_US_STANDARD("AMAZON_S3_US_STANDARD"),
+    
+    @SerializedName("AMAZON_S3_US_WEST_1")
+    AMAZON_S3_US_WEST_1("AMAZON_S3_US_WEST_1"),
+    
+    @SerializedName("AMAZON_S3_US_WEST_2")
+    AMAZON_S3_US_WEST_2("AMAZON_S3_US_WEST_2"),
+    
+    @SerializedName("GOOGLE_STORAGE_ASIA")
+    GOOGLE_STORAGE_ASIA("GOOGLE_STORAGE_ASIA"),
+    
+    @SerializedName("GOOGLE_STORAGE_ASIA_EAST1")
+    GOOGLE_STORAGE_ASIA_EAST1("GOOGLE_STORAGE_ASIA_EAST1"),
+    
+    @SerializedName("GOOGLE_STORAGE_EU")
+    GOOGLE_STORAGE_EU("GOOGLE_STORAGE_EU"),
+    
+    @SerializedName("GOOGLE_STORAGE_US")
+    GOOGLE_STORAGE_US("GOOGLE_STORAGE_US"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_CENTRAL1")
+    GOOGLE_STORAGE_US_CENTRAL1("GOOGLE_STORAGE_US_CENTRAL1"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_CENTRAL2")
+    GOOGLE_STORAGE_US_CENTRAL2("GOOGLE_STORAGE_US_CENTRAL2"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_EAST1")
+    GOOGLE_STORAGE_US_EAST1("GOOGLE_STORAGE_US_EAST1"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_EAST2")
+    GOOGLE_STORAGE_US_EAST2("GOOGLE_STORAGE_US_EAST2"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_EAST3")
+    GOOGLE_STORAGE_US_EAST3("GOOGLE_STORAGE_US_EAST3"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_WEST1")
+    GOOGLE_STORAGE_US_WEST1("GOOGLE_STORAGE_US_WEST1");
+
+    private String value;
+
+    RegionEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+  }
+
+  @SerializedName("region")
+  private RegionEnum region = null;
 
   @SerializedName("contentType")
   private String contentType = null;
@@ -202,22 +295,22 @@ public class StreamInfo   {
     this.timeCreated = timeCreated;
   }
 
-  public StreamInfo backendLocation(BackendLocation backendLocation) {
-    this.backendLocation = backendLocation;
+  public StreamInfo region(RegionEnum region) {
+    this.region = region;
     return this;
   }
 
    /**
-   * Get backendLocation
-   * @return backendLocation
+   * Get region
+   * @return region
   **/
   @ApiModelProperty(example = "null", value = "")
-  public BackendLocation getBackendLocation() {
-    return backendLocation;
+  public RegionEnum getRegion() {
+    return region;
   }
 
-  public void setBackendLocation(BackendLocation backendLocation) {
-    this.backendLocation = backendLocation;
+  public void setRegion(RegionEnum region) {
+    this.region = region;
   }
 
   public StreamInfo contentType(String contentType) {
@@ -296,7 +389,7 @@ public class StreamInfo   {
         Objects.equals(this.eTag, streamInfo.eTag) &&
         Objects.equals(this.etag, streamInfo.etag) &&
         Objects.equals(this.timeCreated, streamInfo.timeCreated) &&
-        Objects.equals(this.backendLocation, streamInfo.backendLocation) &&
+        Objects.equals(this.region, streamInfo.region) &&
         Objects.equals(this.contentType, streamInfo.contentType) &&
         Objects.equals(this.timeModified, streamInfo.timeModified) &&
         Objects.equals(this.userMetadata, streamInfo.userMetadata);
@@ -304,7 +397,7 @@ public class StreamInfo   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(streamLocation, containerName, providerId, streamLength, eTag, etag, timeCreated, backendLocation, contentType, timeModified, userMetadata);
+    return Objects.hash(streamLocation, containerName, providerId, streamLength, eTag, etag, timeCreated, region, contentType, timeModified, userMetadata);
   }
 
   @Override
@@ -319,7 +412,7 @@ public class StreamInfo   {
     sb.append("    eTag: ").append(toIndentedString(eTag)).append("\n");
     sb.append("    etag: ").append(toIndentedString(etag)).append("\n");
     sb.append("    timeCreated: ").append(toIndentedString(timeCreated)).append("\n");
-    sb.append("    backendLocation: ").append(toIndentedString(backendLocation)).append("\n");
+    sb.append("    region: ").append(toIndentedString(region)).append("\n");
     sb.append("    contentType: ").append(toIndentedString(contentType)).append("\n");
     sb.append("    timeModified: ").append(toIndentedString(timeModified)).append("\n");
     sb.append("    userMetadata: ").append(toIndentedString(userMetadata)).append("\n");

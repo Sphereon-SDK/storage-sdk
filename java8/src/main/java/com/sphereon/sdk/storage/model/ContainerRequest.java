@@ -34,13 +34,59 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ContainerRequest
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-09-13T08:17:36.538+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-04T03:49:14.058+01:00")
 public class ContainerRequest   {
+  /**
+   * The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.
+   */
+  public enum CreationModeEnum {
+    @SerializedName("NEW_ONLY")
+    NEW_ONLY("NEW_ONLY"),
+    
+    @SerializedName("REQUIRE_EXISTING")
+    REQUIRE_EXISTING("REQUIRE_EXISTING"),
+    
+    @SerializedName("ALLOW_EXISTING")
+    ALLOW_EXISTING("ALLOW_EXISTING");
+
+    private String value;
+
+    CreationModeEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+  }
+
+  @SerializedName("creationMode")
+  private CreationModeEnum creationMode = null;
+
   @SerializedName("name")
   private String name = null;
 
   @SerializedName("backendId")
   private String backendId = null;
+
+  public ContainerRequest creationMode(CreationModeEnum creationMode) {
+    this.creationMode = creationMode;
+    return this;
+  }
+
+   /**
+   * The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.
+   * @return creationMode
+  **/
+  @ApiModelProperty(example = "null", value = "The way a container is creation. If the container should be new, is allowed already exist or use an existing remote container.")
+  public CreationModeEnum getCreationMode() {
+    return creationMode;
+  }
+
+  public void setCreationMode(CreationModeEnum creationMode) {
+    this.creationMode = creationMode;
+  }
 
   public ContainerRequest name(String name) {
     this.name = name;
@@ -88,13 +134,14 @@ public class ContainerRequest   {
       return false;
     }
     ContainerRequest containerRequest = (ContainerRequest) o;
-    return Objects.equals(this.name, containerRequest.name) &&
+    return Objects.equals(this.creationMode, containerRequest.creationMode) &&
+        Objects.equals(this.name, containerRequest.name) &&
         Objects.equals(this.backendId, containerRequest.backendId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, backendId);
+    return Objects.hash(creationMode, name, backendId);
   }
 
   @Override
@@ -102,6 +149,7 @@ public class ContainerRequest   {
     StringBuilder sb = new StringBuilder();
     sb.append("class ContainerRequest {\n");
     
+    sb.append("    creationMode: ").append(toIndentedString(creationMode)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    backendId: ").append(toIndentedString(backendId)).append("\n");
     sb.append("}");
