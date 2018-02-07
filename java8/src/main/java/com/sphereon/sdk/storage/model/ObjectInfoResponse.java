@@ -27,35 +27,42 @@ package com.sphereon.sdk.storage.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
-import com.sphereon.sdk.storage.model.StreamInfo;
+import com.sphereon.sdk.storage.model.ObjectInfoItem;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * ObjectInfoResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-09-13T08:17:36.538+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-04T03:49:14.058+01:00")
 public class ObjectInfoResponse   {
-  @SerializedName("streamInfo")
-  private StreamInfo streamInfo = null;
+  @SerializedName("objectInfoList")
+  private List<ObjectInfoItem> objectInfoList = new ArrayList<ObjectInfoItem>();
 
-  public ObjectInfoResponse streamInfo(StreamInfo streamInfo) {
-    this.streamInfo = streamInfo;
+  public ObjectInfoResponse objectInfoList(List<ObjectInfoItem> objectInfoList) {
+    this.objectInfoList = objectInfoList;
+    return this;
+  }
+
+  public ObjectInfoResponse addObjectInfoListItem(ObjectInfoItem objectInfoListItem) {
+    this.objectInfoList.add(objectInfoListItem);
     return this;
   }
 
    /**
-   * Get streamInfo
-   * @return streamInfo
+   * Get objectInfoList
+   * @return objectInfoList
   **/
   @ApiModelProperty(example = "null", value = "")
-  public StreamInfo getStreamInfo() {
-    return streamInfo;
+  public List<ObjectInfoItem> getObjectInfoList() {
+    return objectInfoList;
   }
 
-  public void setStreamInfo(StreamInfo streamInfo) {
-    this.streamInfo = streamInfo;
+  public void setObjectInfoList(List<ObjectInfoItem> objectInfoList) {
+    this.objectInfoList = objectInfoList;
   }
 
 
@@ -68,12 +75,12 @@ public class ObjectInfoResponse   {
       return false;
     }
     ObjectInfoResponse objectInfoResponse = (ObjectInfoResponse) o;
-    return Objects.equals(this.streamInfo, objectInfoResponse.streamInfo);
+    return Objects.equals(this.objectInfoList, objectInfoResponse.objectInfoList);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(streamInfo);
+    return Objects.hash(objectInfoList);
   }
 
   @Override
@@ -81,7 +88,7 @@ public class ObjectInfoResponse   {
     StringBuilder sb = new StringBuilder();
     sb.append("class ObjectInfoResponse {\n");
     
-    sb.append("    streamInfo: ").append(toIndentedString(streamInfo)).append("\n");
+    sb.append("    objectInfoList: ").append(toIndentedString(objectInfoList)).append("\n");
     sb.append("}");
     return sb.toString();
   }

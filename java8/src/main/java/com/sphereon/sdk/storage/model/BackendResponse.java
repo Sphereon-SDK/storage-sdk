@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * BackendResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-09-13T08:17:36.538+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-04T03:49:14.058+01:00")
 public class BackendResponse   {
   /**
    * The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties.
@@ -50,7 +50,10 @@ public class BackendResponse   {
     MS_AZURE_BLOB_STORAGE("MS_AZURE_BLOB_STORAGE"),
     
     @SerializedName("GOOGLE_CLOUD_STORAGE")
-    GOOGLE_CLOUD_STORAGE("GOOGLE_CLOUD_STORAGE");
+    GOOGLE_CLOUD_STORAGE("GOOGLE_CLOUD_STORAGE"),
+    
+    @SerializedName("XILLIO_ENGINE")
+    XILLIO_ENGINE("XILLIO_ENGINE");
 
     private String value;
 
@@ -103,6 +106,103 @@ public class BackendResponse   {
 
   @SerializedName("state")
   private StateEnum state = null;
+
+  /**
+   * The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.
+   */
+  public enum RegionEnum {
+    @SerializedName("AMAZON_S3_AP_NORTHEAST_1")
+    AMAZON_S3_AP_NORTHEAST_1("AMAZON_S3_AP_NORTHEAST_1"),
+    
+    @SerializedName("AMAZON_S3_AP_NORTHEAST_2")
+    AMAZON_S3_AP_NORTHEAST_2("AMAZON_S3_AP_NORTHEAST_2"),
+    
+    @SerializedName("AMAZON_S3_AP_SOUTH_1")
+    AMAZON_S3_AP_SOUTH_1("AMAZON_S3_AP_SOUTH_1"),
+    
+    @SerializedName("AMAZON_S3_AP_SOUTHEAST_1")
+    AMAZON_S3_AP_SOUTHEAST_1("AMAZON_S3_AP_SOUTHEAST_1"),
+    
+    @SerializedName("AMAZON_S3_AP_SOUTHEAST_2")
+    AMAZON_S3_AP_SOUTHEAST_2("AMAZON_S3_AP_SOUTHEAST_2"),
+    
+    @SerializedName("AMAZON_S3_CA_CENTRAL_1")
+    AMAZON_S3_CA_CENTRAL_1("AMAZON_S3_CA_CENTRAL_1"),
+    
+    @SerializedName("AMAZON_S3_CN_NORTH_1")
+    AMAZON_S3_CN_NORTH_1("AMAZON_S3_CN_NORTH_1"),
+    
+    @SerializedName("AMAZON_S3_EU_CENTRAL_1")
+    AMAZON_S3_EU_CENTRAL_1("AMAZON_S3_EU_CENTRAL_1"),
+    
+    @SerializedName("AMAZON_S3_EU_WEST_1")
+    AMAZON_S3_EU_WEST_1("AMAZON_S3_EU_WEST_1"),
+    
+    @SerializedName("AMAZON_S3_EU_WEST_2")
+    AMAZON_S3_EU_WEST_2("AMAZON_S3_EU_WEST_2"),
+    
+    @SerializedName("AMAZON_S3_SA_EAST_1")
+    AMAZON_S3_SA_EAST_1("AMAZON_S3_SA_EAST_1"),
+    
+    @SerializedName("AMAZON_S3_US_EAST_1")
+    AMAZON_S3_US_EAST_1("AMAZON_S3_US_EAST_1"),
+    
+    @SerializedName("AMAZON_S3_US_EAST_2")
+    AMAZON_S3_US_EAST_2("AMAZON_S3_US_EAST_2"),
+    
+    @SerializedName("AMAZON_S3_US_STANDARD")
+    AMAZON_S3_US_STANDARD("AMAZON_S3_US_STANDARD"),
+    
+    @SerializedName("AMAZON_S3_US_WEST_1")
+    AMAZON_S3_US_WEST_1("AMAZON_S3_US_WEST_1"),
+    
+    @SerializedName("AMAZON_S3_US_WEST_2")
+    AMAZON_S3_US_WEST_2("AMAZON_S3_US_WEST_2"),
+    
+    @SerializedName("GOOGLE_STORAGE_ASIA")
+    GOOGLE_STORAGE_ASIA("GOOGLE_STORAGE_ASIA"),
+    
+    @SerializedName("GOOGLE_STORAGE_ASIA_EAST1")
+    GOOGLE_STORAGE_ASIA_EAST1("GOOGLE_STORAGE_ASIA_EAST1"),
+    
+    @SerializedName("GOOGLE_STORAGE_EU")
+    GOOGLE_STORAGE_EU("GOOGLE_STORAGE_EU"),
+    
+    @SerializedName("GOOGLE_STORAGE_US")
+    GOOGLE_STORAGE_US("GOOGLE_STORAGE_US"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_CENTRAL1")
+    GOOGLE_STORAGE_US_CENTRAL1("GOOGLE_STORAGE_US_CENTRAL1"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_CENTRAL2")
+    GOOGLE_STORAGE_US_CENTRAL2("GOOGLE_STORAGE_US_CENTRAL2"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_EAST1")
+    GOOGLE_STORAGE_US_EAST1("GOOGLE_STORAGE_US_EAST1"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_EAST2")
+    GOOGLE_STORAGE_US_EAST2("GOOGLE_STORAGE_US_EAST2"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_EAST3")
+    GOOGLE_STORAGE_US_EAST3("GOOGLE_STORAGE_US_EAST3"),
+    
+    @SerializedName("GOOGLE_STORAGE_US_WEST1")
+    GOOGLE_STORAGE_US_WEST1("GOOGLE_STORAGE_US_WEST1");
+
+    private String value;
+
+    RegionEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+  }
+
+  @SerializedName("region")
+  private RegionEnum region = null;
 
   @SerializedName("parentId")
   private String parentId = null;
@@ -170,6 +270,24 @@ public class BackendResponse   {
     this.state = state;
   }
 
+  public BackendResponse region(RegionEnum region) {
+    this.region = region;
+    return this;
+  }
+
+   /**
+   * The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.
+   * @return region
+  **/
+  @ApiModelProperty(example = "null", value = "The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account.")
+  public RegionEnum getRegion() {
+    return region;
+  }
+
+  public void setRegion(RegionEnum region) {
+    this.region = region;
+  }
+
   public BackendResponse parentId(String parentId) {
     this.parentId = parentId;
     return this;
@@ -202,12 +320,13 @@ public class BackendResponse   {
         Objects.equals(this.name, backendResponse.name) &&
         Objects.equals(this.id, backendResponse.id) &&
         Objects.equals(this.state, backendResponse.state) &&
+        Objects.equals(this.region, backendResponse.region) &&
         Objects.equals(this.parentId, backendResponse.parentId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(backendType, name, id, state, parentId);
+    return Objects.hash(backendType, name, id, state, region, parentId);
   }
 
   @Override
@@ -219,6 +338,7 @@ public class BackendResponse   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("    region: ").append(toIndentedString(region)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
     sb.append("}");
     return sb.toString();

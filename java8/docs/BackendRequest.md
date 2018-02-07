@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **backendType** | [**BackendTypeEnum**](#BackendTypeEnum) | The type of backend that is created. This field allows users to create a local backend or with supported 3rd parties. |  [optional]
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
+**region** | [**RegionEnum**](#RegionEnum) | The storage region where the container and files are stored. This option is available for Google and Amazon Storage. For Azure is only possible to set the region when creating the storage account. |  [optional]
 **parentId** | **String** | The backend that is used for when properties are not set. This allows usernamePasswordCredentials to be set at one backend and used by multiple backends. |  [optional]
 **requestCredentials** | [**RequestCredentials**](RequestCredentials.md) | The credentials details |  [optional]
 
@@ -19,6 +20,39 @@ SHARED_STORAGE | &quot;SHARED_STORAGE&quot;
 AMAZON_S3 | &quot;AMAZON_S3&quot;
 MS_AZURE_BLOB_STORAGE | &quot;MS_AZURE_BLOB_STORAGE&quot;
 GOOGLE_CLOUD_STORAGE | &quot;GOOGLE_CLOUD_STORAGE&quot;
+XILLIO_ENGINE | &quot;XILLIO_ENGINE&quot;
+
+
+<a name="RegionEnum"></a>
+## Enum: RegionEnum
+Name | Value
+---- | -----
+AMAZON_S3_AP_NORTHEAST_1 | &quot;AMAZON_S3_AP_NORTHEAST_1&quot;
+AMAZON_S3_AP_NORTHEAST_2 | &quot;AMAZON_S3_AP_NORTHEAST_2&quot;
+AMAZON_S3_AP_SOUTH_1 | &quot;AMAZON_S3_AP_SOUTH_1&quot;
+AMAZON_S3_AP_SOUTHEAST_1 | &quot;AMAZON_S3_AP_SOUTHEAST_1&quot;
+AMAZON_S3_AP_SOUTHEAST_2 | &quot;AMAZON_S3_AP_SOUTHEAST_2&quot;
+AMAZON_S3_CA_CENTRAL_1 | &quot;AMAZON_S3_CA_CENTRAL_1&quot;
+AMAZON_S3_CN_NORTH_1 | &quot;AMAZON_S3_CN_NORTH_1&quot;
+AMAZON_S3_EU_CENTRAL_1 | &quot;AMAZON_S3_EU_CENTRAL_1&quot;
+AMAZON_S3_EU_WEST_1 | &quot;AMAZON_S3_EU_WEST_1&quot;
+AMAZON_S3_EU_WEST_2 | &quot;AMAZON_S3_EU_WEST_2&quot;
+AMAZON_S3_SA_EAST_1 | &quot;AMAZON_S3_SA_EAST_1&quot;
+AMAZON_S3_US_EAST_1 | &quot;AMAZON_S3_US_EAST_1&quot;
+AMAZON_S3_US_EAST_2 | &quot;AMAZON_S3_US_EAST_2&quot;
+AMAZON_S3_US_STANDARD | &quot;AMAZON_S3_US_STANDARD&quot;
+AMAZON_S3_US_WEST_1 | &quot;AMAZON_S3_US_WEST_1&quot;
+AMAZON_S3_US_WEST_2 | &quot;AMAZON_S3_US_WEST_2&quot;
+GOOGLE_STORAGE_ASIA | &quot;GOOGLE_STORAGE_ASIA&quot;
+GOOGLE_STORAGE_ASIA_EAST1 | &quot;GOOGLE_STORAGE_ASIA_EAST1&quot;
+GOOGLE_STORAGE_EU | &quot;GOOGLE_STORAGE_EU&quot;
+GOOGLE_STORAGE_US | &quot;GOOGLE_STORAGE_US&quot;
+GOOGLE_STORAGE_US_CENTRAL1 | &quot;GOOGLE_STORAGE_US_CENTRAL1&quot;
+GOOGLE_STORAGE_US_CENTRAL2 | &quot;GOOGLE_STORAGE_US_CENTRAL2&quot;
+GOOGLE_STORAGE_US_EAST1 | &quot;GOOGLE_STORAGE_US_EAST1&quot;
+GOOGLE_STORAGE_US_EAST2 | &quot;GOOGLE_STORAGE_US_EAST2&quot;
+GOOGLE_STORAGE_US_EAST3 | &quot;GOOGLE_STORAGE_US_EAST3&quot;
+GOOGLE_STORAGE_US_WEST1 | &quot;GOOGLE_STORAGE_US_WEST1&quot;
 
 
 

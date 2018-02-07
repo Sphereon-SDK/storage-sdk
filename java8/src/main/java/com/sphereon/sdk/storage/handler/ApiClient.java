@@ -124,7 +124,7 @@ public class ApiClient {
      */
     public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-    private String basePath = "https://gw.api.cloud.sphereon.com/";
+    private String basePath = "https://gw.api.cloud.sphereon.com/bucket-storage/0.7";
     private boolean lenientOnJson = false;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
@@ -169,7 +169,7 @@ public class ApiClient {
         this.lenientDatetimeFormat = true;
 
         // Set default User-Agent.
-        setUserAgent("Swagger-Codegen/0.6.0-SNAPSHOT/java");
+        setUserAgent("Swagger-Codegen/0.7.0-SNAPSHOT/java");
 
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
@@ -190,7 +190,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g https://gw.api.cloud.sphereon.com/
+     * @param basePath Base path of the URL (e.g https://gw.api.cloud.sphereon.com/bucket-storage/0.7
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {
