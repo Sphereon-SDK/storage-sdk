@@ -7,6 +7,7 @@ csharp-net45/src/Sphereon.SDK.Storage
 javascript/src
 html-docs/index.html
 node_modules/
+docs/
 
 # Visual Studio
 .vs/
