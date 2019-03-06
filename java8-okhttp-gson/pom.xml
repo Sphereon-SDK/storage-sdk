@@ -5,7 +5,7 @@
   <artifactId>storage-sdk-java8-okhttp-gson</artifactId>
   <packaging>jar</packaging>
   <name>storage-sdk-java8-okhttp-gson</name>
-  <version>0.8.9-SNAPSHOT</version>
+  <version>0.8.9</version>
   <url>https://github.com/swagger-api/swagger-codegen</url>
   <description>Swagger Java</description>
   <distributionManagement>
