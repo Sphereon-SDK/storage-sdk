@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>storage-sdk-java8-okhttp-gson</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.8.9</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.sphereon.sdk:storage-sdk-java8-okhttp-gson:0.8.0-SNAPSHOT"
+compile "com.sphereon.sdk:storage-sdk-java8-okhttp-gson:0.8.9"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/storage-sdk-java8-okhttp-gson-0.8.0-SNAPSHOT.jar
+* target/storage-sdk-java8-okhttp-gson-0.8.9.jar
 * target/lib/*.jar
 
 ## Getting Started
