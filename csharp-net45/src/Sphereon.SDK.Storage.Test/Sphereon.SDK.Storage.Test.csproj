@@ -2,7 +2,7 @@
 <!--
 Storage
 
-Sphereon Storage APIs provide an abstraction layer for storage of containers (folders) and objects (files), using a filesystem backend or AWS-s3, Azure blobstorage or Google cloud storage backend.
+Sphereon Storage API provides an abstraction layer for storage of (virtual) folders and streams (files/contents) fully agnostic with respect to supported storage backends. This allows for easy uniform access to and manipulation of contents regardless of the content backend being used. Currently the following backends are supported: Sphereon Cloud Storage, Amazon S3, Azure Blob Storage, Google Cloud Storage or one of the Xillio supported content repositories like Documentum, Dropbox etc. For more information about this API please visit https://docs.sphereon.com/api/storage/0.8/
 
 OpenAPI spec version: 0.8
 Contact: dev@sphereon.com
@@ -75,7 +75,7 @@ Contact: dev@sphereon.com
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\Sphereon.SDK.Storage\Sphereon.SDK.Storage.csproj">
-          <Project>{2BA9A0BF-590F-4E73-89AE-71607A209039}</Project>
+          <Project>{A0C77215-EA07-42DA-A93A-3D3FBC4EF20A}</Project>
           <Name>Sphereon.SDK.Storage</Name>
       </ProjectReference>
   </ItemGroup>
